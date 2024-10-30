@@ -1,0 +1,40 @@
+{
+  "name": "createdoodle",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port=3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.1.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-markdown": "^9.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-syntax-highlighter": "^15.5.11",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.1",
+    "fs": "^0.0.1-security",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "rehype-highlight": "^7.0.0",
+    "remark-numbered-footnote-labels": "^1.1.0",
+    "sass": "^1.71.1",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5",
+    "@yeong/eslint-config": "workspace:*",
+    "@yeong/typescript-config": "workspace:*"
+  }
+}
