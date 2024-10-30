@@ -1,0 +1,19 @@
+{
+  "name": "@yeong/utils",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    "./string": {
+      "types": "./src/string/string.utils.ts",
+      "default": "./dist/string/string.utils.js"
+    }
+  },
+  "devDependencies": {
+    "@yeong/typescript-config": "workspace:*",
+    "@yeong/eslint-config": "workspace:*",
+    "typescript": "latest"
+  }
+}
