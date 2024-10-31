@@ -1,4 +1,4 @@
-import CommonButton from '@/components/ui/button/CommonButton/CommonButton'
+import { CommonButton } from '@yeong/ui'
 import { COLORS } from '@/constants/color.constants'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Icon } from '@iconify/react'

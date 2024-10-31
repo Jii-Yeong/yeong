@@ -1,4 +1,4 @@
-import { parseDomSizeValue } from '@/utils/string.utils'
+import { parseDomSizeValue } from '@yeong/utils/string'
 import { ChangeEvent, CSSProperties, useState, KeyboardEvent } from 'react'
 
 export type CommonInputProps = {

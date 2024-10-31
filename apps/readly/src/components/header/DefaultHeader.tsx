@@ -2,10 +2,9 @@
 
 import { useGoogleLogin } from '@react-oauth/google'
 import { loginByGoogleMutation } from '@/service/auth.service'
-import ProfileImage from '../ui/image/ProfileImage/ProfileImage'
 import { getUserInfoQuery } from '@/service/user.service'
 import Link from 'next/link'
-import { CommonButton } from '@yeong/ui'
+import { CommonButton, ProfileImage } from '@yeong/ui'
 
 export default function DefaultHeader() {
   const mutation = loginByGoogleMutation()

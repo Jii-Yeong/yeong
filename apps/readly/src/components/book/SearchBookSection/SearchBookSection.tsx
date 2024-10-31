@@ -1,8 +1,7 @@
 'use client'
 
 import CommonPagination from '@/components/pagination/CommonPagination/CommonPagination'
-import CommonButton from '@/components/ui/button/CommonButton/CommonButton'
-import CommonInput from '@/components/ui/input/CommonInput/CommonInput'
+import { CommonButton, CommonInput } from '@yeong/ui'
 import { searchBookMutation } from '@/service/book.service'
 import { useState, useReducer, useEffect } from 'react'
 import BookItem from '../BookItem/BookItem'

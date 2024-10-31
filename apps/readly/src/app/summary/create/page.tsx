@@ -4,7 +4,7 @@ import SearchBookSection from '@/components/book/SearchBookSection/SearchBookSec
 import { useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { SearchBookItem } from '@/model/book.dto'
-import CommonButton from '@/components/ui/button/CommonButton/CommonButton'
+import { CommonButton } from '@yeong/ui'
 import { createBookSummaryMutation } from '@/service/book.service'
 import { COLORS } from '@/constants/color.constants'
 

@@ -1,20 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CommonInput from './CommonInput';
+import { ProfileImage } from '@yeong/ui';
 
 const meta = {
-  title: 'UI/Input/CommonInput',
-  component: CommonInput,
+  title: 'UI/Image/ProfileImage',
+  component: ProfileImage,
   parameters: {
     layout: 'centered',
   },
 
-} satisfies Meta<typeof CommonInput>;
+} satisfies Meta<typeof ProfileImage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    setInputValue: () => { }
   },
 };
