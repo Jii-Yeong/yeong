@@ -1,0 +1,5 @@
+{
+  "extends": "@yeong/config/typescript/react-app.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}
