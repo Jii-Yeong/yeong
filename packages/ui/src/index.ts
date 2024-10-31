@@ -1,3 +1,3 @@
-import CommonButton from "./button/CommonButton/CommonButton.tsx";
+import CommonButton from "./components/button/CommonButton/CommonButton.tsx";
 
 export { CommonButton }
