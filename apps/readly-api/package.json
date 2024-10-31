@@ -11,8 +11,7 @@
     "@vercel/node": "^2.9.6",
     "express": "^4.21.1",
     "typescript": "^4.7.3",
-    "@yeong/eslint-config": "workspace:*",
-    "@yeong/typescript-config": "workspace:*"
+    "@yeong/config": "workspace:*"
   },
   "dependencies": {
     "@vercel/postgres": "^0.10.0",

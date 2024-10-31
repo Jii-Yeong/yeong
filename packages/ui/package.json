@@ -4,25 +4,28 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./styles": "./src/styles/globals.css"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
-    "@yeong/eslint-config": "workspace:*",
-    "@yeong/typescript-config": "workspace:*",
     "@turbo/gen": "^1.12.4",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@yeong/config": "workspace:*",
+    "autoprefixer": "^10.0.1",
     "eslint": "^8.57.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.14",
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "@yeong/utils": "workspace:*"
+    "@yeong/utils": "workspace:*",
+    "react": "^18.2.0"
   }
 }

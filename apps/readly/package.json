@@ -44,7 +44,6 @@
     "storybook": "8.3.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
-    "@yeong/eslint-config": "workspace:*",
-    "@yeong/typescript-config": "workspace:*"
+    "@yeong/config": "workspace:*"
   }
 }

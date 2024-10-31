@@ -12,8 +12,7 @@
     }
   },
   "devDependencies": {
-    "@yeong/typescript-config": "workspace:*",
-    "@yeong/eslint-config": "workspace:*",
+    "@yeong/config": "workspace:*",
     "typescript": "latest"
   }
 }
