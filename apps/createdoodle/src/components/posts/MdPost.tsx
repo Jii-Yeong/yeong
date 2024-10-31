@@ -1,3 +1,5 @@
+'use client';
+
 import 'katex/dist/katex.min.css';
 import Markdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
