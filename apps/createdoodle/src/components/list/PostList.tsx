@@ -6,9 +6,10 @@ type PostListProps = {
 };
 
 export default function PostList({list}: PostListProps) {
+  const reversedList = [...list].reverse();
   return (
     <div className="flex flex-col gap-y-4 max-w-4xl">
-      {list.reverse().map((item, index) => (
+      {reversedList.map((item, index) => (
         <PostListItem item={item} key={`${JSON.stringify(item)}-${index}`} />
       ))}
     </div>
