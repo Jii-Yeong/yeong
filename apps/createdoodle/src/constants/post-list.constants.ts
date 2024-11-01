@@ -74,4 +74,11 @@ export const postList: PostListItemType[] = [
     thumbnail: '8',
     route: 8,
   },
+  {
+    id: '9',
+    title: 'Turborepo를 이용하여 모노레포 구성하기',
+    category: '라이브러리/프레임워크',
+    description: 'Turborepo를 이용하여 모노레포를 구성하고 여러 내부 패키지를 만드는 방법에 대한 정리',
+    route: 9,
+  },
 ];
