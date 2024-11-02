@@ -26,6 +26,11 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
 
   const decodedInfo = decodeJwtToken(userToken);
 
+  if (!decodedInfo.id) {
+    res.status(401).send('Decoding failed.');
+    return;
+  }
+
   const content = req.body?.content;
   const bookInfo = req.body?.bookInfo;
   const startPage = req.body?.startPage;
@@ -119,7 +124,9 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   const { rows, rowCount } = await sql`
   SELECT * 
-  FROM summaries`;
+  FROM summaries
+  ORDER BY created_at DESC
+  `;
 
   if (!rowCount || rowCount <= 0) {
     res.json([]);
@@ -138,11 +145,6 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
   }
 
   const decodedInfo = decodeJwtToken(userToken);
-
-  if (!decodedInfo.id) {
-    res.status(401).send('Decoding failed.');
-    return;
-  }
 
   const id = req.query?.id;
 
