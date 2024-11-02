@@ -1,17 +1,17 @@
-import { CommonDivider, ProfileImage } from '@yeong/ui'
-import Link from 'next/link'
-import BookSummaryContent from '../BookSummaryContent/BookSummaryContent'
+import { CommonDivider, EllipsisText, ProfileImage } from '@yeong/ui';
+import Link from 'next/link';
+import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
 
 export type BookSummaryItemProps = {
-  id: number
-  content: string
-  bookTitle: string
-  bookAuthor: string
-  userImage: string
-  userName: string
-  startPage: number
-  endPage: number
-}
+  id: number;
+  content: string;
+  bookTitle: string;
+  bookAuthor: string;
+  userImage: string;
+  userName: string;
+  startPage: number;
+  endPage: number;
+};
 
 export default function BookSummaryItem({
   id,
@@ -24,7 +24,10 @@ export default function BookSummaryItem({
   endPage,
 }: BookSummaryItemProps) {
   return (
-    <Link href={`summary/detail/${id}`} className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col">
+    <Link
+      href={`summary/detail/${id}`}
+      className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col"
+    >
       <div className="bg-light-blue p-[8px] rounded-[8px] ">
         <div className="overflow-hidden h-[120px]">
           <BookSummaryContent content={content} />
@@ -34,7 +37,7 @@ export default function BookSummaryItem({
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>
-            <p className="text-md">{bookTitle}</p>
+            <EllipsisText text={bookTitle} fontSize={14} />
             <p className="text-md text-dark-gray">{bookAuthor}</p>
           </div>
           <div className="flex flex-row gap-x-[4px] text-sm text-dark-gray">
@@ -49,5 +52,5 @@ export default function BookSummaryItem({
         </div>
       </div>
     </Link>
-  )
+  );
 }
