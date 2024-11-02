@@ -19,6 +19,7 @@ type CommonButtonProps = {
   isRightIcon?: ReactNode;
   disabled?: boolean;
   isLoading?: boolean;
+  loadingColor?: string;
   clickButton?: () => void;
 };
 
@@ -39,6 +40,7 @@ export default function CommonButton({
   disabled,
   style,
   isLoading,
+  loadingColor = '#5ae9e4',
   clickButton,
 }: CommonButtonProps) {
   const handleClickButton = () => {
@@ -65,7 +67,7 @@ export default function CommonButton({
       }}
     >
       {isLoading ? (
-        <LoadingSpinner size={30} />
+        <LoadingSpinner size={30} color={loadingColor} />
       ) : (
         <>
           {isLeftIcon}
