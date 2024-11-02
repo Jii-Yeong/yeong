@@ -1,3 +1,4 @@
+import { InlineIcon } from '@iconify/react/dist/iconify.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CommonButton } from '@yeong/ui';
 
@@ -18,5 +19,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     text: 'Button',
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    text: 'Button',
+    isLeftIcon: <InlineIcon icon="line-md:heart-filled" />,
+    isRightIcon: <InlineIcon icon="line-md:heart-filled" />,
   },
 };

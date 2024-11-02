@@ -96,6 +96,9 @@ importers:
 
   apps/design-system:
     dependencies:
+      '@iconify/react':
+        specifier: ^5.0.2
+        version: 5.0.2(react@18.3.1)
       '@yeong/ui':
         specifier: workspace:*
         version: link:../../packages/ui

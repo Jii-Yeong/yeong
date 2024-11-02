@@ -1,21 +1,26 @@
-import { parseDomSizeValue } from '@yeong/utils/string'
-import { CSSProperties } from 'react'
+import { parseDomSizeValue } from '@yeong/utils/string';
+import { CSSProperties, ReactNode } from 'react';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonButtonProps = {
-  text: string
-  backgroundColor?: string
-  color?: string
-  width?: string | number
-  height?: string | number
-  borderRadius?: string | number
-  borderColor?: string
-  borderWidth?: string | number
-  fontSize?: string | number
-  fontWeight?: string | number
-  padding?: string | number
-  style?: CSSProperties
-  clickButton?: () => void
-}
+  text: string;
+  backgroundColor?: string;
+  color?: string;
+  width?: string | number;
+  height?: string | number;
+  borderRadius?: string | number;
+  borderColor?: string;
+  borderWidth?: string | number;
+  fontSize?: string | number;
+  fontWeight?: string | number;
+  padding?: string | number;
+  style?: CSSProperties;
+  isLeftIcon?: ReactNode;
+  isRightIcon?: ReactNode;
+  disabled?: boolean;
+  isLoading?: boolean;
+  clickButton?: () => void;
+};
 
 export default function CommonButton({
   text,
@@ -29,13 +34,22 @@ export default function CommonButton({
   fontSize = 14,
   fontWeight = 'normal',
   padding = 8,
+  isLeftIcon,
+  isRightIcon,
+  disabled,
   style,
+  isLoading,
   clickButton,
 }: CommonButtonProps) {
+  const handleClickButton = () => {
+    if (disabled || isLoading || !clickButton) return;
+    clickButton();
+  };
   return (
     <button
-      className="hover:opacity-60"
-      onClick={clickButton}
+      className="hover:opacity-60 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60"
+      onClick={handleClickButton}
+      disabled={disabled}
       style={{
         backgroundColor,
         color,
@@ -48,8 +62,17 @@ export default function CommonButton({
         fontWeight,
         padding: parseDomSizeValue(padding),
         ...style,
-      }}>
-      {text}
+      }}
+    >
+      {isLoading ? (
+        <LoadingSpinner size={30} />
+      ) : (
+        <>
+          {isLeftIcon}
+          {text}
+          {isRightIcon}
+        </>
+      )}
     </button>
-  )
+  );
 }
