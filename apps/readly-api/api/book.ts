@@ -130,6 +130,20 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('Login is required.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  if (!decodedInfo.id) {
+    res.status(401).send('Decoding failed.');
+    return;
+  }
+
   const id = req.query?.id;
 
   if (!id) {
@@ -140,7 +154,15 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
   const { rowCount } =
     await sql`SELECT summary_id FROM summary_like_count WHERE summary_id = ${String(id)};`;
 
-  res.json({ like_count: rowCount });
+  const { rows } = await sql`
+    SELECT EXISTS (
+      SELECT 1 
+      FROM summary_like_count 
+      WHERE summary_id = ${String(id)}
+      AND user_id = ${decodedInfo.id}
+    );`;
+
+  res.json({ like_count: rowCount, is_clicked: isExistRows(rows) });
 });
 
 bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {

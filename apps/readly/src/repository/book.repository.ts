@@ -1,33 +1,69 @@
-import { readlyApiAxiosInstance } from "@/api/readly-api"
-import { BookSummaryItemDto, CreateBookSummaryRequest, SearchBookRequest, SearchBookResponse } from "@/model/book/book.dto"
+import { readlyApiAxiosInstance } from '@/api/readly-api';
+import {
+  BookSummaryItemDto,
+  BookSummaryLikeCountResponse,
+  CreateBookSummaryRequest,
+  SearchBookRequest,
+  SearchBookResponse,
+} from '@/model/book/book.dto';
 
 export const searchBookList = async (params: SearchBookRequest) => {
-  const { data } = await readlyApiAxiosInstance().post<SearchBookResponse>('/book/search', params)
-  return data
-}
+  const { data } = await readlyApiAxiosInstance().post<SearchBookResponse>(
+    '/book/search',
+    params,
+  );
+  return data;
+};
 
 export const createBookSummary = async (params: CreateBookSummaryRequest) => {
-  await readlyApiAxiosInstance().post('/book/summary/create', params)
-}
+  await readlyApiAxiosInstance().post('/book/summary/create', params);
+};
 
 export const getDetailBookSummary = async (id: BookSummaryItemDto['id']) => {
-  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto>('/book/summary', {
-    params: {
-      id
-    }
-  })
-  return data
-}
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto>(
+    '/book/summary',
+    {
+      params: {
+        id,
+      },
+    },
+  );
+  return data;
+};
 
-export const deleteDetailBoookSummary = async (id: BookSummaryItemDto['id']) => {
+export const deleteDetailBoookSummary = async (
+  id: BookSummaryItemDto['id'],
+) => {
   await readlyApiAxiosInstance().delete('/book/summary/delete', {
     params: {
-      id
-    }
-  })
-}
+      id,
+    },
+  });
+};
 
 export const getBoookSummaryList = async () => {
-  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto[]>('/book/summary/list')
-  return data
-}
+  const { data } =
+    await readlyApiAxiosInstance().get<BookSummaryItemDto[]>(
+      '/book/summary/list',
+    );
+  return data;
+};
+
+export const getBookSummaryLikeCount = async (id: BookSummaryItemDto['id']) => {
+  const { data } =
+    await readlyApiAxiosInstance().get<BookSummaryLikeCountResponse>(
+      '/book/summary/like-count',
+      {
+        params: {
+          id,
+        },
+      },
+    );
+  return data;
+};
+
+export const addBookSummaryLikeCount = async (
+  params: Pick<BookSummaryItemDto, 'id'>,
+) => {
+  await readlyApiAxiosInstance().post('/book/summary/click-like', params);
+};
