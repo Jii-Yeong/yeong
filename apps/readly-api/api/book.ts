@@ -1,51 +1,51 @@
-import express, { Request, Response } from 'express'
-import { searchBookList } from '../utils/book'
-import { decodeJwtToken } from '../utils/auth'
-import { sql } from '@vercel/postgres'
+import { sql } from '@vercel/postgres';
+import express, { Request, Response } from 'express';
+import { decodeJwtToken } from '../utils/auth';
+import { searchBookList } from '../utils/book';
+import { isExistRows } from '../utils/sql';
 
-
-const bookRouter = express.Router()
+const bookRouter = express.Router();
 
 bookRouter.post('/search', async (req: Request, res: Response) => {
-  const query = req.body?.query || ''
-  const display = req.body?.display || 10
-  const start = req.body?.start || 1
-  const sort = req.body?.sort || 'sim'
-  const searchResult = await searchBookList({ query, display, start, sort })
+  const query = req.body?.query || '';
+  const display = req.body?.display || 10;
+  const start = req.body?.start || 1;
+  const sort = req.body?.sort || 'sim';
+  const searchResult = await searchBookList({ query, display, start, sort });
 
-  res.json(searchResult)
-})
+  res.json(searchResult);
+});
 
 bookRouter.post('/summary/create', async (req: Request, res: Response) => {
-  const userToken = req.headers["authorization"]?.split(" ")[1];
+  const userToken = req.headers['authorization']?.split(' ')[1];
 
   if (!userToken) {
-    res.status(401).send('You entered via the wrong route.')
-    return
+    res.status(401).send('You entered via the wrong route.');
+    return;
   }
 
-  const decodedInfo = decodeJwtToken(userToken)
+  const decodedInfo = decodeJwtToken(userToken);
 
-  const content = req.body?.content
-  const bookInfo = req.body?.bookInfo
-  const startPage = req.body?.startPage
-  const endPage = req.body?.endPage
+  const content = req.body?.content;
+  const bookInfo = req.body?.bookInfo;
+  const startPage = req.body?.startPage;
+  const endPage = req.body?.endPage;
 
   if (!content || !bookInfo) {
-    res.status(401).send('A required parameter is missing.')
-    return
+    res.status(401).send('A required parameter is missing.');
+    return;
   }
 
   const { rows } = await sql`
   SELECT nickname, profile_image 
   FROM users 
-  WHERE id = ${decodedInfo.id};`
+  WHERE id = ${decodedInfo.id};`;
 
-  const row = rows[0]
+  const row = rows[0];
 
   if (!row) {
-    res.status(401).send('There is no user information.')
-    return
+    res.status(401).send('There is no user information.');
+    return;
   }
 
   await sql`
@@ -63,66 +63,128 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
     ${row.profile_image},
     ${startPage},
     ${endPage}
-    );`
+    );`;
 
-  res.send('success created')
-})
+  res.send('success created');
+});
 
 bookRouter.get('/summary', async (req: Request, res: Response) => {
-  const id = req.query?.id
+  const id = req.query?.id;
 
   if (!id) {
-    res.status(401).send('A required parameter is missing.')
-    return
+    res.status(401).send('A required parameter is missing.');
+    return;
   }
+
+  await sql`
+  UPDATE summaries
+  SET view_count = view_count + 1
+  WHERE id = ${String(id)};`;
 
   const { rows } = await sql`
   SELECT * 
   FROM summaries 
-  WHERE id = ${String(id)};`
+  WHERE id = ${String(id)};`;
 
-  const row = rows[0]
+  const row = rows[0];
 
   if (!row) {
-    res.status(401).send('Summary does not exist.')
-    return
+    res.status(401).send('Summary does not exist.');
+    return;
   }
 
-  res.json(row)
-})
+  res.json(row);
+});
 
 bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
-  const id = req.body?.id
+  const id = req.body?.id;
 
   if (!id) {
-    res.status(401).send('A required parameter is missing.')
+    res.status(401).send('A required parameter is missing.');
   }
 
   const { rowCount } = await sql`
   DELETE 
   FROM summaries 
-  WHERE id = ${String(id)};`
+  WHERE id = ${String(id)};`;
 
   if (!rowCount || rowCount <= 0) {
-    res.status(401).send('Summary does not exist.')
-    return
+    res.status(401).send('Summary does not exist.');
+    return;
   }
 
-  res.send('Success deleted.')
-})
+  res.send('Success deleted.');
+});
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   const { rows, rowCount } = await sql`
   SELECT * 
-  FROM summaries`
+  FROM summaries`;
 
   if (!rowCount || rowCount <= 0) {
-    res.json([])
-    return
+    res.json([]);
+    return;
   }
 
-  res.json(rows)
-})
+  res.json(rows);
+});
 
+bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
+  const id = req.query?.id;
 
-export default bookRouter
+  if (!id) {
+    res.status(401).send('A required parameter is missing.');
+    return;
+  }
+
+  const { rowCount } =
+    await sql`SELECT summary_id FROM summary_like_count WHERE summary_id = ${String(id)};`;
+
+  res.json({ like_count: rowCount });
+});
+
+bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('Login is required.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  if (!decodedInfo.id) {
+    res.status(401).send('Decoding failed.');
+    return;
+  }
+
+  const id = req.body?.id;
+
+  if (!id) {
+    res.status(401).send('A required parameter is missing.');
+    return;
+  }
+
+  const { rows } = await sql`
+  SELECT EXISTS (
+    SELECT 1 
+    FROM summary_like_count 
+    WHERE summary_id = ${id}
+    AND user_id = ${decodedInfo.id}
+  );`;
+
+  if (isExistRows(rows)) {
+    await sql`
+    DELETE FROM summary_like_count 
+    WHERE summary_id = ${id} 
+    AND user_id = ${decodedInfo.id};`;
+    res.send('delete like count.');
+  } else {
+    await sql`
+    INSERT INTO summary_like_count (summary_id, user_id) 
+    VALUES (${id}, ${decodedInfo.id});`;
+    res.send('insert like count.');
+  }
+});
+
+export default bookRouter;
