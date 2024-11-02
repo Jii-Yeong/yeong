@@ -27,6 +27,9 @@ export const searchBookMutation = () => {
 export const createBookSummaryMutation = () => {
   return useMutation({
     mutationFn: createBookSummary,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
+    },
   });
 };
 

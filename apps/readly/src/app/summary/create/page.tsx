@@ -1,33 +1,36 @@
-'use client'
+'use client';
 
-import SearchBookSection from '@/components/book/SearchBookSection/SearchBookSection'
-import { useState } from 'react'
-import { Editor } from '@tinymce/tinymce-react'
-import { SearchBookItem } from '@/model/book/book.dto'
-import { CommonButton, CommonInput } from '@yeong/ui'
-import { createBookSummaryMutation } from '@/service/book.service'
-import { COLORS } from '@/constants/color.constants'
+import SearchBookSection from '@/components/book/SearchBookSection/SearchBookSection';
+import { COLORS } from '@/constants/color.constants';
+import { SearchBookItem } from '@/model/book/book.dto';
+import { createBookSummaryMutation } from '@/service/book.service';
+import { Editor } from '@tinymce/tinymce-react';
+import { CommonButton, CommonInput } from '@yeong/ui';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Page() {
-  const [content, setContent] = useState<string>('')
-  const [selectedBook, setSelectedBook] = useState<SearchBookItem | null>(null)
-  const [startPage, setStartPage] = useState('')
-  const [endPage, setEndPage] = useState('')
-  const { mutate } = createBookSummaryMutation()
+  const [content, setContent] = useState<string>('');
+  const [selectedBook, setSelectedBook] = useState<SearchBookItem | null>(null);
+  const [startPage, setStartPage] = useState('');
+  const [endPage, setEndPage] = useState('');
+  const { mutateAsync, isPending } = createBookSummaryMutation();
+  const router = useRouter();
 
   const handleEditorChange = (content: string) => {
-    setContent(content)
-  }
+    setContent(content);
+  };
 
-  const clickEndButton = () => {
-    if (!content || !selectedBook) return
-    mutate({
+  const clickEndButton = async () => {
+    if (!content || !selectedBook) return;
+    await mutateAsync({
       content,
       bookInfo: selectedBook,
       startPage,
       endPage,
-    })
-  }
+    });
+    router.push('/');
+  };
 
   return (
     <div className="flex flex-col gap-y-[16px]">
@@ -54,7 +57,9 @@ export default function Page() {
         color={COLORS.white}
         borderColor="transparent"
         padding="16px 10px"
+        isLoading={isPending}
+        loadingColor={COLORS.white}
       />
     </div>
-  )
+  );
 }
