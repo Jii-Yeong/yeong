@@ -28,14 +28,28 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
 
   const content = req.body?.content
   const bookInfo = req.body?.bookInfo
+  const startPage = req.body?.startPage
+  const endPage = req.body?.endPage
 
   if (!content || !bookInfo) {
     res.status(401).send('A required parameter is missing.')
     return
   }
 
+  const { rows } = await sql`
+  SELECT nickname, profile_image 
+  FROM users 
+  WHERE id = ${decodedInfo.id};`
+
+  const row = rows[0]
+
+  if (!row) {
+    res.status(401).send('There is no user information.')
+    return
+  }
+
   await sql`
-  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, user_id)
+  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, user_id, user_name, user_image, start_page, end_page)
   VALUES (
     ${content},
     ${bookInfo.title},
@@ -44,7 +58,11 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
     ${bookInfo.pubdate},
     ${bookInfo.image},
     ${bookInfo.link},
-    ${decodedInfo.id}
+    ${decodedInfo.id},
+    ${row.nickname},
+    ${row.profile_image},
+    ${startPage},
+    ${endPage}
     );`
 
   res.send('success created')

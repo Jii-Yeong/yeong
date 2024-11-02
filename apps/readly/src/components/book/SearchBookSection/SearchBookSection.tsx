@@ -6,7 +6,7 @@ import { searchBookMutation } from '@/service/book.service'
 import { useState, useReducer, useEffect } from 'react'
 import BookItem from '../BookItem/BookItem'
 import './SearchBookSection.scss'
-import { SearchBookItem } from '@/model/book.dto'
+import { SearchBookItem } from '@/model/book/book.dto'
 
 type SearchBookSectionProps = {
   clickSelect: (item: SearchBookItem) => void

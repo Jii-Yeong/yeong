@@ -12,6 +12,7 @@ export default {
         black: '#111111',
         gray: '#d3d3d3',
         'dark-gray': '#898989',
+        'light-blue': '#eff3ff',
       },
       fontSize: {
         sm: '12px',

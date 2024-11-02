@@ -1,5 +1,5 @@
 import { readlyApiAxiosInstance } from "@/api/readly-api"
-import { BookSummaryItem, CreateBookSummaryRequest, SearchBookRequest, SearchBookResponse } from "@/model/book.dto"
+import { BookSummaryItemDto, CreateBookSummaryRequest, SearchBookRequest, SearchBookResponse } from "@/model/book/book.dto"
 
 export const searchBookList = async (params: SearchBookRequest) => {
   const { data } = await readlyApiAxiosInstance().post<SearchBookResponse>('/book/search', params)
@@ -10,8 +10,8 @@ export const createBookSummary = async (params: CreateBookSummaryRequest) => {
   await readlyApiAxiosInstance().post('/book/summary/create', params)
 }
 
-export const getDetailBookSummary = async (id: BookSummaryItem['id']) => {
-  const { data } = await readlyApiAxiosInstance().get<BookSummaryItem>('/book/summary', {
+export const getDetailBookSummary = async (id: BookSummaryItemDto['id']) => {
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto>('/book/summary', {
     params: {
       id
     }
@@ -19,7 +19,7 @@ export const getDetailBookSummary = async (id: BookSummaryItem['id']) => {
   return data
 }
 
-export const deleteDetailBoookSummary = async (id: BookSummaryItem['id']) => {
+export const deleteDetailBoookSummary = async (id: BookSummaryItemDto['id']) => {
   await readlyApiAxiosInstance().delete('/book/summary/delete', {
     params: {
       id
@@ -28,6 +28,6 @@ export const deleteDetailBoookSummary = async (id: BookSummaryItem['id']) => {
 }
 
 export const getBoookSummaryList = async () => {
-  const { data } = await readlyApiAxiosInstance().get<BookSummaryItem[]>('/book/summary/list')
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto[]>('/book/summary/list')
   return data
 }

@@ -1,7 +1,7 @@
 import { getBoookSummaryList } from './../repository/book.repository';
 import { BOOK_SUMMARY_KEY } from "@/constants/query-key.constants";
 import { queryClient } from "@/lib/react-query";
-import { BookSummaryItem } from "@/model/book.dto";
+import { BookSummaryItemDto, toBookSummaryItenModel } from "@/model/book/book.dto";
 import { createBookSummary, deleteDetailBoookSummary, getDetailBookSummary, searchBookList } from "@/repository/book.repository";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -17,7 +17,7 @@ export const createBookSummaryMutation = () => {
   })
 }
 
-export const getDetailBookSummaryQuery = (id: BookSummaryItem['id']) => {
+export const getDetailBookSummaryQuery = (id: BookSummaryItemDto['id']) => {
   return useQuery({
     queryKey: [BOOK_SUMMARY_KEY, id],
     queryFn: () => getDetailBookSummary(id)
@@ -36,6 +36,9 @@ export const deleteDetailBookSummaryMutation = () => {
 export const getBoookSummaryListQuery = () => {
   return useQuery({
     queryKey: [BOOK_SUMMARY_KEY],
-    queryFn: getBoookSummaryList
+    queryFn: async () => {
+      const data = await getBoookSummaryList()
+      return data.map(item => toBookSummaryItenModel(item))
+    },
   })
 }

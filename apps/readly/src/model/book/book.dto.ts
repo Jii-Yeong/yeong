@@ -1,3 +1,4 @@
+import { BookSummaryItemModel } from './book.model';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -27,10 +28,12 @@ export type SearchBookItem = {
 
 export type CreateBookSummaryRequest = {
   content: string;
-  bookInfo: SearchBookItem
+  bookInfo: SearchBookItem;
+  startPage: string;
+  endPage: string;
 }
 
-export type BookSummaryItem = {
+export type BookSummaryItemDto = {
   id: number
   contents: string
   book_title: string
@@ -43,4 +46,20 @@ export type BookSummaryItem = {
   created_at: string
   book_image: string
   book_link: string
+  start_page: number
+  end_page: number
+  user_name: string
+  user_image: string
+}
+
+export const toBookSummaryItenModel = (item: BookSummaryItemDto): BookSummaryItemModel => {
+  return {
+    bookAuthor: item.book_author,
+    bookTitle: item.book_title,
+    content: item.contents,
+    endPage: item.end_page,
+    startPage: item.start_page,
+    userImage: item.user_image,
+    userName: item.user_name,
+  }
 }

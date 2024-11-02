@@ -3,14 +3,16 @@
 import SearchBookSection from '@/components/book/SearchBookSection/SearchBookSection'
 import { useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
-import { SearchBookItem } from '@/model/book.dto'
-import { CommonButton } from '@yeong/ui'
+import { SearchBookItem } from '@/model/book/book.dto'
+import { CommonButton, CommonInput } from '@yeong/ui'
 import { createBookSummaryMutation } from '@/service/book.service'
 import { COLORS } from '@/constants/color.constants'
 
 export default function Page() {
   const [content, setContent] = useState<string>('')
   const [selectedBook, setSelectedBook] = useState<SearchBookItem | null>(null)
+  const [startPage, setStartPage] = useState('')
+  const [endPage, setEndPage] = useState('')
   const { mutate } = createBookSummaryMutation()
 
   const handleEditorChange = (content: string) => {
@@ -22,6 +24,8 @@ export default function Page() {
     mutate({
       content,
       bookInfo: selectedBook,
+      startPage,
+      endPage,
     })
   }
 
@@ -35,6 +39,12 @@ export default function Page() {
         apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
         onEditorChange={handleEditorChange}
       />
+      <h1 className="text-lg font-bold">쪽수</h1>
+      <div className="flex flex-row items-center gap-x-[8px]">
+        <CommonInput setInputValue={setStartPage} type="number" width={70} />
+        <p>~</p>
+        <CommonInput setInputValue={setEndPage} type="number" width={70} />
+      </div>
       <CommonButton
         text="작성"
         clickButton={clickEndButton}

@@ -9,6 +9,7 @@ export type CommonInputProps = {
   padding?: string | number
   placeholder?: string
   style?: CSSProperties
+  type?: string
   setInputValue: (value: string) => void
   pressEnter?: () => void
 }
@@ -21,6 +22,7 @@ export default function CommonInput({
   padding = 8,
   placeholder,
   style,
+  type = 'text',
   setInputValue,
   pressEnter,
 }: CommonInputProps) {
@@ -47,6 +49,7 @@ export default function CommonInput({
       value={value}
       onChange={changeInputValue}
       onKeyUp={handleKeyUp}
+      type={type}
     />
   )
 }

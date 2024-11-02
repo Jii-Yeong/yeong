@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
-import './reset.css'
 import Provider from './provider'
 import DefaultHeader from '@/components/header/DefaultHeader'
 
@@ -33,7 +32,7 @@ export default function RootLayout({
         <Provider>
           <div className="flex flex-col items-center">
             <DefaultHeader />
-            <div className="w-[600px] m-[24px]">{children}</div>
+            <div className="w-[1000px] m-[24px]">{children}</div>
           </div>
         </Provider>
       </body>
