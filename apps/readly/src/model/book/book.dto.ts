@@ -54,6 +54,7 @@ export type BookSummaryItemDto = {
 
 export const toBookSummaryItenModel = (item: BookSummaryItemDto): BookSummaryItemModel => {
   return {
+    id: item.id,
     bookAuthor: item.book_author,
     bookTitle: item.book_title,
     content: item.contents,

@@ -1,7 +1,9 @@
 import { CommonDivider, ProfileImage } from '@yeong/ui'
+import Link from 'next/link'
 import BookSummaryContent from '../BookSummaryContent/BookSummaryContent'
 
 export type BookSummaryItemProps = {
+  id: number
   content: string
   bookTitle: string
   bookAuthor: string
@@ -12,6 +14,7 @@ export type BookSummaryItemProps = {
 }
 
 export default function BookSummaryItem({
+  id,
   content,
   bookAuthor,
   bookTitle,
@@ -21,7 +24,7 @@ export default function BookSummaryItem({
   endPage,
 }: BookSummaryItemProps) {
   return (
-    <div className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col">
+    <Link href={`summary/detail/${id}`} className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col">
       <div className="bg-light-blue p-[8px] rounded-[8px] ">
         <div className="overflow-hidden h-[120px]">
           <BookSummaryContent content={content} />
@@ -45,6 +48,6 @@ export default function BookSummaryItem({
           <p className="text-md">{userName}</p>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

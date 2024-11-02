@@ -1,20 +1,20 @@
-import { COLORS } from '@/constants/color.constants'
-import { parseDomSizeValue } from '@/utils/string.utils'
-import Image from 'next/image'
+import { COLORS } from '@/constants/color.constants';
+import { parseDomSizeValue } from '@/utils/string.utils';
+import Image from 'next/image';
 
 type BookItemProps = {
-  title: string
-  author: string
-  publisher: string
-  pubdate: string
-  image: string
-  isbn: string
-  isSelected?: boolean
-  imageWidth?: string | number
-  cursor?: 'default' | 'pointer'
-  isWide?: boolean
-  clickItem?: (isbn: string) => void
-}
+  title: string;
+  author: string;
+  publisher: string;
+  pubdate: string;
+  image: string;
+  isbn?: string;
+  isSelected?: boolean;
+  imageWidth?: string | number;
+  cursor?: 'default' | 'pointer';
+  isWide?: boolean;
+  clickItem?: (isbn: string) => void;
+};
 
 export default function BookItem({
   title,
@@ -30,8 +30,8 @@ export default function BookItem({
   clickItem,
 }: BookItemProps) {
   const handleClickItem = () => {
-    if (clickItem) clickItem(isbn)
-  }
+    if (clickItem && isbn) clickItem(isbn);
+  };
   return (
     <div
       className="p-[8px] rounded-[8px] w-full h-full flex gap-x-[16px]"
@@ -40,7 +40,8 @@ export default function BookItem({
         cursor,
         flexDirection: isWide ? 'row' : 'column',
       }}
-      onClick={handleClickItem}>
+      onClick={handleClickItem}
+    >
       <Image
         src={image}
         alt="book-image"
@@ -56,5 +57,5 @@ export default function BookItem({
         <p className="text-sm text-dark-gray">{pubdate}</p>
       </div>
     </div>
-  )
+  );
 }
