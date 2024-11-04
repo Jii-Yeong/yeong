@@ -1,6 +1,6 @@
 import { COLORS } from '@/constants/color.constants';
 import { parseDomSizeValue } from '@/utils/string.utils';
-import { formatDateToString } from '@yeong/utils/date';
+import { formatDateToString, transferStringToDate } from '@yeong/utils/date';
 import Image from 'next/image';
 import { useMemo } from 'react';
 
@@ -36,7 +36,7 @@ export default function BookItem({
   };
 
   const pubdateFromFormat = useMemo(
-    () => formatDateToString(new Date(pubdate)),
+    () => formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd')),
     [pubdate],
   );
   return (

@@ -13,6 +13,7 @@ export default {
         gray: '#d3d3d3',
         'dark-gray': '#898989',
         'light-blue': '#eff3ff',
+        red: '#ff0000',
       },
       fontSize: {
         sm: '12px',
