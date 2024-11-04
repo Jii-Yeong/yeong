@@ -64,6 +64,7 @@ export const toBookSummaryItenModel = (
     startPage: item.start_page,
     userImage: item.user_image,
     userName: item.user_name,
+    createAt: item.created_at,
   };
 };
 

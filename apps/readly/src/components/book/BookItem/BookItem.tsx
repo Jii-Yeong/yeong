@@ -1,6 +1,8 @@
 import { COLORS } from '@/constants/color.constants';
 import { parseDomSizeValue } from '@/utils/string.utils';
+import { formatDateToString } from '@yeong/utils/date';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 type BookItemProps = {
   title: string;
@@ -32,6 +34,11 @@ export default function BookItem({
   const handleClickItem = () => {
     if (clickItem && isbn) clickItem(isbn);
   };
+
+  const pubdateFromFormat = useMemo(
+    () => formatDateToString(new Date(pubdate)),
+    [pubdate],
+  );
   return (
     <div
       className="p-[8px] rounded-[8px] w-full h-full flex gap-x-[16px]"
@@ -54,7 +61,7 @@ export default function BookItem({
         <p className="text-md font-bold leading-5">{title}</p>
         <p className="text-sm">{author}</p>
         <p className="text-sm text-dark-gray">{publisher}</p>
-        <p className="text-sm text-dark-gray">{pubdate}</p>
+        <p className="text-sm text-dark-gray">{pubdateFromFormat}</p>
       </div>
     </div>
   );

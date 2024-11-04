@@ -1,5 +1,7 @@
 import { CommonDivider, EllipsisText, ProfileImage } from '@yeong/ui';
+import { formatDateToString } from '@yeong/utils/date';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
 
 export type BookSummaryItemProps = {
@@ -11,6 +13,7 @@ export type BookSummaryItemProps = {
   userName: string;
   startPage: number;
   endPage: number;
+  createAt: string;
 };
 
 export default function BookSummaryItem({
@@ -22,7 +25,12 @@ export default function BookSummaryItem({
   userName,
   startPage,
   endPage,
+  createAt,
 }: BookSummaryItemProps) {
+  const createAtFromFormat = useMemo(
+    () => formatDateToString(new Date(createAt)),
+    [createAt],
+  );
   return (
     <Link
       href={`summary/detail/${id}`}
@@ -46,9 +54,12 @@ export default function BookSummaryItem({
             <p>{endPage}p</p>
           </div>
         </div>
-        <div className="flex flex-row gap-x-[8px] items-center justify-end">
-          <ProfileImage imageSrc={userImage} />
-          <p className="text-md">{userName}</p>
+        <div className="flex flex-row items-center justify-between mt-[16px]">
+          <div className="flex flex-row gap-x-[8px] items-center justify-end">
+            <ProfileImage imageSrc={userImage} />
+            <p className="text-md">{userName}</p>
+          </div>
+          <p className="text-dark-gray text-md">{createAtFromFormat}</p>
         </div>
       </div>
     </Link>
