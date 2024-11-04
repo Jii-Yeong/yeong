@@ -1,9 +1,9 @@
-import { parseDomSizeValue } from '@yeong/utils/string'
+import { parseDomSizeValue } from '@yeong/utils/string';
 
 type ProfileImageProps = {
-  imageSrc?: string
-  size?: string | number
-}
+  imageSrc?: string;
+  size?: string | number;
+};
 
 export default function ProfileImage({
   imageSrc,
@@ -15,8 +15,11 @@ export default function ProfileImage({
       style={{
         width: parseDomSizeValue(size),
         height: parseDomSizeValue(size),
-      }}>
-      {imageSrc && <img src={imageSrc} alt="profile-image" />}
+      }}
+    >
+      {imageSrc && (
+        <img src={imageSrc} alt="profile-image" className="w-full" />
+      )}
     </div>
-  )
+  );
 }
