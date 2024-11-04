@@ -1,8 +1,8 @@
 'use client';
 
 import { getBoookSummaryListQuery } from '@/service/book.service';
+import BookSummaryListSkeleton from '../../skeleton/book/BookSummaryListSkeleton';
 import BookSummaryItem from '../BookSummaryItem/BookSummaryItem';
-import BookSummaryListSkeleton from './BookSummaryListSkeleton';
 
 export default function BookSummaryList() {
   const { data, isLoading } = getBoookSummaryListQuery();

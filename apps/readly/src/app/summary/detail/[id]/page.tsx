@@ -2,6 +2,8 @@
 
 import BookItem from '@/components/book/BookItem/BookItem';
 import BookSummaryContent from '@/components/book/BookSummaryContent/BookSummaryContent';
+import BookItemSkeleton from '@/components/skeleton/book/BookItemSkeleton';
+import BookSummaryDetailSkeleton from '@/components/skeleton/book/BookSummaryDetailSkeleton';
 import { COLORS } from '@/constants/color.constants';
 import {
   addBookSummaryLikeCountMutation,
@@ -9,7 +11,8 @@ import {
   getDetailBookSummaryQuery,
 } from '@/service/book.service';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton } from '@yeong/ui';
+import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
+import { formatDateToString } from '@yeong/utils/date';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 
@@ -35,16 +38,30 @@ export default function SummaryDetailPage() {
     mutate({ id: Number(params.id) });
   };
 
+  const createAt = useMemo(() => {
+    if (!detailSummaryData) return '';
+    return formatDateToString(new Date(detailSummaryData.created_at));
+  }, [detailSummaryData?.created_at]);
+
   return (
-    <div>
-      <h1 className="text-lg font-bold">요약</h1>
-      {detailSummaryData && (
+    <div className="flex flex-col gap-y-[32px] items-center mt-[32px]">
+      {detailSummaryData ? (
         <>
-          <div className="flex flex-row justify-end text-dark-gray text-md gap-x-[16px]">
-            <p>{`조회수 : ${detailSummaryData.view_count}`}</p>
+          <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
+            <div className="flex flex-row items-center gap-x-[8px]">
+              <ProfileImage imageSrc={detailSummaryData.user_image} />
+              <p>{detailSummaryData.user_name}</p>
+            </div>
+            <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
+              <span>{createAt}</span>
+              <span>|</span>
+              <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
+            </div>
           </div>
           <BookSummaryContent content={detailSummaryData.contents} />
         </>
+      ) : (
+        <BookSummaryDetailSkeleton />
       )}
       <CommonButton
         text={likeButtonText}
@@ -55,8 +72,8 @@ export default function SummaryDetailPage() {
         width={130}
         isLoading={isFetching || isPending}
       />
-      <h1 className="text-lg font-bold">책 정보</h1>
-      {detailSummaryData && (
+      <CommonDivider />
+      {detailSummaryData ? (
         <BookItem
           isWide
           author={detailSummaryData.book_author}
@@ -66,6 +83,8 @@ export default function SummaryDetailPage() {
           publisher={detailSummaryData.book_publisher}
           imageWidth={150}
         />
+      ) : (
+        <BookItemSkeleton isWide imageWidth={150} />
       )}
     </div>
   );
