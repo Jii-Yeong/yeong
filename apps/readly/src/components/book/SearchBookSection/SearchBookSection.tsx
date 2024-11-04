@@ -8,16 +8,25 @@ import { useEffect, useReducer, useState } from 'react';
 import BookItem from '../BookItem/BookItem';
 import './SearchBookSection.scss';
 
+export type SearchBookType = Pick<
+  SearchBookItem,
+  'author' | 'image' | 'pubdate' | 'title' | 'publisher' | 'isbn' | 'link'
+>;
+
 type SearchBookSectionProps = {
-  clickSelect: (item: SearchBookItem) => void;
+  defaultBook?: SearchBookType | null;
+  clickSelect: (item: SearchBookType) => void;
 };
 
 export default function SearchBookSection({
+  defaultBook = null,
   clickSelect,
 }: SearchBookSectionProps) {
   const [inputValue, setInputValue] = useState('');
   const [isOpenResult, setIsOpenResult] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<SearchBookItem | null>(null);
+  const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(
+    defaultBook,
+  );
   const [alertText, setAlertText] = useState('');
   const { mutate, data: bookData } = searchBookMutation();
   const displayCount = 12;
@@ -104,7 +113,7 @@ export default function SearchBookSection({
           )}
         </div>
       )}
-      {!isOpenResult && selectedBook && (
+      {selectedBook && (
         <div className="w-full">
           <BookItem
             author={selectedBook.author}

@@ -15,7 +15,7 @@ export default function BookSummaryContent({
   useEffect(() => {
     if (!divRef.current) return;
     divRef.current.innerHTML = content;
-  }, []);
+  }, [content]);
 
   return <div ref={divRef} className="w-full"></div>;
 }

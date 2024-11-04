@@ -11,6 +11,7 @@ import {
   addBookSummaryLikeCount,
   createBookSummary,
   deleteDetailBoookSummary,
+  editBookSummary,
   getBookSummaryLikeCount,
   getDetailBookSummary,
   searchBookList,
@@ -39,6 +40,15 @@ export const getDetailBookSummaryQuery = (id: BookSummaryItemDto['id']) => {
     queryFn: () => getDetailBookSummary(id),
     staleTime: Infinity,
     gcTime: Infinity,
+  });
+};
+
+export const editBookSummaryMutation = () => {
+  return useMutation({
+    mutationFn: editBookSummary,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
+    },
   });
 };
 

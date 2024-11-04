@@ -101,6 +101,45 @@ bookRouter.get('/summary', async (req: Request, res: Response) => {
   res.json(row);
 });
 
+bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  if (!decodedInfo.id) {
+    res.status(401).send('Decoding failed.');
+    return;
+  }
+
+  const id = req.body?.id;
+
+  if (!id) {
+    res.status(401).send('A required parameter is missing.');
+  }
+
+  const content = req.body?.content;
+  const bookInfo = req.body?.bookInfo;
+  const startPage = req.body?.startPage;
+  const endPage = req.body?.endPage;
+
+  if (!content || !bookInfo) {
+    res.status(401).send('A required parameter is missing.');
+    return;
+  }
+
+  await sql`
+  UPDATE summaries
+  SET contents = ${content}, book_title = ${bookInfo.title}, book_author = ${bookInfo.author}, book_publisher = ${bookInfo.publisher}, book_pubdate = ${bookInfo.pubdate}, book_image = ${bookInfo.image}, book_link = ${bookInfo.link}, start_page = ${startPage}, end_page = ${endPage}
+  WHERE id = ${id} AND user_id = ${decodedInfo.id};`;
+
+  res.send('success edited');
+});
+
 bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
   const id = req.body?.id;
 

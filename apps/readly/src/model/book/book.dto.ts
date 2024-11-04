@@ -1,3 +1,4 @@
+import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
 import { BookSummaryItemModel } from './book.model';
 export type SearchBookRequest = {
   query: string;
@@ -28,10 +29,12 @@ export type SearchBookItem = {
 
 export type CreateBookSummaryRequest = {
   content: string;
-  bookInfo: SearchBookItem;
+  bookInfo: SearchBookType;
   startPage: string;
   endPage: string;
 };
+
+export type EditBookSummaryRequest = CreateBookSummaryRequest;
 
 export type BookSummaryItemDto = {
   id: number;
