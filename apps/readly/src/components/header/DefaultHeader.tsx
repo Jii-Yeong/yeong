@@ -24,7 +24,10 @@ export default function DefaultHeader() {
 
   return (
     <div className="bg-main w-full h-[56px] px-[8px] flex flex-row justify-between items-center">
-      <Link href="/" className="text-white text-[32px] font-bold">
+      <Link
+        href="/"
+        className="text-white text-[24px] md:text-[32px] font-bold"
+      >
         READLY
       </Link>
       <div className="flex flex-row gap-x-2">
