@@ -18,7 +18,8 @@
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
-    "@yeong/ui": "workspace:*"
+    "@yeong/ui": "workspace:*",
+    "@yeong/utils": "workspace:*"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.9.0",

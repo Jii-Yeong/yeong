@@ -9,10 +9,16 @@
     "./string": {
       "types": "./src/string/string.utils.ts",
       "default": "./dist/string/string.utils.js"
+    },
+    "./date": {
+      "types": "./src/date/date.utils.ts",
+      "default": "./dist/date/date.utils.js"
     }
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@yeong/config": "workspace:*",
+    "luxon": "^3.5.0",
     "typescript": "latest"
   }
 }
