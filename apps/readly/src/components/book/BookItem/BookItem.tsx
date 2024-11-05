@@ -35,10 +35,11 @@ export default function BookItem({
     if (clickItem && isbn) clickItem(isbn);
   };
 
-  const pubdateFromFormat = useMemo(
-    () => formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd')),
-    [pubdate],
-  );
+  const pubdateFromFormat = useMemo(() => {
+    if (isWide) return formatDateToString(new Date(pubdate));
+    return formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd'));
+  }, [pubdate]);
+
   return (
     <div
       className="p-[8px] rounded-[8px] w-full h-full flex gap-x-[16px]"
