@@ -74,6 +74,9 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+  const decodedInfo = decodeJwtToken(userToken || null);
+
   const id = req.query?.id;
 
   if (!id) {
@@ -98,7 +101,7 @@ bookRouter.get('/summary', async (req: Request, res: Response) => {
     return;
   }
 
-  res.json(row);
+  res.json({ ...row, is_my: row.user_id === decodedInfo.id });
 });
 
 bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
@@ -141,7 +144,7 @@ bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
 });
 
 bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
-  const id = req.body?.id;
+  const id = req.query?.id;
 
   if (!id) {
     res.status(401).send('A required parameter is missing.');
