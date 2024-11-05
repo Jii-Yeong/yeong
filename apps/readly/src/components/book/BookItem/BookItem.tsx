@@ -1,6 +1,6 @@
 import { COLORS } from '@/constants/color.constants';
-import { parseDomSizeValue } from '@/utils/string.utils';
 import { formatDateToString, transferStringToDate } from '@yeong/utils/date';
+import { parseDomSizeValue } from '@yeong/utils/string';
 import Image from 'next/image';
 import { useMemo } from 'react';
 

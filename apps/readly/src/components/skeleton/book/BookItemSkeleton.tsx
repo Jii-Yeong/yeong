@@ -1,5 +1,5 @@
-import { parseDomSizeValue } from '@/utils/string.utils';
 import { CommonSkeleton } from '@yeong/ui';
+import { parseDomSizeValue } from '@yeong/utils/string';
 
 type BookItemProps = {
   isWide?: boolean;

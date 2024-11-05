@@ -53,6 +53,7 @@ export type BookSummaryItemDto = {
   end_page: number;
   user_name: string;
   user_image: string;
+  is_my: boolean;
 };
 
 export const toBookSummaryItenModel = (
