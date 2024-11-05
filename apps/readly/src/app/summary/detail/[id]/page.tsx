@@ -74,8 +74,21 @@ export default function SummaryDetailPage() {
               </div>
               {detailSummaryData.is_my && (
                 <div className="flex flex-row gap-x-[8px]">
-                  <CommonButton text="수정" clickButton={clickEditButton} />
-                  <CommonButton text="삭제" clickButton={clickDeleteButton} />
+                  <CommonButton
+                    text="수정"
+                    clickButton={clickEditButton}
+                    fontSize={14}
+                    padding="2px 8px"
+                  />
+                  <CommonButton
+                    text="삭제"
+                    clickButton={clickDeleteButton}
+                    fontSize={14}
+                    color={COLORS.white}
+                    backgroundColor={COLORS.red}
+                    borderColor="transparent"
+                    padding="2px 8px"
+                  />
                 </div>
               )}
             </div>
