@@ -1,10 +1,11 @@
 'use client';
 
 import CommonPagination from '@/components/pagination/CommonPagination/CommonPagination';
+import { useViewport } from '@/hooks/useViewport';
 import { SearchBookItem } from '@/model/book/book.dto';
 import { searchBookMutation } from '@/service/book.service';
 import { CommonButton, CommonInput } from '@yeong/ui';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import BookItem from '../BookItem/BookItem';
 import './SearchBookSection.scss';
 
@@ -29,7 +30,9 @@ export default function SearchBookSection({
   );
   const [alertText, setAlertText] = useState('');
   const { mutate, data: bookData } = searchBookMutation();
-  const displayCount = 12;
+  const { isSm } = useViewport();
+
+  const displayCount = useMemo(() => (isSm ? 8 : 12), [isSm]);
 
   const reducer = (state: number, action: number) => {
     if (!action) return state;
@@ -90,8 +93,9 @@ export default function SearchBookSection({
           <CommonPagination
             totalCount={countState}
             clickButton={clickPaginationButton}
+            viewButtonCount={isSm ? 5 : 10}
           />
-          <div className="book-data-list">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-[8px] gap-y-[8px]">
             {bookData?.items &&
               bookData.items.map((item, index) => (
                 <div key={`${JSON.stringify(item)}-${index}`}>
