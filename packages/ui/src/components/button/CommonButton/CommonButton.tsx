@@ -49,7 +49,7 @@ export default function CommonButton({
   };
   return (
     <button
-      className="hover:opacity-60 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60"
+      className="hover:opacity-100 lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60"
       onClick={handleClickButton}
       disabled={disabled}
       style={{
