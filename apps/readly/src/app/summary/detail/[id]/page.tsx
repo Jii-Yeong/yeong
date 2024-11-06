@@ -2,6 +2,7 @@
 
 import BookItem from '@/components/book/BookItem/BookItem';
 import BookSummaryContent from '@/components/book/BookSummaryContent/BookSummaryContent';
+import SummaryComment from '@/components/comment/SummaryComment/SummaryComment';
 import BookItemSkeleton from '@/components/skeleton/book/BookItemSkeleton';
 import BookSummaryDetailSkeleton from '@/components/skeleton/book/BookSummaryDetailSkeleton';
 import { COLORS } from '@/constants/color.constants';
@@ -19,13 +20,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 export default function SummaryDetailPage() {
-  const params = useParams();
+  const { id } = useParams();
   const router = useRouter();
-  const { data: detailSummaryData } = getDetailBookSummaryQuery(
-    Number(params.id),
-  );
+  const { data: detailSummaryData } = getDetailBookSummaryQuery(Number(id));
   const { data: likeCountData, isFetching } = getBookSummaryLikeCountQuery(
-    Number(params.id),
+    Number(id),
   );
   const { mutate: likeMutate, isPending } = addBookSummaryLikeCountMutation();
   const { mutateAsync: deleteMutate } = deleteDetailBookSummaryMutation();
@@ -44,21 +43,21 @@ export default function SummaryDetailPage() {
   }, [detailSummaryData?.created_at]);
 
   const clickLikeButton = () => {
-    likeMutate({ id: Number(params.id) });
+    likeMutate({ id: Number(id) });
   };
 
   const clickEditButton = () => {
-    if (!params.id) return;
-    router.push(getSummaryEditPage(Number(params.id)));
+    if (!id) return;
+    router.push(getSummaryEditPage(Number(id)));
   };
 
   const clickDeleteButton = async () => {
-    await deleteMutate(Number(params.id));
+    await deleteMutate(Number(id));
     router.push(getRootPage());
   };
 
   return (
-    <div className="flex flex-col gap-y-[32px] items-center mt-[32px]">
+    <div className="flex flex-col gap-y-[32px] items-center mt-[32px] w-full">
       {detailSummaryData ? (
         <>
           <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
@@ -121,6 +120,7 @@ export default function SummaryDetailPage() {
       ) : (
         <BookItemSkeleton isWide imageWidth={150} />
       )}
+      <SummaryComment />
     </div>
   );
 }
