@@ -8,8 +8,8 @@ export default function BookSummaryDetailSkeleton() {
           <CommonSkeleton width={30} height={30} borderRadius={30} />
           <CommonSkeleton width={100} height={24} />
         </div>
-        <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
-          <CommonSkeleton width={200} height={24} />
+        <div className="text-dark-gray flex flex-col gap-y-[8px] items-center">
+          <CommonSkeleton width={100} height={24} />
         </div>
       </div>
       <div className="w-full flex flex-col gap-y-[16px]">

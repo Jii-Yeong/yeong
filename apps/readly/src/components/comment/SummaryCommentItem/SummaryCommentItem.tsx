@@ -49,7 +49,7 @@ export default function SummaryCommentItem({
       <p className="text-md text-dark-gray">
         {formatDateToString(new Date(createdAt))}
       </p>
-      <div>{comment}</div>
+      <div className="whitespace-break-spaces	break-all">{comment}</div>
       <div className="flex flex-row gap-x-[16px]">
         <div className="flex flex-row gap-x-[8px] items-center">
           <ProfileImage imageSrc={userImage} />

@@ -19,10 +19,10 @@ export default function BookItemSkeleton({
     >
       <CommonSkeleton width={parseDomSizeValue(imageWidth)} height={200} />
       <div className="py-[8px] flex flex-col gap-y-[8px] flex-1">
-        <CommonSkeleton height={24} width="40%" />
-        <CommonSkeleton height={24} width="30%" />
-        <CommonSkeleton height={24} width="30%" />
-        <CommonSkeleton height={24} width="20%" />
+        <CommonSkeleton height={24} width={150} />
+        <CommonSkeleton height={24} width={80} />
+        <CommonSkeleton height={24} width={70} />
+        <CommonSkeleton height={24} width={100} />
       </div>
     </div>
   );

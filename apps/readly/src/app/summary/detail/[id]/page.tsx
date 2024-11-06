@@ -60,37 +60,39 @@ export default function SummaryDetailPage() {
     <div className="flex flex-col gap-y-[32px] items-center mt-[32px] w-full">
       {detailSummaryData ? (
         <>
-          <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
-            <div className="flex flex-row items-center gap-x-[8px]">
-              <ProfileImage imageSrc={detailSummaryData.user_image} />
-              <p>{detailSummaryData.user_name}</p>
-            </div>
-            <div className="flex flex-row gap-x-[16px]">
-              <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
-                <span>{createAt}</span>
-                <span>|</span>
-                <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
+          <div className="w-full flex flex-col gap-y-[8px]">
+            <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
+              <div className="flex flex-row items-center gap-x-[8px]">
+                <ProfileImage imageSrc={detailSummaryData.user_image} />
+                <p>{detailSummaryData.user_name}</p>
               </div>
-              {detailSummaryData.is_my && (
-                <div className="flex flex-row gap-x-[8px]">
-                  <CommonButton
-                    text="수정"
-                    clickButton={clickEditButton}
-                    fontSize={14}
-                    padding="2px 8px"
-                  />
-                  <CommonButton
-                    text="삭제"
-                    clickButton={clickDeleteButton}
-                    fontSize={14}
-                    color={COLORS.white}
-                    backgroundColor={COLORS.red}
-                    borderColor="transparent"
-                    padding="2px 8px"
-                  />
+              <div className="flex flex-row gap-x-[16px]">
+                <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
+                  <span>{createAt}</span>
+                  <span>|</span>
+                  <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
                 </div>
-              )}
+              </div>
             </div>
+            {detailSummaryData.is_my && (
+              <div className="flex flex-row gap-x-[8px] justify-end">
+                <CommonButton
+                  text="수정"
+                  clickButton={clickEditButton}
+                  fontSize={14}
+                  padding="2px 8px"
+                />
+                <CommonButton
+                  text="삭제"
+                  clickButton={clickDeleteButton}
+                  fontSize={14}
+                  color={COLORS.white}
+                  backgroundColor={COLORS.red}
+                  borderColor="transparent"
+                  padding="2px 8px"
+                />
+              </div>
+            )}
           </div>
           <BookSummaryContent content={detailSummaryData.contents} />
         </>
