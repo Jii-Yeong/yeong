@@ -9,7 +9,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "public": ["./public/*"]
-    }
+    },
+    "allowImportingTsExtensions": true
   },
   "include": [
     "next-env.d.ts",

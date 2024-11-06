@@ -16,5 +16,6 @@ export const Default: Story = {
     isMy: true,
     userImage: '',
     userName: '수리마수리',
+    id: 0,
   },
 };
