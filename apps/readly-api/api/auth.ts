@@ -19,6 +19,10 @@ authRouter.post('/login', async (req: Request, res: Response) => {
     return;
   }
 
+  console.log('token', token);
+
+  console.log('token.access_token', token.access_token);
+
   const userInfo = await getGoogleUserInfo(token.access_token);
 
   console.log('userInfo', userInfo);
