@@ -20,6 +20,7 @@ type CommonButtonProps = {
   disabled?: boolean;
   isLoading?: boolean;
   loadingColor?: string;
+  loadingWidth?: number;
   clickButton?: () => void;
 };
 
@@ -40,6 +41,7 @@ export default function CommonButton({
   disabled,
   style,
   isLoading,
+  loadingWidth = 30,
   loadingColor = '#5ae9e4',
   clickButton,
 }: CommonButtonProps) {
@@ -67,7 +69,7 @@ export default function CommonButton({
       }}
     >
       {isLoading ? (
-        <LoadingSpinner size={30} color={loadingColor} />
+        <LoadingSpinner size={loadingWidth} color={loadingColor} />
       ) : (
         <>
           {isLeftIcon}
