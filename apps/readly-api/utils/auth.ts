@@ -19,20 +19,7 @@ export const getGoogleTokenByCode = async (
       }),
     });
 
-    console.log('process.env.GOOGLE_CLIENT_ID', process.env.GOOGLE_CLIENT_ID);
-    console.log(
-      'process.env.GOOGLE_CLIENT_SECRET',
-      process.env.GOOGLE_CLIENT_SECRET,
-    );
-    console.log(
-      'process.env.GOOGLE_REDIRECT_URI',
-      process.env.GOOGLE_REDIRECT_URI,
-    );
-    console.log('response', response);
-
     const data = await response.json();
-
-    console.log(data);
     return data;
   } catch (error) {
     console.error('Error exchanging authorization code:', error);
