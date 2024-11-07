@@ -9,12 +9,14 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.6",
     "@vercel/node": "^2.9.6",
+    "@yeong/config": "workspace:*",
     "express": "^4.21.1",
-    "typescript": "^4.7.3",
-    "@yeong/config": "workspace:*"
+    "typescript": "^4.7.3"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2"

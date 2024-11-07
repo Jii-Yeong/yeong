@@ -1,4 +1,5 @@
 import { sql } from '@vercel/postgres';
+import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
 import {
   generateJwtToken,
@@ -9,7 +10,61 @@ import { isExistRows } from '../utils/sql';
 
 const authRouter = express.Router();
 
+authRouter.post('/sign-up', async (req: Request, res: Response) => {
+  const userId = req.body?.user_id;
+  const password = req.body?.password;
+  const nickname = req.body?.nickname;
+
+  if (!userId || !password || !nickname) {
+    res.status(400).send('A required parameter is missing.');
+    return;
+  }
+
+  const encryptedPassword = await bcrypt.hash(password, 10);
+
+  await sql`INSERT INTO users (id, nickname, user_id, password)
+      VALUES (gen_random_uuid()::text, ${nickname}, ${userId}, ${encryptedPassword});`;
+
+  res.send('Success sign up.');
+});
+
 authRouter.post('/login', async (req: Request, res: Response) => {
+  const userId = req.body?.user_id;
+  const password = req.body?.password;
+
+  if (!userId || !password) {
+    res.status(400).send('A required parameter is missing.');
+    return;
+  }
+
+  const { rows } =
+    await sql`SELECT id, password FROM users WHERE user_id = ${userId};`;
+  const row = rows[0];
+
+  if (!row) {
+    res.json({
+      isSuccess: false,
+      message: '아이디와 비밀번호를 확인해주세요.',
+    });
+    return;
+  }
+
+  const isCollectPassword = await bcrypt.compare(password, row.password);
+
+  if (!isCollectPassword) {
+    res.json({
+      isSuccess: false,
+      message: '아이디와 비밀번호를 확인해주세요.',
+    });
+    return;
+  }
+
+  const accessToken = generateJwtToken({ id: row.id });
+
+  res.json({ isSuccess: true, accessToken });
+});
+
+authRouter.post('/login/google', async (req: Request, res: Response) => {
   const code = req.body.code;
 
   const token = await getGoogleTokenByCode(code);
