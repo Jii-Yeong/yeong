@@ -97,7 +97,7 @@ export default function SummaryDetailPage() {
       <CommonButton
         text={likeButtonText}
         clickButton={clickLikeButton}
-        isLeftIcon={<Icon icon="line-md:heart-filled" color={likeIconColor} />}
+        leftIcon={<Icon icon="line-md:heart-filled" color={likeIconColor} />}
         isLoading={isFetching || isPending}
         className="w-[130px] font-bold text-[20px]"
       />
