@@ -5,8 +5,8 @@ import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 type CommonButtonProps = {
   text: string;
   style?: CSSProperties;
-  isLeftIcon?: ReactNode;
-  isRightIcon?: ReactNode;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
   disabled?: boolean;
   isLoading?: boolean;
   loadingColor?: string;
@@ -17,8 +17,8 @@ type CommonButtonProps = {
 
 export default function CommonButton({
   text,
-  isLeftIcon,
-  isRightIcon,
+  leftIcon,
+  rightIcon,
   disabled,
   isLoading,
   loadingWidth = 30,
@@ -48,9 +48,9 @@ export default function CommonButton({
         <LoadingSpinner size={loadingWidth} color={loadingColor} />
       ) : (
         <>
-          {isLeftIcon}
+          {leftIcon}
           {text}
-          {isRightIcon}
+          {rightIcon}
         </>
       )}
     </button>

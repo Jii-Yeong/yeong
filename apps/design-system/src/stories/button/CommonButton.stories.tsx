@@ -8,9 +8,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 } satisfies Meta<typeof CommonButton>;
 
 export default meta;
@@ -25,7 +22,7 @@ export const Default: Story = {
 export const Icon: Story = {
   args: {
     text: 'Button',
-    isLeftIcon: <InlineIcon icon="line-md:heart-filled" />,
-    isRightIcon: <InlineIcon icon="line-md:heart-filled" />,
+    leftIcon: <InlineIcon icon="line-md:heart-filled" />,
+    rightIcon: <InlineIcon icon="line-md:heart-filled" />,
   },
 };
