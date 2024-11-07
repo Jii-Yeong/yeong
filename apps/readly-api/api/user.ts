@@ -19,7 +19,6 @@ userRouter.get('/info', async (req: Request, res: Response) => {
   FROM users
   WHERE id = ${decodedInfo.id};`;
 
-  console.log(decodedInfo, rows);
   const row = rows[0];
 
   if (!row) {
