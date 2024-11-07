@@ -1,19 +1,9 @@
-import { parseDomSizeValue } from '@yeong/utils/string';
-import { CSSProperties, ReactNode } from 'react';
+import { ButtonHTMLAttributes, CSSProperties, ReactNode, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonButtonProps = {
   text: string;
-  backgroundColor?: string;
-  color?: string;
-  width?: string | number;
-  height?: string | number;
-  borderRadius?: string | number;
-  borderColor?: string;
-  borderWidth?: string | number;
-  fontSize?: string | number;
-  fontWeight?: string | number;
-  padding?: string | number;
   style?: CSSProperties;
   isLeftIcon?: ReactNode;
   isRightIcon?: ReactNode;
@@ -21,53 +11,39 @@ type CommonButtonProps = {
   isLoading?: boolean;
   loadingColor?: string;
   loadingWidth?: number;
+  classList?: string[];
   clickButton?: () => void;
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CommonButton({
   text,
-  backgroundColor = '#ffffff',
-  color = '#000000',
-  width = 'auto',
-  height = 'auto',
-  borderRadius = parseDomSizeValue(8),
-  borderColor = '#d3d3d3',
-  borderWidth = 1,
-  fontSize = 14,
-  fontWeight = 'normal',
-  padding = 8,
   isLeftIcon,
   isRightIcon,
   disabled,
-  style,
   isLoading,
   loadingWidth = 30,
   loadingColor = '#5ae9e4',
+  className,
+  classList,
   clickButton,
+  ...rest
 }: CommonButtonProps) {
   const handleClickButton = () => {
     if (disabled || isLoading || !clickButton) return;
     clickButton();
   };
+
+  const buttonClassName = useMemo(
+    () =>
+      twMerge(
+        'hover:opacity-100 bg-white text-black text-[14px] rounded-[8px] p-[8px] border border-gray lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60',
+        className,
+        classList,
+      ),
+    [className, classList],
+  );
   return (
-    <button
-      className="hover:opacity-100 lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60"
-      onClick={handleClickButton}
-      disabled={disabled}
-      style={{
-        backgroundColor,
-        color,
-        width: parseDomSizeValue(width),
-        height: parseDomSizeValue(height),
-        borderRadius: parseDomSizeValue(borderRadius),
-        borderColor,
-        borderWidth: parseDomSizeValue(borderWidth),
-        fontSize: parseDomSizeValue(fontSize),
-        fontWeight,
-        padding: parseDomSizeValue(padding),
-        ...style,
-      }}
-    >
+    <button className={buttonClassName} onClick={handleClickButton} {...rest}>
       {isLoading ? (
         <LoadingSpinner size={loadingWidth} color={loadingColor} />
       ) : (

@@ -3,11 +3,13 @@ import {
   ChangeEvent,
   CSSProperties,
   forwardRef,
+  HTMLAttributes,
   KeyboardEvent,
   Ref,
+  useMemo,
   useState,
 } from 'react';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
+import { twMerge } from 'tailwind-merge';
 
 export type CommonTextareaProps = {
   defaultValue?: string;
@@ -20,28 +22,40 @@ export type CommonTextareaProps = {
   type?: string;
   alertText?: string;
   disabled?: boolean;
+  className?: string;
+  classList?: string;
   ref?: Ref<HTMLTextAreaElement>;
   setTextareaValue: (value: string) => void;
   pressEnter?: () => void;
-};
+} & HTMLAttributes<HTMLTextAreaElement>;
 
 export default forwardRef(function CommonTextarea(
   {
     defaultValue = '',
     width = '100%',
     height = 100,
-    borderRadius = 8,
-    padding = 8,
-    placeholder,
-    style,
     alertText,
-    disabled,
+    className,
+    classList,
     setTextareaValue,
     pressEnter,
+    ...rest
   }: CommonTextareaProps,
   ref: Ref<HTMLTextAreaElement>,
 ) {
   const [value, setValue] = useState(defaultValue);
+
+  const textareaClassName = useMemo(
+    () =>
+      twMerge(
+        'border border-gray focus:outline-main text-black w-full h-full resize-none rounded-[8px] p-[8px]',
+        [alertText ? 'border-red' : 'border-gray'],
+        className,
+        classList,
+      ),
+    [className, classList],
+  );
+
   const changeTextareaValue = (e: ChangeEvent) => {
     const element = e.target as HTMLInputElement;
     setValue(element.value);
@@ -56,22 +70,15 @@ export default forwardRef(function CommonTextarea(
       style={{
         width: parseDomSizeValue(width),
         height: parseDomSizeValue(height),
-        ...style,
       }}
     >
       <textarea
-        className="border border-gray focus:outline-main text-black w-full h-full resize-none"
-        style={{
-          borderRadius: parseDomSizeValue(borderRadius),
-          padding: parseDomSizeValue(padding),
-          borderColor: alertText ? UI_COLORS.red : UI_COLORS.gray,
-        }}
-        placeholder={placeholder}
+        className={textareaClassName}
         value={value}
         onChange={changeTextareaValue}
         onKeyUp={handleKeyUp}
-        disabled={disabled}
         ref={ref}
+        {...rest}
       />
       <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
     </div>
