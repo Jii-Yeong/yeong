@@ -126,12 +126,7 @@ export default function BookSummaryCreateSection({
       <CommonButton
         text="작성"
         clickButton={clickEndButton}
-        fontSize={16}
-        fontWeight="bold"
-        backgroundColor={COLORS.main}
-        color={COLORS.white}
-        borderColor="transparent"
-        padding="16px 10px"
+        className="text-[16px] font-bold bg-main text-white border-transparent px-[10px] py-[16px]"
         isLoading={isCreatePending || isEditPending}
         loadingColor={COLORS.white}
       />

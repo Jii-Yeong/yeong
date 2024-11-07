@@ -81,10 +81,10 @@ export default function SearchBookSection({
       <div className="flex flex-row gap-x-[16px] w-full">
         <CommonInput
           setInputValue={setInputValue}
-          style={{ flex: 1 }}
           pressEnter={searchBook}
           placeholder="책 제목을 2자 이상 입력해주세요."
           alertText={alertText}
+          wrapperClassName="flex-1"
         />
         <CommonButton text="검색" clickButton={searchBook} />
       </div>

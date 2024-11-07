@@ -41,7 +41,7 @@ export default function BookSummaryItem({
           <BookSummaryContent content={content} />
         </div>
       </div>
-      <CommonDivider marginVertical={8} />
+      <CommonDivider className="my-[8px]" />
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>

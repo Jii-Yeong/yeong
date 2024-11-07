@@ -79,17 +79,12 @@ export default function SummaryDetailPage() {
                 <CommonButton
                   text="수정"
                   clickButton={clickEditButton}
-                  fontSize={14}
-                  padding="2px 8px"
+                  className="text-[14px] px-[8px] py-[2px]"
                 />
                 <CommonButton
                   text="삭제"
                   clickButton={clickDeleteButton}
-                  fontSize={14}
-                  color={COLORS.white}
-                  backgroundColor={COLORS.red}
-                  borderColor="transparent"
-                  padding="2px 8px"
+                  className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
                 />
               </div>
             )}
@@ -103,10 +98,8 @@ export default function SummaryDetailPage() {
         text={likeButtonText}
         clickButton={clickLikeButton}
         isLeftIcon={<Icon icon="line-md:heart-filled" color={likeIconColor} />}
-        fontSize={20}
-        fontWeight={700}
-        width={130}
         isLoading={isFetching || isPending}
+        className="w-[130px] font-bold text-[20px]"
       />
       <CommonDivider />
       {detailSummaryData ? (

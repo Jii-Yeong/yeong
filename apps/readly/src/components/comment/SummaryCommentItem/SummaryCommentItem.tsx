@@ -58,7 +58,7 @@ export default function SummaryCommentItem({
         {isLoggedIn && !isReply && (
           <CommonButton
             text={replyButtonText}
-            fontSize={12}
+            className="text-[12px]"
             clickButton={clickReplyButton}
           />
         )}
@@ -67,11 +67,7 @@ export default function SummaryCommentItem({
             {/* <CommonButton text="수정" fontSize={12} padding="2px 8px" /> */}
             <CommonButton
               text="삭제"
-              fontSize={12}
-              color={COLORS.white}
-              backgroundColor={COLORS.red}
-              borderColor="transparent"
-              padding="2px 8px"
+              className="text-[12px] text-white bg-red border-transparent px-[8px] py-[2px]"
               clickButton={clickCommentDeleteButton}
               isLoading={isDeletePending}
               disabled={isDeletePending}
