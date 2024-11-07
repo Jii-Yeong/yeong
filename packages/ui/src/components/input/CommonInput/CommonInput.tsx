@@ -1,10 +1,11 @@
 import { parseDomSizeValue } from '@yeong/utils/string';
 import {
   ChangeEvent,
+  forwardRef,
   HTMLAttributes,
   KeyboardEvent,
+  Ref,
   useMemo,
-  useState,
 } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -18,27 +19,31 @@ export type CommonInputProps = {
   classList?: string[];
   wrapperClassName?: string;
   wrapperClassList?: string[];
-  setInputValue: (value: string) => void;
+  type?: string;
+  setInputValue?: (value: string) => void;
   pressEnter?: () => void;
 } & HTMLAttributes<HTMLInputElement>;
 
-export default function CommonInput({
-  defaultValue = '',
-  width = '100%',
-  height = 40,
-  alertText,
-  wrapperClassName,
-  wrapperClassList,
-  className,
-  classList,
-  setInputValue,
-  pressEnter,
-  ...rest
-}: CommonInputProps) {
-  const [value, setValue] = useState(defaultValue);
+export default forwardRef(function CommonInput(
+  {
+    defaultValue = '',
+    width = '100%',
+    height = 40,
+    alertText,
+    wrapperClassName,
+    wrapperClassList,
+    className,
+    classList,
+    type,
+    setInputValue,
+    pressEnter,
+    ...rest
+  }: CommonInputProps,
+  ref: Ref<HTMLInputElement>,
+) {
   const changeInputValue = (e: ChangeEvent) => {
+    if (!setInputValue) return;
     const element = e.target as HTMLInputElement;
-    setValue(element.value);
     setInputValue(element.value);
   };
   const handleKeyUp = (e: KeyboardEvent) => {
@@ -70,12 +75,13 @@ export default function CommonInput({
     >
       <input
         className={inputClassName}
-        value={value}
         onChange={changeInputValue}
         onKeyUp={handleKeyUp}
+        type={type}
+        ref={ref}
         {...rest}
       />
       <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
     </div>
   );
-}
+});
