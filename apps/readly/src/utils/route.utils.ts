@@ -15,3 +15,11 @@ export const getSummaryCreatePage = () => {
 export const getSummaryEditPage = (id: BookSummaryItemModel['id']) => {
   return `/summary/edit/${id}`;
 };
+
+export const getSignUpPage = () => {
+  return '/sign-up';
+};
+
+export const getLoginPage = () => {
+  return '/login';
+};

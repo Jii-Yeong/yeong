@@ -1,25 +1,29 @@
 'use client';
 
-import { loginByGoogleMutation } from '@/service/auth.service';
 import { getUserInfoQuery } from '@/service/user.service';
-import { useGoogleLogin } from '@react-oauth/google';
+import {
+  getLoginPage,
+  getSignUpPage,
+  getSummaryCreatePage,
+} from '@/utils/route.utils';
 import { CommonButton, ProfileImage } from '@yeong/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function DefaultHeader() {
-  const mutation = loginByGoogleMutation();
   const { data } = getUserInfoQuery();
   const router = useRouter();
-  const loginGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      mutation.mutate(tokenResponse.code);
-    },
-    flow: 'auth-code',
-  });
+
+  const clickLoginButton = () => {
+    router.push(getLoginPage());
+  };
 
   const goToWriteSummary = () => {
-    router.push('/summary/create');
+    router.push(getSummaryCreatePage());
+  };
+
+  const clickSignUpButton = () => {
+    router.push(getSignUpPage());
   };
 
   return (
@@ -46,8 +50,8 @@ export default function DefaultHeader() {
           </div>
         ) : (
           <>
-            <CommonButton text="로그인" clickButton={loginGoogle} />
-            <CommonButton text="회원가입" />
+            <CommonButton text="로그인" clickButton={clickLoginButton} />
+            <CommonButton text="회원가입" clickButton={clickSignUpButton} />
           </>
         )}
       </div>
