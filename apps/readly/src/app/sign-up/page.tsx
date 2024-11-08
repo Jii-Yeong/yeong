@@ -78,7 +78,7 @@ export default function SignUpPage() {
     <div className="w-full flex flex-col items-center">
       <form
         onSubmit={handleSubmit(submitSignUpData)}
-        className="flex flex-col gap-y-[26px] w-[400px]"
+        className="flex flex-col gap-y-[26px] w-full sm:w-[400px]"
       >
         <h1 className="text-lg font-bold">회원가입</h1>
         <CommonInput

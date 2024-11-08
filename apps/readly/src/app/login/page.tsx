@@ -51,7 +51,7 @@ export default function LoginPage() {
   return (
     <div className="w-full flex flex-col items-center">
       <form
-        className="w-[400px] flex flex-col gap-y-[26px]"
+        className="w-full sm:w-[400px] flex flex-col gap-y-[26px]"
         onSubmit={handleSubmit(submitLoginData)}
       >
         <h1 className="text-lg font-bold">로그인</h1>
