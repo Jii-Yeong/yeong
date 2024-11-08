@@ -4,6 +4,7 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEvent,
+  ReactNode,
   Ref,
   useMemo,
 } from 'react';
@@ -20,6 +21,7 @@ export type CommonInputProps = {
   wrapperClassName?: string;
   wrapperClassList?: string[];
   type?: string;
+  rightIcon?: ReactNode;
   setInputValue?: (value: string) => void;
   pressEnter?: () => void;
 } & HTMLAttributes<HTMLInputElement>;
@@ -35,6 +37,7 @@ export default forwardRef(function CommonInput(
     className,
     classList,
     type,
+    rightIcon,
     setInputValue,
     pressEnter,
     ...rest
@@ -51,15 +54,20 @@ export default forwardRef(function CommonInput(
   };
 
   const divClassName = useMemo(
-    () => twMerge('flex flex-col relative', wrapperClassName, wrapperClassList),
+    () =>
+      twMerge(
+        'flex flex-col relative border border-gray focus:outline-main rounded-[8px] p-[8px] flex flex-row items-center',
+        [alertText ? 'border-red' : 'border-gray'],
+        wrapperClassName,
+        wrapperClassList,
+      ),
     [wrapperClassName, wrapperClassList],
   );
 
   const inputClassName = useMemo(
     () =>
       twMerge(
-        'border border-gray focus:outline-main text-black w-full h-full rounded-[8px] p-[8px]',
-        [alertText ? 'border-red' : 'border-gray'],
+        'focus:outline-none text-black w-full h-full flex-1',
         className,
         classList,
       ),
@@ -81,6 +89,7 @@ export default forwardRef(function CommonInput(
         ref={ref}
         {...rest}
       />
+      {rightIcon && rightIcon}
       <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
     </div>
   );

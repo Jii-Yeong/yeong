@@ -5,4 +5,5 @@ export const UI_COLORS = {
   lightGray: '#efefef',
   highlight: '#fdf5e1',
   red: '#ff0000',
+  green: '#00ff32',
 } as const;

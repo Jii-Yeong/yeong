@@ -14,6 +14,7 @@ export default {
         'dark-gray': '#898989',
         'light-blue': '#eff3ff',
         red: '#ff0000',
+        green: '#00ff32',
       },
       fontSize: {
         sm: '12px',
