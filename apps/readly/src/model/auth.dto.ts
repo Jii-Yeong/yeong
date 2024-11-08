@@ -19,3 +19,8 @@ export type LoginByDefaultResponse = {
   message: string;
   accessToken?: string;
 };
+
+export type CheckSignUpValueResponse = {
+  isExist: boolean;
+  message: string;
+};

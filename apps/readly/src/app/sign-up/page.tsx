@@ -1,9 +1,17 @@
 'use client';
 
-import { signUpByDefaultMutation } from '@/service/auth.service';
+import { COLORS } from '@/constants/color.constants';
+import {
+  checkSignUpIdMutation,
+  checkSignUpNicknameMutation,
+  signUpByDefaultMutation,
+} from '@/service/auth.service';
 import { getLoginPage } from '@/utils/route.utils';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonButton, CommonInput } from '@yeong/ui';
+import { debounce } from 'lodash-es';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
@@ -17,19 +25,48 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    getValues,
+    formState: { errors, isValid },
   } = useForm<Inputs>();
 
-  const { mutateAsync } = signUpByDefaultMutation();
+  const { mutateAsync: signUpMutate } = signUpByDefaultMutation();
+  const {
+    mutateAsync: idMutate,
+    data: idData,
+    isPending: isIdPending,
+  } = checkSignUpIdMutation();
+  const { mutateAsync: nicknameMutate } = checkSignUpNicknameMutation();
   const router = useRouter();
 
-  function replaceInputValue(e: InputEvent) {
+  const idCheckIcon = useMemo(() => {
+    if (isIdPending)
+      return (
+        <Icon icon="line-md:loading-loop" color={COLORS.main} width={20} />
+      );
+
+    if (!idData) return undefined;
+
+    return idData.isExist ? (
+      <Icon icon="mingcute:close-fill" color={COLORS.red} />
+    ) : (
+      <Icon icon="mingcute:check-fill" color={COLORS.green} />
+    );
+  }, [idData, isIdPending]);
+
+  const checkExistId = debounce((e: InputEvent) => {
+    console.log('debounce');
+    const element = e.target as HTMLInputElement;
+    if (!element.value) return;
+    idMutate({ user_id: element.value });
+  }, 350);
+
+  const replaceInputValue = (e: InputEvent) => {
     const element = e.target as HTMLInputElement;
     element.value = element.value.replace(/[^A-Za-z0-9]+$/gi, '');
-  }
+  };
 
   const submitSignUpData: SubmitHandler<Inputs> = async (data) => {
-    await mutateAsync({
+    await signUpMutate({
       nickname: data.nickname,
       password: data.password,
       user_id: data.id,
@@ -48,13 +85,18 @@ export default function SignUpPage() {
           placeholder="아이디"
           {...register('id', {
             required: '아이디는 필수 입력값 입니다.',
-            onChange: replaceInputValue,
+            onChange: (e) => {
+              replaceInputValue(e);
+              checkExistId(e);
+            },
             minLength: {
               value: 6,
               message: '아이디는 6자 이상 입력하여야 합니다.',
             },
+            validate: () => !idData?.isExist || '중복된 아이디 입니다.',
           })}
           alertText={errors.id?.message}
+          rightIcon={idCheckIcon}
         />
         <CommonInput
           placeholder="비밀번호"

@@ -1,6 +1,8 @@
 import { USERS_QUERY_KEY } from '@/constants/query-key.constants';
 import { queryClient } from '@/lib/react-query';
 import {
+  checkSignUpId,
+  checkSignUpNickname,
   loginByDefault,
   loginByGoogle,
   signUpByDefault,
@@ -25,6 +27,18 @@ export const loginByGoogleMutation = () => {
 export const signUpByDefaultMutation = () => {
   return useMutation({
     mutationFn: signUpByDefault,
+  });
+};
+
+export const checkSignUpIdMutation = () => {
+  return useMutation({
+    mutationFn: checkSignUpId,
+  });
+};
+
+export const checkSignUpNicknameMutation = () => {
+  return useMutation({
+    mutationFn: checkSignUpNickname,
   });
 };
 
