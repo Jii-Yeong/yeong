@@ -28,6 +28,61 @@ authRouter.post('/sign-up', async (req: Request, res: Response) => {
   res.send('Success sign up.');
 });
 
+authRouter.post('/sign-up/id-check', async (req: Request, res: Response) => {
+  const userId = req.body?.user_id;
+
+  if (!userId) {
+    res.status(400).send('A required parameter is missing.');
+    return;
+  }
+
+  const { rows } = await sql`
+  SELECT EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE user_id = ${userId}
+  );`;
+
+  if (isExistRows(rows)) {
+    res.json({
+      isExist: true,
+      message: '중복된 아이디입니다.',
+    });
+    return;
+  }
+
+  res.json({ isExist: false });
+});
+
+authRouter.post(
+  '/sign-up/nickname-check',
+  async (req: Request, res: Response) => {
+    const nickname = req.body?.nickname;
+
+    if (!nickname) {
+      res.status(400).send('A required parameter is missing.');
+      return;
+    }
+
+    const { rows } = await sql`
+  SELECT EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE nickname = ${nickname}
+  );`;
+
+    if (isExistRows(rows)) {
+      res.json({
+        isExist: true,
+        message: '중복된 닉네임입니다.',
+      });
+      return;
+    }
+
+    res.json({ isExist: false });
+  },
+);
+
 authRouter.post('/login', async (req: Request, res: Response) => {
   const userId = req.body?.user_id;
   const password = req.body?.password;
