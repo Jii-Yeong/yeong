@@ -6,4 +6,6 @@ export const UI_COLORS = {
   highlight: '#fdf5e1',
   red: '#ff0000',
   green: '#00ff32',
+  blue: '#5676d3',
+  lightBlue: '#eff3ff',
 } as const;

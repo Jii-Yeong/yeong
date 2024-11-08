@@ -1,4 +1,5 @@
 import CommonButton from './components/button/CommonButton/CommonButton.tsx';
+import CommonChip from './components/chip/CommonChip/CommonChip.tsx';
 import CommonDivider from './components/divider/CommonDivider.tsx';
 import ProfileImage from './components/image/ProfileImage/ProfileImage.tsx';
 import CommonInput from './components/input/CommonInput/CommonInput.tsx';
@@ -8,6 +9,7 @@ import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
 import EllipsisText from './components/text/EllipsisText/EllipsisText.tsx';
 export {
   CommonButton,
+  CommonChip,
   CommonDivider,
   CommonInput,
   CommonSkeleton,
