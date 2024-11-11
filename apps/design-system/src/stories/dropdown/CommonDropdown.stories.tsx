@@ -34,7 +34,6 @@ const list = [
 export const Default: Story = {
   args: {
     clickItem: (value: string) => console.log(value),
-
     children: ({ clickItem }) => (
       <CommonDropdownInner>
         {list.map((item) => (
@@ -48,8 +47,5 @@ export const Default: Story = {
         ))}
       </CommonDropdownInner>
     ),
-
-    className: "h-20",
-    placeholder: "aa"
   },
 };
