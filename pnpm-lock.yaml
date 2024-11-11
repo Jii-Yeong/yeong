@@ -385,6 +385,9 @@ importers:
         specifier: ^2.5.4
         version: 2.5.4
     devDependencies:
+      '@iconify/react':
+        specifier: ^5.0.2
+        version: 5.0.2(react@18.3.1)
       '@turbo/gen':
         specifier: ^1.12.4
         version: 1.13.4(@types/node@20.16.5)(typescript@5.5.4)

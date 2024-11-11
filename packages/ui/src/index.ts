@@ -8,6 +8,8 @@ import CommonTextarea from './components/input/CommonTextarea/CommonTextarea.tsx
 import LoadingSpinner from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
 import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
 import EllipsisText from './components/text/EllipsisText/EllipsisText.tsx';
+import CommonDropdownInner from './components/dropdown/CommonDropdownInner/CommonDropdownInner.tsx';
+import CommonDropdownItem from './components/dropdown/CommonDropdownItem/CommonDropdownItem.tsx';
 export {
   CommonButton,
   CommonChip,
@@ -19,4 +21,6 @@ export {
   EllipsisText,
   LoadingSpinner,
   ProfileImage,
+  CommonDropdownInner,
+  CommonDropdownItem
 };
