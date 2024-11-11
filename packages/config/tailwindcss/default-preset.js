@@ -11,6 +11,7 @@ export default {
         main: '#5ae9e4',
         black: '#111111',
         gray: '#d3d3d3',
+        'light-gray': '#efefef',
         'dark-gray': '#898989',
         'light-blue': '#eff3ff',
         red: '#ff0000',
@@ -24,13 +25,13 @@ export default {
         xl: '32px',
       },
       screens: {
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
         '2xl': '1536px',
       },
     },
   },
   plugins: [],
-}
+};
