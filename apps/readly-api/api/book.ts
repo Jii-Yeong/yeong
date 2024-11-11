@@ -253,4 +253,10 @@ bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
   }
 });
 
+bookRouter.get('/category/list', async (req: Request, res: Response) => {
+  const { rows } = await sql`SELECT * FROM book_category`;
+
+  res.json(rows);
+});
+
 export default bookRouter;
