@@ -33,15 +33,11 @@ const list = [
 
 export const Default: Story = {
   args: {
-    clickItem: (value: string) => console.log(value),
-    children: ({ clickItem }) => (
+    onChange: (value: string) => console.log(value),
+    children: (
       <CommonDropdownInner>
         {list.map((item) => (
-          <CommonDropdownItem
-            value={item.value}
-            clickItem={clickItem}
-            key={item.value}
-          >
+          <CommonDropdownItem value={item.value} key={item.value}>
             {item.children}
           </CommonDropdownItem>
         ))}

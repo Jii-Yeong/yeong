@@ -1,5 +1,6 @@
 import {
-  ReactElement,
+  createContext,
+  InputHTMLAttributes,
   ReactNode,
   useCallback,
   useEffect,
@@ -11,21 +12,28 @@ import { UI_COLORS } from '../../../constants/color.constants.ts';
 import { twMerge } from 'tailwind-merge';
 
 type CommonDropdownProps = {
+  children: ReactNode;
   placeholder?: string;
   className?: string;
-  classList?: string[];
-  clickItem: (value: string) => void;
-  children: (props: {
-    clickItem: (value: string, children: ReactNode) => void;
-  }) => ReactElement;
+  value?: string;
+  onChange: (value: string) => void;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
+
+type CommonDropdownContextType = {
+  clickDropdownItem: (value: string, children: ReactNode) => void;
 };
+
+export const CommonDropdownContext = createContext<CommonDropdownContextType>({
+  clickDropdownItem: () => {},
+});
 
 export default function CommonDropdown({
   placeholder = '선택',
   className,
-  classList,
-  clickItem,
   children,
+  value,
+  onChange,
+  ...rest
 }: CommonDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -34,16 +42,15 @@ export default function CommonDropdown({
   const divClassName = twMerge(
     'p-[8px] border border-solid border-gray rounded-[8px] min-w-[100px] flex flex-row items-center justify-between cursor-pointer',
     className,
-    classList,
   );
 
-  const clickController = () => {
+  const handleClickController = () => {
     setIsOpen(!isOpen);
   };
 
   const clickDropdownItem = (value: string, children: ReactNode) => {
     setIsOpen(false);
-    clickItem(value);
+    onChange(value);
     setItemChildren(children);
   };
 
@@ -68,7 +75,7 @@ export default function CommonDropdown({
 
   return (
     <div ref={dropdownRef} className="relative">
-      <div className={divClassName} onClick={clickController}>
+      <div className={divClassName} onClick={handleClickController}>
         {placeholder && !itemChildren ? (
           <p className="text-dark-gray">{placeholder}</p>
         ) : (
@@ -80,7 +87,10 @@ export default function CommonDropdown({
           color={UI_COLORS.darkGray}
         />
       </div>
-      {isOpen && children({ clickItem: clickDropdownItem })}
+      <CommonDropdownContext.Provider value={{ clickDropdownItem }}>
+        {isOpen && children}
+      </CommonDropdownContext.Provider>
+      <input type="hidden" value={value} aria-hidden="true" {...rest} />
     </div>
   );
 }

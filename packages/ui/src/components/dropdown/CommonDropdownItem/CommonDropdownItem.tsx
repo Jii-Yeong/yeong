@@ -1,29 +1,26 @@
-import { ReactNode } from 'react';
+import { useContext } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { CommonDropdownContext } from '../CommonDropdown/CommonDropdown.tsx';
 
 type CommonDropdownItemProps = {
   children: string;
   value: string;
   className?: string;
-  classList?: string[];
-  clickItem: (value: string, children: ReactNode) => void;
 };
 
 export default function CommonDropdownItem({
   children,
   value,
   className,
-  classList,
-  clickItem,
 }: CommonDropdownItemProps) {
+  const { clickDropdownItem } = useContext(CommonDropdownContext);
   const divClassName = twMerge(
-    'p-[8px] hover:bg-gray/40 first:rounded-t-[8px] last:rounded-b-[8px]',
+    'p-[8px] hover:bg-gray/40 first:rounded-t-[8px] last:rounded-b-[8px] cursor-pointer',
     className,
-    classList,
   );
 
   const handleClickItem = () => {
-    clickItem(value, children);
+    clickDropdownItem(value, children);
   };
   return (
     <div className={divClassName} onClick={handleClickItem}>
