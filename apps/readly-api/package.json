@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vercel dev --port=3002"
+    "dev": "cd ../../ && vercel dev --port=3002"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
