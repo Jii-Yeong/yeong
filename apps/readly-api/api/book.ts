@@ -32,6 +32,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   }
 
   const content = req.body?.content;
+  const categoryId = req.body?.category_id;
   const bookInfo = req.body?.bookInfo;
   const startPage = req.body?.startPage;
   const endPage = req.body?.endPage;
@@ -54,7 +55,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   }
 
   await sql`
-  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, user_id, user_name, user_image, start_page, end_page)
+  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, user_id, user_name, user_image, start_page, end_page, category_id)
   VALUES (
     ${content},
     ${bookInfo.title},
@@ -67,7 +68,8 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
     ${row.nickname},
     ${row.profile_image},
     ${startPage},
-    ${endPage}
+    ${endPage},
+    ${categoryId}
     );`;
 
   res.send('success created');
@@ -164,10 +166,21 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
+  const categoryId = req.query?.categoryId as string || null
+
   const { rows, rowCount } = await sql`
-  SELECT * 
-  FROM summaries
-  ORDER BY created_at DESC
+  SELECT 
+    summaries.*,
+    book_category.name AS category_name
+  FROM 
+    summaries
+  LEFT JOIN 
+    book_category
+  ON 
+    summaries.category_id = book_category.id
+  WHERE 
+    summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL
+  ORDER BY summaries.created_at DESC;
   `;
 
   if (!rowCount || rowCount <= 0) {
@@ -254,7 +267,21 @@ bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/category/list', async (req: Request, res: Response) => {
-  const { rows } = await sql`SELECT * FROM book_category`;
+  const { rows } = await sql`
+  SELECT 
+    book_category.id,
+    book_category.name,
+    COUNT(summaries.id) AS summary_count
+  FROM 
+    book_category
+  LEFT JOIN 
+    summaries
+  ON 
+    book_category.id = summaries.category_id
+  GROUP BY 
+    book_category.id, book_category.name
+  ORDER BY 
+    summary_count DESC;`;
 
   res.json(rows);
 });
