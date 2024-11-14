@@ -74,7 +74,7 @@ export default function CommonDropdown({
   }, [isOpen, handleClickOutside]);
 
   return (
-    <div ref={dropdownRef} className="relative">
+    <div ref={dropdownRef} className="relative w-fit">
       <div className={divClassName} onClick={handleClickController}>
         {placeholder && !itemChildren ? (
           <p className="text-dark-gray">{placeholder}</p>

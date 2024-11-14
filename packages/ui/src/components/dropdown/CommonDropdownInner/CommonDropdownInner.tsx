@@ -13,7 +13,7 @@ export default function CommonDropdownInner({
   children,
 }: CommonDropdownInnerProps) {
   const divClassName = twMerge(
-    'absolute shadow-lg shadow-main/40 min-w-full rounded-[8px]',
+    'absolute shadow-lg shadow-main/40 min-w-full rounded-[8px] z-10 bg-white',
     className,
     classList,
   );
