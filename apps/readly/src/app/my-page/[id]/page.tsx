@@ -2,6 +2,7 @@
 
 import BookSummaryItem from '@/components/book/BookSummaryItem/BookSummaryItem';
 import BookSummaryListSkeleton from '@/components/skeleton/book/BookSummaryListSkeleton';
+import MyPageProfileSkeleton from '@/components/skeleton/my-page/MyPageProfileSkeleton';
 import { COLORS } from '@/constants/color.constants';
 import { getBookSummaryListQuery } from '@/service/book.service';
 import {
@@ -26,7 +27,9 @@ export default function MyPage() {
   const [isOpenNicknameInput, setIsOpenNicknameInput] = useState(false);
   const [isOpenFileInput, setIsOpenFileInput] = useState(false);
 
-  const { data: infoData } = getUserInfoQuery(String(id));
+  const { data: infoData, isFetching: infoFetching } = getUserInfoQuery(
+    String(id),
+  );
   const { data: myListData, isLoading: listLoading } = getBookSummaryListQuery({
     user_id: String(id),
   });
@@ -60,63 +63,69 @@ export default function MyPage() {
 
   return (
     <div className="flex flex-col items-center gap-y-[16px]">
-      <div className="flex flex-row items-end">
-        <ProfileImage imageSrc={infoData?.profile_image} size={150} />
-        {infoData?.is_my && (
-          <CommonButton
-            className="rounded-full w-[24px] h-[24px] p-0"
-            classList={[
-              isOpenFileInput && 'bg-main',
-              isOpenFileInput && 'border-transparent',
-            ]}
-            leftIcon={
-              <Icon
-                icon="mingcute:pencil-fill"
-                color={isOpenFileInput ? COLORS.white : COLORS.black}
+      {infoFetching && <MyPageProfileSkeleton />}
+      {!infoFetching && infoData && (
+        <div className="w-full flex flex-col items-center">
+          <div className="flex flex-row items-end relative mb-[16px]">
+            <ProfileImage imageSrc={infoData?.profile_image} size={150} />
+            {infoData?.is_my && (
+              <CommonButton
+                className="rounded-full w-[24px] h-[24px] p-0 absolute right-[-16px]"
+                classList={[
+                  isOpenFileInput && 'bg-main',
+                  isOpenFileInput && 'border-transparent',
+                ]}
+                leftIcon={
+                  <Icon
+                    icon="mingcute:pencil-fill"
+                    color={isOpenFileInput ? COLORS.white : COLORS.black}
+                  />
+                }
+                onClick={clickEditFileButton}
               />
-            }
-            onClick={clickEditFileButton}
-          />
-        )}
-      </div>
-      {isOpenFileInput && (
-        <div className="flex flex-row gap-x-[16px]">
-          <CommonFileInput onChange={setFiles} />
-          <CommonButton text="수정" onClick={clickEnterEditProfile} />
+            )}
+          </div>
+          {isOpenFileInput && (
+            <div className="flex flex-row gap-x-[16px]">
+              <CommonFileInput onChange={setFiles} />
+              <CommonButton text="수정" onClick={clickEnterEditProfile} />
+            </div>
+          )}
+
+          <div className="flex flex-col items-center gap-y-[16px] relative">
+            <div className="flex flex-row gap-x-[8px] items-center">
+              <p className="text-lg">{infoData?.nickname}</p>
+              {infoData?.is_my && (
+                <CommonButton
+                  className="rounded-full w-[24px] h-[24px] p-0 absolute right-[-32px] bottom-0"
+                  classList={[
+                    isOpenNicknameInput && 'bg-main',
+                    isOpenNicknameInput && 'border-transparent',
+                  ]}
+                  leftIcon={
+                    <Icon
+                      icon="mingcute:pencil-fill"
+                      color={isOpenNicknameInput ? COLORS.white : COLORS.black}
+                    />
+                  }
+                  onClick={clickEditNicknameButton}
+                />
+              )}
+            </div>
+          </div>
+          {isOpenNicknameInput && (
+            <div className="flex flex-row gap-x-[16px] mt-[16px]">
+              <CommonInput
+                wrapperClassName="flex-1"
+                placeholder="수정할 닉네임"
+                setInputValue={setNickname}
+              />
+              <CommonButton text="수정" onClick={clickEnterEditNickname} />
+            </div>
+          )}
         </div>
       )}
 
-      <div className="flex flex-col items-center gap-y-[16px]">
-        <div className="flex flex-row gap-x-[8px] items-center">
-          <p className="text-lg">{infoData?.nickname}</p>
-          {infoData?.is_my && (
-            <CommonButton
-              className="rounded-full w-[24px] h-[24px] p-0"
-              classList={[
-                isOpenNicknameInput && 'bg-main',
-                isOpenNicknameInput && 'border-transparent',
-              ]}
-              leftIcon={
-                <Icon
-                  icon="mingcute:pencil-fill"
-                  color={isOpenNicknameInput ? COLORS.white : COLORS.black}
-                />
-              }
-              onClick={clickEditNicknameButton}
-            />
-          )}
-        </div>
-        {isOpenNicknameInput && (
-          <div className="flex flex-row gap-x-[16px]">
-            <CommonInput
-              wrapperClassName="flex-1"
-              placeholder="수정할 닉네임"
-              setInputValue={setNickname}
-            />
-            <CommonButton text="수정" onClick={clickEnterEditNickname} />
-          </div>
-        )}
-      </div>
       <div className="w-full">
         <h1 className="text-lg mb-[16px]">작성글</h1>
         <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-x-[16px] gap-y-[16px] w-full">
