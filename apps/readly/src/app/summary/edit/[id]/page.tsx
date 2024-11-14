@@ -24,6 +24,8 @@ export default function SummaryEditPage() {
           defaultContent={data.contents}
           defaultEndPage={String(data.end_page)}
           defaultStartPage={String(data.start_page)}
+          defaultCategory={String(data.category_id)}
+          defaultCategoryName={data.category_name}
           isEdit
           summaryId={String(id)}
         />

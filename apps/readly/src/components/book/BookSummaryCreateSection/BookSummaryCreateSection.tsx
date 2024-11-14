@@ -25,6 +25,8 @@ type BookSummaryCreateSectionProps = {
   defaultContent?: string;
   defaultStartPage?: string;
   defaultEndPage?: string;
+  defaultCategory?: string;
+  defaultCategoryName?: string;
   isEdit?: boolean;
   summaryId?: string;
 };
@@ -34,13 +36,15 @@ export default function BookSummaryCreateSection({
   defaultContent = '',
   defaultEndPage = '1',
   defaultStartPage = '1',
+  defaultCategory = '',
+  defaultCategoryName = '',
   isEdit,
   summaryId,
 }: BookSummaryCreateSectionProps) {
   const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(
     defaultBook,
   );
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryId, setCategoryId] = useState(defaultCategory);
   const [content, setContent] = useState(defaultContent);
   const [startPage, setStartPage] = useState(defaultStartPage);
   const [endPage, setEndPage] = useState(defaultEndPage);
@@ -122,6 +126,7 @@ export default function BookSummaryCreateSection({
           onChange={setCategoryId}
           className="w-[300px]"
           value={categoryId}
+          label={defaultCategoryName}
         >
           <CommonDropdownInner>
             <div className="grid grid-cols-2">
@@ -129,6 +134,7 @@ export default function BookSummaryCreateSection({
                 <CommonDropdownItem
                   value={String(item.id)}
                   children={item.name}
+                  key={item.id}
                 />
               ))}
             </div>
