@@ -1,4 +1,3 @@
-import { parseDomSizeValue } from '@yeong/utils/string';
 import {
   ChangeEvent,
   forwardRef,
@@ -12,8 +11,6 @@ import { twMerge } from 'tailwind-merge';
 
 export type CommonInputProps = {
   defaultValue?: string;
-  width?: string | number;
-  height?: string | number;
   alertText?: string;
   placeholder?: string;
   className?: string;
@@ -29,8 +26,6 @@ export type CommonInputProps = {
 export default forwardRef(function CommonInput(
   {
     defaultValue = '',
-    width = '100%',
-    height = 40,
     alertText,
     wrapperClassName,
     wrapperClassList,
@@ -74,13 +69,7 @@ export default forwardRef(function CommonInput(
     [className, classList],
   );
   return (
-    <div
-      className={divClassName}
-      style={{
-        width: parseDomSizeValue(width),
-        height: parseDomSizeValue(height),
-      }}
-    >
+    <div className={divClassName}>
       <input
         className={inputClassName}
         onChange={changeInputValue}

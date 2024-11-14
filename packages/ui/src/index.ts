@@ -11,6 +11,7 @@ import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
 import EllipsisText from './components/text/EllipsisText/EllipsisText.tsx';
 import CommonDropdownInner from './components/dropdown/CommonDropdownInner/CommonDropdownInner.tsx';
 import CommonDropdownItem from './components/dropdown/CommonDropdownItem/CommonDropdownItem.tsx';
+import CommonFileInput from './components/input/CommonFileInput/CommonFileInput.tsx';
 export {
   CommonButton,
   CommonChip,
@@ -23,7 +24,8 @@ export {
   LoadingSpinner,
   ProfileImage,
   CommonDropdownInner,
-  CommonDropdownItem
+  CommonDropdownItem,
+  CommonFileInput
 };
 
 export type {
