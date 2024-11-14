@@ -197,7 +197,7 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
-  const categoryId = req.query?.categoryId as string || null
+  const categoryId = req.query?.category_id as string || null
   const userId = req.query?.user_id as string || null
 
   const { rows, rowCount } = await sql`
@@ -217,9 +217,9 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   ON 
     summaries.category_id = book_category.id
   WHERE 
-    summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL
+    (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
   AND
-    summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL
+    (summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL)
   ORDER BY summaries.created_at DESC;
   `;
 
