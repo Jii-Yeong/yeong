@@ -118,14 +118,20 @@ export default function BookSummaryCreateSection({
       )}
       <h1 className="text-lg font-bold">카테고리</h1>
       {categoryData && (
-        <CommonDropdown onChange={setCategoryId} className="w-[150px]">
+        <CommonDropdown
+          onChange={setCategoryId}
+          className="w-[300px]"
+          value={categoryId}
+        >
           <CommonDropdownInner>
-            {categoryData.map((item) => (
-              <CommonDropdownItem
-                value={String(item.id)}
-                children={item.name}
-              />
-            ))}
+            <div className="grid grid-cols-2">
+              {categoryData.map((item) => (
+                <CommonDropdownItem
+                  value={String(item.id)}
+                  children={item.name}
+                />
+              ))}
+            </div>
           </CommonDropdownInner>
         </CommonDropdown>
       )}
