@@ -1,5 +1,6 @@
 import CommonButton from './components/button/CommonButton/CommonButton.tsx';
 import CommonChip from './components/chip/CommonChip/CommonChip.tsx';
+import { CommonChipProps } from './components/chip/CommonChip/CommonChip.tsx';
 import CommonDivider from './components/divider/CommonDivider.tsx';
 import CommonDropdown from './components/dropdown/CommonDropdown/CommonDropdown.tsx';
 import ProfileImage from './components/image/ProfileImage/ProfileImage.tsx';
@@ -24,3 +25,7 @@ export {
   CommonDropdownInner,
   CommonDropdownItem
 };
+
+export type {
+  CommonChipProps,
+}
