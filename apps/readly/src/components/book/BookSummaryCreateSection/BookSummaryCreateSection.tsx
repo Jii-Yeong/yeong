@@ -7,9 +7,16 @@ import { COLORS } from '@/constants/color.constants';
 import {
   createBookSummaryMutation,
   editBookSummaryMutation,
+  getBookCategoryListQuery,
 } from '@/service/book.service';
 import { Editor } from '@tinymce/tinymce-react';
-import { CommonButton, CommonInput } from '@yeong/ui';
+import {
+  CommonButton,
+  CommonDropdown,
+  CommonDropdownInner,
+  CommonDropdownItem,
+  CommonInput,
+} from '@yeong/ui';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -30,19 +37,22 @@ export default function BookSummaryCreateSection({
   isEdit,
   summaryId,
 }: BookSummaryCreateSectionProps) {
-  const [content, setContent] = useState(defaultContent);
   const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(
     defaultBook,
   );
+  const [categoryId, setCategoryId] = useState('');
+  const [content, setContent] = useState(defaultContent);
   const [startPage, setStartPage] = useState(defaultStartPage);
   const [endPage, setEndPage] = useState(defaultEndPage);
   const [bookAlertMessage, setBookAlertMessage] = useState('');
+  const [categoryAlertMessage, setCategoryAlertMessage] = useState('');
   const [contentAlertMessage, setContentAlertMessage] = useState('');
   const { mutateAsync: createMutate, isPending: isCreatePending } =
     createBookSummaryMutation();
   const { mutateAsync: editMutate, isPending: isEditPending } =
     editBookSummaryMutation();
   const router = useRouter();
+  const { data: categoryData } = getBookCategoryListQuery();
 
   const handleEditorChange = (content: string) => {
     setContent(content);
@@ -51,6 +61,10 @@ export default function BookSummaryCreateSection({
   const clickEndButton = async () => {
     if (!selectedBook) {
       setBookAlertMessage('읽은 책을 선택하여야 합니다.');
+      return;
+    }
+    if (!categoryId) {
+      setCategoryAlertMessage('카테고리를 선택하여야 합니다.');
       return;
     }
     if (!content) {
@@ -65,6 +79,7 @@ export default function BookSummaryCreateSection({
         startPage,
         endPage,
         id: Number(summaryId),
+        category_id: Number(categoryId),
       });
       router.push(`/summary/detail/${summaryId}`);
     } else {
@@ -73,6 +88,7 @@ export default function BookSummaryCreateSection({
         bookInfo: selectedBook,
         startPage,
         endPage,
+        category_id: Number(categoryId),
       });
       router.push('/');
     }
@@ -85,6 +101,9 @@ export default function BookSummaryCreateSection({
     if (content) {
       setContentAlertMessage('');
     }
+    if (categoryId) {
+      setCategoryAlertMessage('');
+    }
   }, [selectedBook, content]);
 
   return (
@@ -96,6 +115,22 @@ export default function BookSummaryCreateSection({
       />
       {bookAlertMessage && (
         <p className="text-md text-red">{bookAlertMessage}</p>
+      )}
+      <h1 className="text-lg font-bold">카테고리</h1>
+      {categoryData && (
+        <CommonDropdown onChange={setCategoryId} className="w-[150px]">
+          <CommonDropdownInner>
+            {categoryData.map((item) => (
+              <CommonDropdownItem
+                value={String(item.id)}
+                children={item.name}
+              />
+            ))}
+          </CommonDropdownInner>
+        </CommonDropdown>
+      )}
+      {categoryAlertMessage && (
+        <p className="text-md text-red">{categoryAlertMessage}</p>
       )}
       <h1 className="text-lg font-bold">요약</h1>
       <Editor

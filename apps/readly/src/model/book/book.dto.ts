@@ -32,9 +32,14 @@ export type CreateBookSummaryRequest = {
   bookInfo: SearchBookType;
   startPage: string;
   endPage: string;
+  category_id: number;
 };
 
 export type EditBookSummaryRequest = CreateBookSummaryRequest;
+
+export type BookSummaryListRequest = {
+  categoryId: BookCategoryDto['id'] | null;
+}
 
 export type BookSummaryItemDto = {
   id: number;
@@ -54,9 +59,11 @@ export type BookSummaryItemDto = {
   user_name: string;
   user_image: string;
   is_my: boolean;
+  category_id: number;
+  category_name: string;
 };
 
-export const toBookSummaryItenModel = (
+export const toBookSummaryItemModel = (
   item: BookSummaryItemDto,
 ): BookSummaryItemModel => {
   return {
@@ -69,6 +76,7 @@ export const toBookSummaryItenModel = (
     userImage: item.user_image,
     userName: item.user_name,
     createAt: item.created_at,
+    category: item.category_name,
   };
 };
 
@@ -76,3 +84,10 @@ export type BookSummaryLikeCountResponse = {
   like_count: number;
   is_clicked: boolean;
 };
+
+export type BookCategoryDto = {
+  created_at: string
+  id: number
+  name: string
+  summary_count: number;
+}

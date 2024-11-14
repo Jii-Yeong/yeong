@@ -1,7 +1,9 @@
 import { readlyApiAxiosInstance } from '@/api/readly-api';
 import {
+  BookCategoryDto,
   BookSummaryItemDto,
   BookSummaryLikeCountResponse,
+  BookSummaryListRequest,
   CreateBookSummaryRequest,
   EditBookSummaryRequest,
   SearchBookRequest,
@@ -48,10 +50,13 @@ export const deleteDetailBoookSummary = async (
   });
 };
 
-export const getBoookSummaryList = async () => {
+export const getBoookSummaryList = async (params: BookSummaryListRequest) => {
   const { data } =
     await readlyApiAxiosInstance().get<BookSummaryItemDto[]>(
       '/book/summary/list',
+      {
+        params
+      }
     );
   return data;
 };
@@ -74,3 +79,8 @@ export const addBookSummaryLikeCount = async (
 ) => {
   await readlyApiAxiosInstance().post('/book/summary/click-like', params);
 };
+
+export const getBookCategoryList = async () => {
+  const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>('/book/category/list')
+  return data
+}

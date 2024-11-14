@@ -1,11 +1,13 @@
 import {
+  BOOK_CATEGORY_KEY,
   BOOK_SUMMARY_KEY,
   BOOK_SUMMARY_LIKE_KEY,
 } from '@/constants/query-key.constants';
 import { queryClient } from '@/lib/react-query';
 import {
   BookSummaryItemDto,
-  toBookSummaryItenModel,
+  BookSummaryListRequest,
+  toBookSummaryItemModel,
 } from '@/model/book/book.dto';
 import {
   addBookSummaryLikeCount,
@@ -17,7 +19,7 @@ import {
   searchBookList,
 } from '@/repository/book.repository';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getBoookSummaryList } from './../repository/book.repository';
+import { getBoookSummaryList, getBookCategoryList } from './../repository/book.repository';
 
 export const searchBookMutation = () => {
   return useMutation({
@@ -61,12 +63,12 @@ export const deleteDetailBookSummaryMutation = () => {
   });
 };
 
-export const getBoookSummaryListQuery = () => {
+export const getBoookSummaryListQuery = (params: BookSummaryListRequest) => {
   return useQuery({
     queryKey: [BOOK_SUMMARY_KEY],
     queryFn: async () => {
-      const data = await getBoookSummaryList();
-      return data.map((item) => toBookSummaryItenModel(item));
+      const data = await getBoookSummaryList(params);
+      return data.map((item) => toBookSummaryItemModel(item));
     },
   });
 };
@@ -86,3 +88,10 @@ export const addBookSummaryLikeCountMutation = () => {
     },
   });
 };
+
+export const getBookCategoryListQuery = () => {
+  return useQuery({
+    queryKey: [BOOK_CATEGORY_KEY],
+    queryFn: getBookCategoryList,
+  })
+}
