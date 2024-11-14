@@ -15,6 +15,7 @@ import {
   deleteDetailBoookSummary,
   editBookSummary,
   getBookSummaryLikeCount,
+  getBookSummaryMyList,
   getDetailBookSummary,
   searchBookList,
 } from '@/repository/book.repository';
@@ -70,8 +71,20 @@ export const getBoookSummaryListQuery = (params: BookSummaryListRequest) => {
       const data = await getBoookSummaryList(params);
       return data.map((item) => toBookSummaryItemModel(item));
     },
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
+
+export const getBookSummaryMyListQuery = () => {
+  return useQuery({
+    queryKey: [BOOK_SUMMARY_KEY],
+    queryFn: async () => {
+      const data = await getBookSummaryMyList();
+      return data.map((item) => toBookSummaryItemModel(item));
+    },
+  })
+}
 
 export const getBookSummaryLikeCountQuery = (id: BookSummaryItemDto['id']) => {
   return useQuery({
