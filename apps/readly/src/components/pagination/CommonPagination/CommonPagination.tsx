@@ -59,8 +59,14 @@ export default function CommonPagination({
     setCurrentPagination(pagination);
   };
 
-  useEffect(() => {
+  const resetPagination = () => {
     setButtonList(pageList.slice(0, viewButtonCount));
+    setCurrentSection(0);
+    setCurrentPagination(0);
+  };
+
+  useEffect(() => {
+    resetPagination();
   }, [totalCount]);
 
   return (
