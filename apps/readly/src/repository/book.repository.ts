@@ -87,6 +87,6 @@ export const addBookSummaryLikeCount = async (
 };
 
 export const getBookCategoryList = async () => {
-  const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>('/book/category/list')
+  const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>('/book/category-list')
   return data
 }
