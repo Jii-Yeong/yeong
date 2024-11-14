@@ -23,6 +23,7 @@ export default function CommonDropdownItem({
   const handleClickItem = () => {
     clickDropdownItem(value, children);
   };
+
   return (
     <div className={divClassName} onClick={handleClickItem}>
       {children}

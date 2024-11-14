@@ -16,6 +16,7 @@ type CommonDropdownProps = {
   placeholder?: string;
   className?: string;
   value: string;
+  label?: ReactNode;
   onChange: (value: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
@@ -34,12 +35,13 @@ export default function CommonDropdown({
   className,
   children,
   value,
+  label,
   onChange,
   ...rest
 }: CommonDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [itemChildren, setItemChildren] = useState<ReactNode | null>(null);
+  const [itemChildren, setItemChildren] = useState<ReactNode | null>(label);
 
   const divClassName = twMerge(
     'p-[8px] border border-solid border-gray rounded-[8px] min-w-[100px] flex flex-row items-center justify-between cursor-pointer',
