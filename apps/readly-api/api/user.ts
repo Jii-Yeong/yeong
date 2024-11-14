@@ -5,7 +5,7 @@ import { put } from '@vercel/blob';
 
 const userRouter = express.Router();
 
-userRouter.get('/info', async (req: Request, res: Response) => {
+userRouter.get('/my-info', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
   if (!userToken) {
@@ -30,6 +30,39 @@ userRouter.get('/info', async (req: Request, res: Response) => {
   delete row.id;
 
   res.json(row);
+});
+
+
+userRouter.get('/info', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  const userId = req.query?.user_id;
+
+  if (!userId) {
+    res.status(401).send('A required parameter is missing.');
+    return
+  }
+
+  const { rows } = await sql`
+  SELECT *
+  FROM users
+  WHERE id = ${String(userId)};`;
+
+  const row = rows[0];
+
+  if (!row) {
+    res.json(null);
+    return;
+  }
+
+  res.json({ ...row, is_my: userId === decodedInfo.id });
 });
 
 userRouter.put('/edit/nickname', async (req: Request, res: Response) => {

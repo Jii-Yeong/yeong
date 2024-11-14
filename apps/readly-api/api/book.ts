@@ -27,7 +27,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   const decodedInfo = decodeJwtToken(userToken);
 
   if (!decodedInfo.id) {
-    res.status(401).send('Decoding failed.');
+    res.status(400).send('Decoding failed.');
     return;
   }
 
@@ -77,7 +77,13 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
 
 bookRouter.get('/summary', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
-  const decodedInfo = decodeJwtToken(userToken || null);
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
 
   const id = req.query?.id;
 
@@ -223,14 +229,12 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/my-list', async (req: Request, res: Response) => {
-  const userToken = req.headers['authorization']?.split(' ')[1];
+  const userId = req.query?.user_id
 
-  if (!userToken) {
-    res.status(401).send('You entered via the wrong route.');
-    return;
+  if (!userId) {
+    res.status(401).send('A required parameter is missing.');
   }
 
-  const decodedInfo = decodeJwtToken(userToken);
 
   const { rows, rowCount } = await sql`
   SELECT 
@@ -243,7 +247,7 @@ bookRouter.get('/summary/my-list', async (req: Request, res: Response) => {
   ON 
     summaries.category_id = book_category.id
   WHERE 
-    summaries.user_id = ${decodedInfo.id}
+    summaries.user_id = ${String(userId)}
   ORDER BY summaries.created_at DESC;
   `;
 
