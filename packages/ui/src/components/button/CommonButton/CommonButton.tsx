@@ -1,9 +1,9 @@
 import { ButtonHTMLAttributes, CSSProperties, ReactNode, useMemo } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { ClassNameValue, twMerge } from 'tailwind-merge';
 import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonButtonProps = {
-  text: string;
+  text?: string;
   style?: CSSProperties;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
@@ -11,12 +11,12 @@ type CommonButtonProps = {
   isLoading?: boolean;
   loadingColor?: string;
   loadingWidth?: number;
-  classList?: string[];
+  classList?: ClassNameValue;
   clickButton?: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CommonButton({
-  text,
+  text = '',
   leftIcon,
   rightIcon,
   disabled,
