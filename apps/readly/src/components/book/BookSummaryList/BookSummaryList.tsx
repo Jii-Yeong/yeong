@@ -10,6 +10,7 @@ import { CommonChip } from '@yeong/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import BookCategorySkeleton from '@/components/skeleton/book/BookCategorySkeleton';
+import BookCategoryChip from '../BookCategoryChip/BookCategoryChip';
 
 export default function BookSummaryList() {
   const router = useRouter();
@@ -31,11 +32,6 @@ export default function BookSummaryList() {
     router.push(`?${currentParams.toString()}`);
   };
 
-  const clickCategoryChip = (value: string) => {
-    currentParams.set('category_id', value);
-    router.push(`?${currentParams.toString()}`);
-  };
-
   useEffect(() => {
     refetch();
   }, [categoryId]);
@@ -52,10 +48,9 @@ export default function BookSummaryList() {
               isActive={!Boolean(categoryId)}
             />
             {categoryData.map((item) => (
-              <CommonChip
+              <BookCategoryChip
                 text={`${item.name} ${item.summary_count}`}
                 value={String(item.id)}
-                onClick={clickCategoryChip}
                 key={item.id}
                 isActive={Number(categoryId) === item.id}
                 disabled={item.summary_count <= 0}

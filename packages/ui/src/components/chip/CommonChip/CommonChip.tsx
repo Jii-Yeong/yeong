@@ -1,7 +1,8 @@
 import { twMerge } from 'tailwind-merge';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
+import { MouseEvent } from 'react';
 
-type CommonChipProps = {
+export type CommonChipProps = {
   text: string;
   value?: string;
   className?: string;
@@ -31,7 +32,8 @@ export default function CommonChip({
     classList,
   );
 
-  const handleClickChip = () => {
+  const handleClickChip = (e: MouseEvent) => {
+    e.preventDefault();
     if (!disabled && onClick) onClick(value || '');
   };
   return (

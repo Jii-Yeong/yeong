@@ -1,5 +1,6 @@
 'use client';
 
+import BookCategoryChip from '@/components/book/BookCategoryChip/BookCategoryChip';
 import BookItem from '@/components/book/BookItem/BookItem';
 import BookSummaryContent from '@/components/book/BookSummaryContent/BookSummaryContent';
 import SummaryComment from '@/components/comment/SummaryComment/SummaryComment';
@@ -14,12 +15,7 @@ import {
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import {
-  CommonButton,
-  CommonChip,
-  CommonDivider,
-  ProfileImage,
-} from '@yeong/ui';
+import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -82,7 +78,10 @@ export default function SummaryDetailPage() {
             <div className="flex flex-row justify-between">
               <div>
                 {detailSummaryData.category_name && (
-                  <CommonChip text={detailSummaryData.category_name} />
+                  <BookCategoryChip
+                    text={detailSummaryData.category_name}
+                    value={String(detailSummaryData.category_id)}
+                  />
                 )}
               </div>
               {detailSummaryData.is_my && (

@@ -77,6 +77,7 @@ export const toBookSummaryItemModel = (
     userName: item.user_name,
     createAt: item.created_at,
     category: item.category_name,
+    categoryId: item.category_id,
   };
 };
 

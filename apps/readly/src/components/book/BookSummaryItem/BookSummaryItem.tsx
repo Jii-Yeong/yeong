@@ -1,13 +1,9 @@
-import {
-  CommonChip,
-  CommonDivider,
-  EllipsisText,
-  ProfileImage,
-} from '@yeong/ui';
+import { CommonDivider, EllipsisText, ProfileImage } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
+import BookCategoryChip from '../BookCategoryChip/BookCategoryChip';
 
 export type BookSummaryItemProps = {
   id: number;
@@ -20,6 +16,7 @@ export type BookSummaryItemProps = {
   endPage: number;
   createAt: string;
   category?: string;
+  categoryId?: number;
 };
 
 export default function BookSummaryItem({
@@ -33,6 +30,7 @@ export default function BookSummaryItem({
   endPage,
   createAt,
   category,
+  categoryId,
 }: BookSummaryItemProps) {
   const createAtFromFormat = useMemo(
     () => formatDateToString(new Date(createAt)),
@@ -61,7 +59,9 @@ export default function BookSummaryItem({
             <p>{endPage}p</p>
           </div>
           <div className="mt-[4px]">
-            {category && <CommonChip text={category} />}
+            {category && categoryId && (
+              <BookCategoryChip text={category} value={String(categoryId)} />
+            )}
           </div>
         </div>
         <div className="flex flex-row items-center justify-between mt-[16px]">
