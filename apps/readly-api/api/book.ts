@@ -92,9 +92,11 @@ bookRouter.get('/summary', async (req: Request, res: Response) => {
   WHERE id = ${String(id)};`;
 
   const { rows } = await sql`
-  SELECT * 
+  SELECT summaries.*, book_category.name AS category_name
   FROM summaries 
-  WHERE id = ${String(id)};`;
+  LEFT JOIN book_category
+  ON summaries.category_id = book_category.id
+  WHERE summaries.id = ${String(id)};`;
 
   const row = rows[0];
 
@@ -131,6 +133,7 @@ bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
   const bookInfo = req.body?.bookInfo;
   const startPage = req.body?.startPage;
   const endPage = req.body?.endPage;
+  const categoryId = req.body?.category_id
 
   if (!content || !bookInfo) {
     res.status(401).send('A required parameter is missing.');
@@ -139,7 +142,17 @@ bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
 
   await sql`
   UPDATE summaries
-  SET contents = ${content}, book_title = ${bookInfo.title}, book_author = ${bookInfo.author}, book_publisher = ${bookInfo.publisher}, book_pubdate = ${bookInfo.pubdate}, book_image = ${bookInfo.image}, book_link = ${bookInfo.link}, start_page = ${startPage}, end_page = ${endPage}
+  SET
+    contents = ${content}, 
+    book_title = ${bookInfo.title}, 
+    book_author = ${bookInfo.author}, 
+    book_publisher = ${bookInfo.publisher}, 
+    book_pubdate = ${bookInfo.pubdate}, 
+    book_image = ${bookInfo.image}, 
+    book_link = ${bookInfo.link}, 
+    start_page = ${startPage}, 
+    end_page = ${endPage}, 
+    category_id = ${categoryId}
   WHERE id = ${id} AND user_id = ${decodedInfo.id};`;
 
   res.send('success edited');
