@@ -10,13 +10,15 @@ import {
 import { Icon } from '@iconify/react';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
 import { twMerge } from 'tailwind-merge';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonDropdownProps = {
+  value: string;
   children: ReactNode;
   placeholder?: string;
   className?: string;
-  value: string;
   label?: ReactNode;
+  isLoading?: boolean;
   onChange: (value: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
@@ -31,11 +33,12 @@ export const CommonDropdownContext = createContext<CommonDropdownContextType>({
 });
 
 export default function CommonDropdown({
+  value,
   placeholder = '선택',
   className,
   children,
-  value,
   label,
+  isLoading,
   onChange,
   ...rest
 }: CommonDropdownProps) {
@@ -44,7 +47,8 @@ export default function CommonDropdown({
   const [itemChildren, setItemChildren] = useState<ReactNode | null>(label);
 
   const divClassName = twMerge(
-    'p-[8px] border border-solid border-gray rounded-[8px] min-w-[100px] flex flex-row items-center justify-between cursor-pointer',
+    'p-[8px] border border-solid border-gray rounded-[8px] min-w-[100px] flex flex-row items-center justify-between',
+    [isLoading ? 'cursor-default' : 'cursor-pointer'],
     className,
   );
 
@@ -53,6 +57,7 @@ export default function CommonDropdown({
   };
 
   const clickDropdownItem = (value: string, children: ReactNode) => {
+    if (isLoading) return;
     setIsOpen(false);
     onChange(value);
     setItemChildren(children);
@@ -78,18 +83,22 @@ export default function CommonDropdown({
   }, [isOpen, handleClickOutside]);
 
   return (
-    <div ref={dropdownRef} className="relative w-fit">
+    <div ref={dropdownRef} className="relative">
       <div className={divClassName} onClick={handleClickController}>
         {placeholder && !itemChildren ? (
           <p className="text-dark-gray">{placeholder}</p>
         ) : (
           <div>{itemChildren}</div>
         )}
-        <Icon
-          icon="bxs:down-arrow"
-          rotate={isOpen ? 90 : 0}
-          color={UI_COLORS.darkGray}
-        />
+        {isLoading ? (
+          <LoadingSpinner size={20} />
+        ) : (
+          <Icon
+            icon="bxs:down-arrow"
+            rotate={isOpen ? 90 : 0}
+            color={UI_COLORS.darkGray}
+          />
+        )}
       </div>
       <CommonDropdownContext.Provider
         value={{ clickDropdownItem, currentValue: value }}
