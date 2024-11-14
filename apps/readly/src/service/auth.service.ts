@@ -1,4 +1,4 @@
-import { USERS_QUERY_KEY } from '@/constants/query-key.constants';
+import { MY_USERS_QUERY_KEY, USERS_QUERY_KEY } from '@/constants/query-key.constants';
 import { queryClient } from '@/lib/react-query';
 import {
   checkSignUpId,
@@ -52,7 +52,7 @@ export const loginByDefaultMutation = () => {
         expires: 1,
         secure: true,
       });
-      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [MY_USERS_QUERY_KEY] });
     },
   });
 };

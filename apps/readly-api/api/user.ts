@@ -27,8 +27,6 @@ userRouter.get('/my-info', async (req: Request, res: Response) => {
     return;
   }
 
-  delete row.id;
-
   res.json(row);
 });
 

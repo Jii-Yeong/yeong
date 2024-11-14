@@ -1,5 +1,6 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
 import { BookSummaryItemModel } from './book.model';
+import { UserInfoDto } from '../user.dto';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -38,7 +39,8 @@ export type CreateBookSummaryRequest = {
 export type EditBookSummaryRequest = CreateBookSummaryRequest;
 
 export type BookSummaryListRequest = {
-  categoryId: BookCategoryDto['id'] | null;
+  categoryId?: BookCategoryDto['id'] | null;
+  user_id?: UserInfoDto['id'] | null
 }
 
 export type BookSummaryItemDto = {

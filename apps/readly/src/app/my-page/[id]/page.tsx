@@ -3,7 +3,7 @@
 import BookSummaryItem from '@/components/book/BookSummaryItem/BookSummaryItem';
 import BookSummaryListSkeleton from '@/components/skeleton/book/BookSummaryListSkeleton';
 import { COLORS } from '@/constants/color.constants';
-import { getBookSummaryMyListQuery } from '@/service/book.service';
+import { getBookSummaryListQuery } from '@/service/book.service';
 import {
   editUserNicknameMutation,
   editUserProfileImageMutation,
@@ -27,8 +27,9 @@ export default function MyPage() {
   const [isOpenFileInput, setIsOpenFileInput] = useState(false);
 
   const { data: infoData } = getUserInfoQuery(String(id));
-  const { data: myListData, isLoading: listLoading } =
-    getBookSummaryMyListQuery(String(id));
+  const { data: myListData, isLoading: listLoading } = getBookSummaryListQuery({
+    user_id: String(id),
+  });
   const { mutate: nicknameMutate } = editUserNicknameMutation();
   const { mutate: imageMutate } = editUserProfileImageMutation();
 
@@ -65,13 +66,13 @@ export default function MyPage() {
           <CommonButton
             className="rounded-full w-[24px] h-[24px] p-0"
             classList={[
-              isOpenNicknameInput && 'bg-main',
-              isOpenNicknameInput && 'border-transparent',
+              isOpenFileInput && 'bg-main',
+              isOpenFileInput && 'border-transparent',
             ]}
             leftIcon={
               <Icon
                 icon="mingcute:pencil-fill"
-                color={isOpenNicknameInput ? COLORS.white : COLORS.black}
+                color={isOpenFileInput ? COLORS.white : COLORS.black}
               />
             }
             onClick={clickEditFileButton}

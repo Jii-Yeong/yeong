@@ -21,7 +21,7 @@ export default function CommonButton({
   rightIcon,
   disabled,
   isLoading,
-  loadingWidth = 30,
+  loadingWidth = 27,
   loadingColor = '#5ae9e4',
   className,
   classList,

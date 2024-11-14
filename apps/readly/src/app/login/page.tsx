@@ -1,5 +1,6 @@
 'use client';
 
+import { COLORS } from '@/constants/color.constants';
 import {
   loginByDefaultMutation,
   loginByGoogleMutation,
@@ -25,17 +26,21 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { mutateAsync: defaultMutate, data: loginData } =
-    loginByDefaultMutation();
+  const {
+    mutateAsync: defaultMutate,
+    data: loginData,
+    isPending: isDefaultPending,
+  } = loginByDefaultMutation();
   const { mutateAsync: googleMutate } = loginByGoogleMutation();
   const message = useMemo(() => loginData?.message, [loginData?.message]);
 
   const submitLoginData: SubmitHandler<Inputs> = async (data) => {
-    await defaultMutate({
+    const mutate = await defaultMutate({
       password: data.password,
       user_id: data.id,
     });
-    if (loginData?.isSuccess) {
+
+    if (mutate.isSuccess) {
       router.push(getRootPage());
     }
   };
@@ -72,6 +77,8 @@ export default function LoginPage() {
             text="로그인"
             type="submit"
             className="bg-main border-transparent text-[18px] text-white font-bold"
+            isLoading={isDefaultPending}
+            loadingColor={COLORS.white}
           />
           <CommonButton
             text="구글 로그인"

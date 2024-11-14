@@ -198,6 +198,7 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   const categoryId = req.query?.categoryId as string || null
+  const userId = req.query?.user_id as string || null
 
   const { rows, rowCount } = await sql`
   SELECT 
@@ -217,37 +218,8 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     summaries.category_id = book_category.id
   WHERE 
     summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL
-  ORDER BY summaries.created_at DESC;
-  `;
-
-  if (!rowCount || rowCount <= 0) {
-    res.json([]);
-    return;
-  }
-
-  res.json(rows);
-});
-
-bookRouter.get('/summary/my-list', async (req: Request, res: Response) => {
-  const userId = req.query?.user_id
-
-  if (!userId) {
-    res.status(401).send('A required parameter is missing.');
-  }
-
-
-  const { rows, rowCount } = await sql`
-  SELECT 
-    summaries.*,
-    book_category.name AS category_name
-  FROM 
-    summaries
-  LEFT JOIN 
-    book_category
-  ON 
-    summaries.category_id = book_category.id
-  WHERE 
-    summaries.user_id = ${String(userId)}
+  AND
+    summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL
   ORDER BY summaries.created_at DESC;
   `;
 

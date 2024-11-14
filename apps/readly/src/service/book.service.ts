@@ -1,8 +1,6 @@
 import {
-  BOOK_CATEGORY_KEY,
-  BOOK_MY_SUMMARY_KEY,
-  BOOK_SUMMARY_KEY,
-  BOOK_SUMMARY_LIKE_KEY,
+  BOOK_CATEGORY_KEY, BOOK_SUMMARY_KEY,
+  BOOK_SUMMARY_LIKE_KEY
 } from '@/constants/query-key.constants';
 import { queryClient } from '@/lib/react-query';
 import {
@@ -15,10 +13,8 @@ import {
   createBookSummary,
   deleteDetailBoookSummary,
   editBookSummary,
-  getBookSummaryLikeCount,
-  getBookSummaryMyList,
-  getDetailBookSummary,
-  searchBookList,
+  getBookSummaryLikeCount, getDetailBookSummary,
+  searchBookList
 } from '@/repository/book.repository';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getBoookSummaryList, getBookCategoryList } from './../repository/book.repository';
@@ -76,16 +72,6 @@ export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
     gcTime: Infinity,
   });
 };
-
-export const getBookSummaryMyListQuery = (id: string) => {
-  return useQuery({
-    queryKey: [BOOK_MY_SUMMARY_KEY, id],
-    queryFn: async () => {
-      const data = await getBookSummaryMyList(id);
-      return data.map((item) => toBookSummaryItemModel(item));
-    },
-  })
-}
 
 export const getBookSummaryLikeCountQuery = (id: BookSummaryItemDto['id']) => {
   return useQuery({

@@ -61,12 +61,6 @@ export const getBoookSummaryList = async (params: BookSummaryListRequest) => {
   return data;
 };
 
-export const getBookSummaryMyList = async (id: string) => {
-  const { data } =
-    await readlyApiAxiosInstance().get<BookSummaryItemDto[]>('/book/summary/my-list', { params: { user_id: id } });
-  return data;
-};
-
 export const getBookSummaryLikeCount = async (id: BookSummaryItemDto['id']) => {
   const { data } =
     await readlyApiAxiosInstance().get<BookSummaryLikeCountResponse>(

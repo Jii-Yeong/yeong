@@ -6,9 +6,10 @@ import {
   getSignUpPage,
   getSummaryCreatePage,
 } from '@/utils/route.utils';
-import { CommonButton, ProfileImage } from '@yeong/ui';
+import { CommonButton } from '@yeong/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import UserProfile from '../user/UserProfile/UserProfile';
 
 export default function DefaultHeader() {
   const { data } = getUserMyInfoQuery();
@@ -34,20 +35,17 @@ export default function DefaultHeader() {
       >
         READLY
       </Link>
-      <div className="flex flex-row gap-x-2">
+      <div className="flex flex-row gap-x-[8px]">
         {data ? (
-          <div className="flex flex-row gap-x-[16px]">
-            <Link
-              href="/my-page"
-              className="flex flex-row items-center gap-x-[8px]"
-            >
-              <ProfileImage imageSrc={data.profile_image} />
-              <p className="text-white text-[16px] font-bold">
-                {data.nickname}
-              </p>
-            </Link>
+          <>
+            <UserProfile
+              userId={data.id}
+              userImage={data.profile_image}
+              userName={data.nickname}
+              textClassName="text-white font-bold"
+            />
             <CommonButton text="요약 작성하기" clickButton={goToWriteSummary} />
-          </div>
+          </>
         ) : (
           <>
             <CommonButton text="로그인" clickButton={clickLoginButton} />
