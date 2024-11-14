@@ -13,10 +13,11 @@ export default function CommonDropdownItem({
   value,
   className,
 }: CommonDropdownItemProps) {
-  const { clickDropdownItem } = useContext(CommonDropdownContext);
+  const { clickDropdownItem, currentValue } = useContext(CommonDropdownContext);
   const divClassName = twMerge(
     'p-[8px] hover:bg-gray/40 first:rounded-t-[8px] last:rounded-b-[8px] cursor-pointer',
     className,
+    currentValue === value && 'bg-main/40',
   );
 
   const handleClickItem = () => {

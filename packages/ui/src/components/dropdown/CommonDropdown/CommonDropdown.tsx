@@ -15,16 +15,18 @@ type CommonDropdownProps = {
   children: ReactNode;
   placeholder?: string;
   className?: string;
-  value?: string;
+  value: string;
   onChange: (value: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 type CommonDropdownContextType = {
   clickDropdownItem: (value: string, children: ReactNode) => void;
+  currentValue: string;
 };
 
 export const CommonDropdownContext = createContext<CommonDropdownContextType>({
   clickDropdownItem: () => {},
+  currentValue: '',
 });
 
 export default function CommonDropdown({
@@ -87,7 +89,9 @@ export default function CommonDropdown({
           color={UI_COLORS.darkGray}
         />
       </div>
-      <CommonDropdownContext.Provider value={{ clickDropdownItem }}>
+      <CommonDropdownContext.Provider
+        value={{ clickDropdownItem, currentValue: value }}
+      >
         {isOpen && children}
       </CommonDropdownContext.Provider>
       <input type="hidden" value={value} aria-hidden="true" {...rest} />
