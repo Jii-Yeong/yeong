@@ -14,7 +14,12 @@ import {
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
+import {
+  CommonButton,
+  CommonChip,
+  CommonDivider,
+  ProfileImage,
+} from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -74,20 +79,27 @@ export default function SummaryDetailPage() {
                 </div>
               </div>
             </div>
-            {detailSummaryData.is_my && (
-              <div className="flex flex-row gap-x-[8px] justify-end">
-                <CommonButton
-                  text="수정"
-                  clickButton={clickEditButton}
-                  className="text-[14px] px-[8px] py-[2px]"
-                />
-                <CommonButton
-                  text="삭제"
-                  clickButton={clickDeleteButton}
-                  className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
-                />
+            <div className="flex flex-row justify-between">
+              <div>
+                {detailSummaryData.category_name && (
+                  <CommonChip text={detailSummaryData.category_name} />
+                )}
               </div>
-            )}
+              {detailSummaryData.is_my && (
+                <div className="flex flex-row gap-x-[8px] justify-end">
+                  <CommonButton
+                    text="수정"
+                    clickButton={clickEditButton}
+                    className="text-[14px] px-[8px] py-[2px]"
+                  />
+                  <CommonButton
+                    text="삭제"
+                    clickButton={clickDeleteButton}
+                    className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <BookSummaryContent content={detailSummaryData.contents} />
         </>
