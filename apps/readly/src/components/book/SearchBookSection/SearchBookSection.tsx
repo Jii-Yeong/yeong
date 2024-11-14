@@ -78,7 +78,7 @@ export default function SearchBookSection({
   }, [bookData?.total]);
   return (
     <div className="search-book-section flex flex-col items-center gap-y-[16px]">
-      <div className="flex flex-row gap-x-[16px] w-full">
+      <div className="flex flex-col sm:flex-row gap-x-[16px] gap-y-[8px] w-full">
         <CommonInput
           setInputValue={setInputValue}
           pressEnter={searchBook}

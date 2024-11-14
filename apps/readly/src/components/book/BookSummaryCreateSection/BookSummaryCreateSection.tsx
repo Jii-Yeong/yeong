@@ -56,7 +56,8 @@ export default function BookSummaryCreateSection({
   const { mutateAsync: editMutate, isPending: isEditPending } =
     editBookSummaryMutation();
   const router = useRouter();
-  const { data: categoryData } = getBookCategoryListQuery();
+  const { data: categoryData, isLoading: categoryLoading } =
+    getBookCategoryListQuery();
 
   const handleEditorChange = (content: string) => {
     setContent(content);
@@ -121,13 +122,14 @@ export default function BookSummaryCreateSection({
         <p className="text-md text-red">{bookAlertMessage}</p>
       )}
       <h1 className="text-lg font-bold">카테고리</h1>
-      {categoryData && (
-        <CommonDropdown
-          onChange={setCategoryId}
-          className="w-[300px]"
-          value={categoryId}
-          label={defaultCategoryName}
-        >
+      <CommonDropdown
+        onChange={setCategoryId}
+        className="w-full sm:w-[300px]"
+        value={categoryId}
+        label={defaultCategoryName}
+        isLoading={categoryLoading}
+      >
+        {categoryData && (
           <CommonDropdownInner>
             <div className="grid grid-cols-2">
               {categoryData.map((item) => (
@@ -139,8 +141,8 @@ export default function BookSummaryCreateSection({
               ))}
             </div>
           </CommonDropdownInner>
-        </CommonDropdown>
-      )}
+        )}
+      </CommonDropdown>
       {categoryAlertMessage && (
         <p className="text-md text-red">{categoryAlertMessage}</p>
       )}
