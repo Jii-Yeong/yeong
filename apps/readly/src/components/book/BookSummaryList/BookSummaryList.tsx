@@ -8,7 +8,7 @@ import BookSummaryListSkeleton from '../../skeleton/book/BookSummaryListSkeleton
 import BookSummaryItem from '../BookSummaryItem/BookSummaryItem';
 import { CommonChip } from '@yeong/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import BookCategorySkeleton from '@/components/skeleton/book/BookCategorySkeleton';
 import BookCategoryChip from '../BookCategoryChip/BookCategoryChip';
 
@@ -19,12 +19,8 @@ export default function BookSummaryList() {
     () => searchParams.get('category_id'),
     [searchParams],
   );
-  const {
-    data: listData,
-    isFetching: listFetching,
-    refetch,
-  } = getBookSummaryListQuery({
-    categoryId: categoryId ? Number(categoryId) : null,
+  const { data: listData, isFetching: listFetching } = getBookSummaryListQuery({
+    category_id: categoryId ? Number(categoryId) : null,
   });
   const { data: categoryData, isLoading: categoryLoading } =
     getBookCategoryListQuery();
@@ -34,10 +30,6 @@ export default function BookSummaryList() {
     currentParams.delete('category_id');
     router.push(`?${currentParams.toString()}`);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [categoryId]);
 
   return (
     <div>

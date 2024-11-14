@@ -63,7 +63,7 @@ export const deleteDetailBookSummaryMutation = () => {
 
 export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
   return useQuery({
-    queryKey: [BOOK_SUMMARY_KEY],
+    queryKey: [BOOK_SUMMARY_KEY, params.user_id, params.category_id],
     queryFn: async () => {
       const data = await getBoookSummaryList(params);
       return data.map((item) => toBookSummaryItemModel(item));

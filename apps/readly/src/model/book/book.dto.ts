@@ -39,7 +39,7 @@ export type CreateBookSummaryRequest = {
 export type EditBookSummaryRequest = CreateBookSummaryRequest;
 
 export type BookSummaryListRequest = {
-  categoryId?: BookCategoryDto['id'] | null;
+  category_id?: BookCategoryDto['id'] | null;
   user_id?: UserInfoDto['id'] | null
 }
 
