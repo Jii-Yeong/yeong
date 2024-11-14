@@ -3,7 +3,6 @@
 import { COLORS } from '@/constants/color.constants';
 import {
   checkSignUpIdMutation,
-  checkSignUpNicknameMutation,
   signUpByDefaultMutation,
 } from '@/service/auth.service';
 import { getLoginPage } from '@/utils/route.utils';
@@ -35,7 +34,6 @@ export default function SignUpPage() {
     data: idData,
     isPending: isIdPending,
   } = checkSignUpIdMutation();
-  const { mutateAsync: nicknameMutate } = checkSignUpNicknameMutation();
   const router = useRouter();
 
   const idCheckIcon = useMemo(() => {
@@ -54,7 +52,6 @@ export default function SignUpPage() {
   }, [idData, isIdPending]);
 
   const checkExistId = debounce((e: InputEvent) => {
-    console.log('debounce');
     const element = e.target as HTMLInputElement;
     if (!element.value) return;
     idMutate({ user_id: element.value });
