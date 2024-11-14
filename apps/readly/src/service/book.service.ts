@@ -1,5 +1,6 @@
 import {
   BOOK_CATEGORY_KEY,
+  BOOK_MY_SUMMARY_KEY,
   BOOK_SUMMARY_KEY,
   BOOK_SUMMARY_LIKE_KEY,
 } from '@/constants/query-key.constants';
@@ -64,7 +65,7 @@ export const deleteDetailBookSummaryMutation = () => {
   });
 };
 
-export const getBoookSummaryListQuery = (params: BookSummaryListRequest) => {
+export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
   return useQuery({
     queryKey: [BOOK_SUMMARY_KEY],
     queryFn: async () => {
@@ -78,7 +79,7 @@ export const getBoookSummaryListQuery = (params: BookSummaryListRequest) => {
 
 export const getBookSummaryMyListQuery = () => {
   return useQuery({
-    queryKey: [BOOK_SUMMARY_KEY],
+    queryKey: [BOOK_MY_SUMMARY_KEY],
     queryFn: async () => {
       const data = await getBookSummaryMyList();
       return data.map((item) => toBookSummaryItemModel(item));

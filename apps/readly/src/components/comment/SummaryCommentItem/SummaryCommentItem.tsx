@@ -1,10 +1,11 @@
 import { COLORS } from '@/constants/color.constants';
 import { useAuth } from '@/hooks/useAuth';
 import { SummaryCommentItemModel } from '@/model/comment/comment.model';
-import { CommonButton, ProfileImage } from '@yeong/ui';
+import { CommonButton } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useMemo, useState } from 'react';
 import SummaryCommentInput from '../SummaryCommentInput/SummaryCommentInput';
+import UserProfile from '@/components/user/UserProfile/UserProfile';
 
 export type SummaryCommentItemProps = SummaryCommentItemModel & {
   isReply?: boolean;
@@ -25,6 +26,7 @@ export default function SummaryCommentItem({
   isReply,
   isPending,
   isDeletePending,
+  userId,
   setCommentValue,
   clickInputButton,
   clickDeleteButton,
@@ -51,10 +53,11 @@ export default function SummaryCommentItem({
       </p>
       <div className="whitespace-break-spaces	break-all">{comment}</div>
       <div className="flex flex-row gap-x-[16px]">
-        <div className="flex flex-row gap-x-[8px] items-center">
-          <ProfileImage imageSrc={userImage} />
-          <p className="text-md">{userName}</p>
-        </div>
+        <UserProfile
+          userId={userId}
+          userImage={userImage}
+          userName={userName}
+        />
         {isLoggedIn && !isReply && (
           <CommonButton
             text={replyButtonText}

@@ -1,15 +1,17 @@
-import { CommonDivider, EllipsisText, ProfileImage } from '@yeong/ui';
+import { CommonDivider, EllipsisText } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
 import BookCategoryChip from '../BookCategoryChip/BookCategoryChip';
+import UserProfile from '@/components/user/UserProfile/UserProfile';
 
 export type BookSummaryItemProps = {
   id: number;
   content: string;
   bookTitle: string;
   bookAuthor: string;
+  userId: string;
   userImage: string;
   userName: string;
   startPage: number;
@@ -24,6 +26,7 @@ export default function BookSummaryItem({
   content,
   bookAuthor,
   bookTitle,
+  userId,
   userImage,
   userName,
   startPage,
@@ -65,10 +68,11 @@ export default function BookSummaryItem({
           </div>
         </div>
         <div className="flex flex-row items-center justify-between mt-[16px]">
-          <div className="flex flex-row gap-x-[8px] items-center justify-end">
-            <ProfileImage imageSrc={userImage} />
-            <p className="text-md">{userName}</p>
-          </div>
+          <UserProfile
+            userImage={userImage}
+            userName={userName}
+            userId={userId}
+          />
           <p className="text-dark-gray text-md">{createAtFromFormat}</p>
         </div>
       </div>

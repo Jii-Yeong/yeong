@@ -30,6 +30,7 @@ export const toSummaryCommentModel = (
     userImage: item.user_image,
     userName: item.user_name,
     isMy: item.is_my,
+    userId: item.user_id,
   };
 };
 

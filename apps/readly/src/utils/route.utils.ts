@@ -23,3 +23,7 @@ export const getSignUpPage = () => {
 export const getLoginPage = () => {
   return '/login';
 };
+
+export const getMyPage = (userId: string) => {
+  return `/my-page/${userId}`
+}

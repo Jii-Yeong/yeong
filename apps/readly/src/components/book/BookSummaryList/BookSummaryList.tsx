@@ -2,7 +2,7 @@
 
 import {
   getBookCategoryListQuery,
-  getBoookSummaryListQuery,
+  getBookSummaryListQuery,
 } from '@/service/book.service';
 import BookSummaryListSkeleton from '../../skeleton/book/BookSummaryListSkeleton';
 import BookSummaryItem from '../BookSummaryItem/BookSummaryItem';
@@ -20,7 +20,7 @@ export default function BookSummaryList() {
     data: listData,
     isFetching: listFetching,
     refetch,
-  } = getBoookSummaryListQuery({
+  } = getBookSummaryListQuery({
     categoryId: categoryId ? Number(categoryId) : null,
   });
   const { data: categoryData, isLoading: categoryLoading } =

@@ -73,6 +73,7 @@ export const toBookSummaryItemModel = (
     content: item.contents,
     endPage: item.end_page,
     startPage: item.start_page,
+    userId: item.user_id,
     userImage: item.user_image,
     userName: item.user_name,
     createAt: item.created_at,

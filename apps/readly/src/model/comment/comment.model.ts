@@ -1,5 +1,6 @@
 export type SummaryCommentItemModel = {
   comment: string;
+  userId: string;
   userImage: string;
   userName: string;
   createdAt: string;

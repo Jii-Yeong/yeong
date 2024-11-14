@@ -6,6 +6,7 @@ import BookSummaryContent from '@/components/book/BookSummaryContent/BookSummary
 import SummaryComment from '@/components/comment/SummaryComment/SummaryComment';
 import BookItemSkeleton from '@/components/skeleton/book/BookItemSkeleton';
 import BookSummaryDetailSkeleton from '@/components/skeleton/book/BookSummaryDetailSkeleton';
+import UserProfile from '@/components/user/UserProfile/UserProfile';
 import { COLORS } from '@/constants/color.constants';
 import {
   addBookSummaryLikeCountMutation,
@@ -15,7 +16,7 @@ import {
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
+import { CommonButton, CommonDivider } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -63,10 +64,11 @@ export default function SummaryDetailPage() {
         <>
           <div className="w-full flex flex-col gap-y-[8px]">
             <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
-              <div className="flex flex-row items-center gap-x-[8px]">
-                <ProfileImage imageSrc={detailSummaryData.user_image} />
-                <p>{detailSummaryData.user_name}</p>
-              </div>
+              <UserProfile
+                userId={detailSummaryData.user_id}
+                userImage={detailSummaryData.user_image}
+                userName={detailSummaryData.user_name}
+              />
               <div className="flex flex-row gap-x-[16px]">
                 <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
                   <span>{createAt}</span>

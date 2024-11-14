@@ -54,6 +54,7 @@ export default function SummaryComment() {
               userImage={item.userImage}
               userName={item.userName}
               id={item.id}
+              userId={item.userId}
               clickInputButton={clickReplyCommentInputButton}
               setCommentValue={setReplyComment}
               isPending={isPending}
@@ -70,6 +71,7 @@ export default function SummaryComment() {
                     userImage={item.userImage}
                     userName={item.userName}
                     id={item.id}
+                    userId={item.userId}
                     key={`${JSON.stringify(item)}-${index}`}
                     isReply
                     clickDeleteButton={clickDeleteCommentButton}
