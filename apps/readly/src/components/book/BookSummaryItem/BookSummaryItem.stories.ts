@@ -24,6 +24,7 @@ export const Default: Story = {
     endPage: 100,
     createAt: '2023-10-18T15:00:00.000Z',
     id: 0,
-    category: '철학'
+    category: '철학',
+    userId: '',
   },
 };

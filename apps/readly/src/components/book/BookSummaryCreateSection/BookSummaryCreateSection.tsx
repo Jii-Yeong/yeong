@@ -161,15 +161,15 @@ export default function BookSummaryCreateSection({
         <CommonInput
           setInputValue={setStartPage}
           type="number"
-          width={70}
           defaultValue={defaultStartPage}
+          wrapperClassName="w-[70px]"
         />
         <p>~</p>
         <CommonInput
           setInputValue={setEndPage}
           type="number"
-          width={70}
           defaultValue={defaultEndPage}
+          wrapperClassName="w-[70px]"
         />
       </div>
       <CommonButton
