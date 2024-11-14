@@ -1,6 +1,7 @@
 import { sql } from '@vercel/postgres';
 import express, { Request, Response } from 'express';
 import { decodeJwtToken } from '../utils/auth';
+import { put } from '@vercel/blob';
 
 const userRouter = express.Router();
 
@@ -30,5 +31,60 @@ userRouter.get('/info', async (req: Request, res: Response) => {
 
   res.json(row);
 });
+
+userRouter.put('/edit/nickname', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  const nickname = req.body?.nickname
+
+  await sql`
+  UPDATE users
+  SET nickname = ${nickname}
+  WHERE id = ${decodedInfo.id};`
+
+  res.send('Success edited.')
+})
+
+userRouter.post('/edit/profile-image', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  let image = req.files?.image
+
+  if (!image) {
+    res.status(400).send('A required parameter is missing.');
+    return
+  }
+
+  if (Array.isArray(image)) {
+    image = image[0]
+  }
+
+  const blob = await put(`readly/user/profile-image/${image.name}`, image.data, {
+    access: 'public'
+  })
+
+  await sql`
+  UPDATE users
+  SET profile_image = ${blob.url}
+  WHERE id = ${decodedInfo.id};`
+
+  res.send('Success edited.')
+})
+
+
 
 export default userRouter;

@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import authRouter from './auth';
 import bookRouter from './book';
 import commentRouter from './comment';
@@ -14,6 +15,16 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(
+  fileUpload({
+    useTempFiles: false,
+    tempFileDir: "/tmp/",
+    abortOnLimit: true,
+    limits: { fileSize: 50 * 1024 * 1024, files: 10 },
+    responseOnLimit: "File size limit has been reached",
+    uploadTimeout: 10000, // 10 seconds
+  })
+);
 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);

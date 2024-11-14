@@ -92,11 +92,23 @@ bookRouter.get('/summary', async (req: Request, res: Response) => {
   WHERE id = ${String(id)};`;
 
   const { rows } = await sql`
-  SELECT summaries.*, book_category.name AS category_name
-  FROM summaries 
-  LEFT JOIN book_category
-  ON summaries.category_id = book_category.id
-  WHERE summaries.id = ${String(id)};`;
+  SELECT 
+    summaries.*, 
+    book_category.name AS category_name,
+    users.nickname AS user_name,
+    users.profile_image AS user_image
+  FROM 
+    summaries
+  LEFT JOIN 
+    users
+  ON 
+    summaries.user_id = users.id
+  LEFT JOIN 
+    book_category
+  ON 
+    summaries.category_id = book_category.id
+  WHERE
+    summaries.id = ${String(id)};`;
 
   const row = rows[0];
 
@@ -184,6 +196,45 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   const { rows, rowCount } = await sql`
   SELECT 
     summaries.*,
+    book_category.name AS category_name,
+    users.nickname AS user_name,
+    users.profile_image AS user_image
+  FROM 
+    summaries
+  LEFT JOIN 
+    users
+  ON
+    summaries.user_id = users.id
+  LEFT JOIN 
+    book_category
+  ON 
+    summaries.category_id = book_category.id
+  WHERE 
+    summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL
+  ORDER BY summaries.created_at DESC;
+  `;
+
+  if (!rowCount || rowCount <= 0) {
+    res.json([]);
+    return;
+  }
+
+  res.json(rows);
+});
+
+bookRouter.get('/summary/my-list', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  const { rows, rowCount } = await sql`
+  SELECT 
+    summaries.*,
     book_category.name AS category_name
   FROM 
     summaries
@@ -192,7 +243,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   ON 
     summaries.category_id = book_category.id
   WHERE 
-    summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL
+    summaries.user_id = ${decodedInfo.id}
   ORDER BY summaries.created_at DESC;
   `;
 
