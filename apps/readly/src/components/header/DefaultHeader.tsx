@@ -1,6 +1,6 @@
 'use client';
 
-import { getUserInfoQuery } from '@/service/user.service';
+import { getUserMyInfoQuery } from '@/service/user.service';
 import {
   getLoginPage,
   getSignUpPage,
@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function DefaultHeader() {
-  const { data } = getUserInfoQuery();
+  const { data } = getUserMyInfoQuery();
   const router = useRouter();
 
   const clickLoginButton = () => {

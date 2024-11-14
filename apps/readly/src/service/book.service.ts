@@ -77,11 +77,11 @@ export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
   });
 };
 
-export const getBookSummaryMyListQuery = () => {
+export const getBookSummaryMyListQuery = (id: string) => {
   return useQuery({
-    queryKey: [BOOK_MY_SUMMARY_KEY],
+    queryKey: [BOOK_MY_SUMMARY_KEY, id],
     queryFn: async () => {
-      const data = await getBookSummaryMyList();
+      const data = await getBookSummaryMyList(id);
       return data.map((item) => toBookSummaryItemModel(item));
     },
   })
