@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import Provider from './provider';
+import KaKaoScript from './script/KaKaoScript';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -39,6 +40,7 @@ export default function RootLayout({
           </div>
         </Provider>
       </body>
+      <KaKaoScript />
     </html>
   );
 }

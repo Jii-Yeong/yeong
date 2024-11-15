@@ -18,12 +18,13 @@ import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonButton, CommonDivider } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 export default function SummaryDetailPage() {
   const { id } = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const { data: detailSummaryData } = getDetailBookSummaryQuery(Number(id));
   const { data: likeCountData, isFetching } = getBookSummaryLikeCountQuery(
     Number(id),
@@ -56,6 +57,21 @@ export default function SummaryDetailPage() {
   const clickDeleteButton = async () => {
     await deleteMutate(Number(id));
     router.push(getRootPage());
+  };
+
+  const clickKaKaoShareButton = () => {
+    window.Kakao.Share.sendScrap({
+      requestUrl: window.location.href,
+      templateId: 114283,
+      templateArgs: {
+        title: `${detailSummaryData?.user_name} 님이 작성한 책 ${detailSummaryData?.book_title}의 요약 - Readly에서 확인해보세요.`,
+        like_count: likeCountData?.like_count || 0,
+        view_count: detailSummaryData?.view_count || 0,
+        path: pathname,
+        profile_image: detailSummaryData?.user_image,
+        user_name: detailSummaryData?.user_name,
+      },
+    });
   };
 
   return (
@@ -114,6 +130,21 @@ export default function SummaryDetailPage() {
         isLoading={isFetching || isPending}
         className="w-[130px] font-bold text-[20px]"
       />
+      {detailSummaryData && likeCountData && (
+        <div>
+          <CommonButton
+            leftIcon={
+              <Icon
+                icon="simple-icons:kakaotalk"
+                width={30}
+                color={COLORS.brown}
+              />
+            }
+            className="p-[4px] rounded-full border-transparent"
+            clickButton={clickKaKaoShareButton}
+          />
+        </div>
+      )}
       <CommonDivider />
       {detailSummaryData ? (
         <BookItem
