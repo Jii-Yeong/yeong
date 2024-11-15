@@ -78,12 +78,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
 bookRouter.get('/summary', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
-  if (!userToken) {
-    res.status(401).send('You entered via the wrong route.');
-    return;
-  }
-
-  const decodedInfo = decodeJwtToken(userToken);
+  const decodedInfo = decodeJwtToken(String(userToken));
 
   const id = req.query?.id;
 
@@ -151,7 +146,7 @@ bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
   const bookInfo = req.body?.bookInfo;
   const startPage = req.body?.startPage;
   const endPage = req.body?.endPage;
-  const categoryId = req.body?.category_id
+  const categoryId = req.body?.category_id;
 
   if (!content || !bookInfo) {
     res.status(401).send('A required parameter is missing.');
@@ -197,8 +192,8 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
-  const categoryId = req.query?.category_id as string || null
-  const userId = req.query?.user_id as string || null
+  const categoryId = (req.query?.category_id as string) || null;
+  const userId = (req.query?.user_id as string) || null;
 
   const { rows, rowCount } = await sql`
   SELECT 
