@@ -48,7 +48,7 @@ export default function SummaryCommentInput({
       <CommonButton
         text="입력"
         className="w-[90px] text-[16px] bg-main text-white border-transparent"
-        clickButton={clickCommentInputButton}
+        onClick={clickCommentInputButton}
         isLoading={isPending}
         loadingColor={COLORS.white}
         disabled={disabled}

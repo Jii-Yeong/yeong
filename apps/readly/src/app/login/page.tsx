@@ -84,7 +84,7 @@ export default function LoginPage() {
             text="구글 로그인"
             className="text-[18px] font-bold"
             leftIcon={<Icon icon="devicon:google" />}
-            clickButton={clickGoogleLoginButton}
+            onClick={clickGoogleLoginButton}
           />
         </div>
       </form>

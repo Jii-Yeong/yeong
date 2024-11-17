@@ -120,12 +120,12 @@ export default function SummaryDetailPage() {
                 <div className="flex flex-row gap-x-[8px] justify-end">
                   <CommonButton
                     text="수정"
-                    clickButton={clickEditButton}
+                    onClick={clickEditButton}
                     className="text-[14px] px-[8px] py-[2px]"
                   />
                   <CommonButton
                     text="삭제"
-                    clickButton={clickDeleteButton}
+                    onClick={clickDeleteButton}
                     className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
                   />
                 </div>
@@ -139,7 +139,7 @@ export default function SummaryDetailPage() {
       )}
       <CommonButton
         text={likeButtonText}
-        clickButton={clickLikeButton}
+        onClick={clickLikeButton}
         leftIcon={<Icon icon="line-md:heart-filled" color={likeIconColor} />}
         isLoading={isFetching || isPending}
         className="w-[130px] font-bold text-[20px]"
@@ -155,14 +155,14 @@ export default function SummaryDetailPage() {
               />
             }
             className="p-[4px] rounded-full border-transparent"
-            clickButton={clickKaKaoShareButton}
+            onClick={clickKaKaoShareButton}
           />
           <CommonButton
             leftIcon={
               <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
             }
             className="p-[4px] rounded-full border-transparent"
-            clickButton={clickXShareButton}
+            onClick={clickXShareButton}
           />
           <CommonButton
             leftIcon={
@@ -173,7 +173,7 @@ export default function SummaryDetailPage() {
               />
             }
             className="p-[4px] rounded-full border-transparent"
-            clickButton={clickCopyLinkButton}
+            onClick={clickCopyLinkButton}
           />
         </div>
       )}

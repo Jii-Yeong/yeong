@@ -1,10 +1,9 @@
-import { ButtonHTMLAttributes, CSSProperties, ReactNode, useMemo } from 'react';
+import { ButtonHTMLAttributes, ReactNode, useMemo } from 'react';
 import { ClassNameValue, twMerge } from 'tailwind-merge';
 import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonButtonProps = {
   text?: string;
-  style?: CSSProperties;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   disabled?: boolean;
@@ -12,7 +11,7 @@ type CommonButtonProps = {
   loadingColor?: string;
   loadingWidth?: number;
   classList?: ClassNameValue;
-  clickButton?: () => void;
+  onClick?: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CommonButton({
@@ -25,12 +24,12 @@ export default function CommonButton({
   loadingColor = '#5ae9e4',
   className,
   classList,
-  clickButton,
+  onClick,
   ...rest
 }: CommonButtonProps) {
   const handleClickButton = () => {
-    if (disabled || isLoading || !clickButton) return;
-    clickButton();
+    if (disabled || isLoading || !onClick) return;
+    onClick();
   };
 
   const buttonClassName = useMemo(

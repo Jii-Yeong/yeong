@@ -62,7 +62,7 @@ export default function SummaryCommentItem({
           <CommonButton
             text={replyButtonText}
             className="text-[12px]"
-            clickButton={clickReplyButton}
+            onClick={clickReplyButton}
           />
         )}
         {isMy && (
@@ -71,7 +71,7 @@ export default function SummaryCommentItem({
             <CommonButton
               text="삭제"
               className="text-[12px] text-white bg-red border-transparent px-[8px] py-[2px]"
-              clickButton={clickCommentDeleteButton}
+              onClick={clickCommentDeleteButton}
               isLoading={isDeletePending}
               disabled={isDeletePending}
               loadingColor={COLORS.white}
