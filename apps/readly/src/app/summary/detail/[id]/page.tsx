@@ -45,6 +45,10 @@ export default function SummaryDetailPage() {
     return formatDateToString(new Date(detailSummaryData.created_at));
   }, [detailSummaryData?.created_at]);
 
+  const shareText = useMemo(() => {
+    return `${detailSummaryData?.user_name} 님이 작성한 책 ${detailSummaryData?.book_title}의 요약 - Readly에서 확인해보세요.`;
+  }, [detailSummaryData]);
+
   const clickLikeButton = () => {
     likeMutate({ id: Number(id) });
   };
@@ -64,7 +68,7 @@ export default function SummaryDetailPage() {
       requestUrl: window.location.href,
       templateId: 114283,
       templateArgs: {
-        title: `${detailSummaryData?.user_name} 님이 작성한 책 ${detailSummaryData?.book_title}의 요약 - Readly에서 확인해보세요.`,
+        title: shareText,
         like_count: likeCountData?.like_count || 0,
         view_count: detailSummaryData?.view_count || 0,
         path: pathname,
@@ -72,6 +76,16 @@ export default function SummaryDetailPage() {
         user_name: detailSummaryData?.user_name,
       },
     });
+  };
+
+  const clickXShareButton = () => {
+    return window.open(
+      `https://twitter.com/intent/tweet?text=${shareText}&url=${window.location.href}`,
+    );
+  };
+
+  const clickCopyLinkButton = () => {
+    navigator.clipboard.writeText(window.location.href);
   };
 
   return (
@@ -131,7 +145,7 @@ export default function SummaryDetailPage() {
         className="w-[130px] font-bold text-[20px]"
       />
       {detailSummaryData && likeCountData && (
-        <div>
+        <div className="flex flex-row justify-center gap-x-[8px]">
           <CommonButton
             leftIcon={
               <Icon
@@ -142,6 +156,24 @@ export default function SummaryDetailPage() {
             }
             className="p-[4px] rounded-full border-transparent"
             clickButton={clickKaKaoShareButton}
+          />
+          <CommonButton
+            leftIcon={
+              <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
+            }
+            className="p-[4px] rounded-full border-transparent"
+            clickButton={clickXShareButton}
+          />
+          <CommonButton
+            leftIcon={
+              <Icon
+                icon="ant-design:paper-clip-outlined"
+                width={35}
+                color={COLORS.black}
+              />
+            }
+            className="p-[4px] rounded-full border-transparent"
+            clickButton={clickCopyLinkButton}
           />
         </div>
       )}
