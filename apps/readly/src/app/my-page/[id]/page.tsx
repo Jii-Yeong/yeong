@@ -10,7 +10,6 @@ import {
   editUserProfileImageMutation,
   getUserInfoQuery,
 } from '@/service/user.service';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import {
   CommonButton,
   CommonFileInput,
@@ -75,12 +74,10 @@ export default function MyPage() {
                   isOpenFileInput && 'bg-main',
                   isOpenFileInput && 'border-transparent',
                 ]}
-                leftIcon={
-                  <Icon
-                    icon="mingcute:pencil-fill"
-                    color={isOpenFileInput ? COLORS.white : COLORS.black}
-                  />
-                }
+                leftIconProps={{
+                  icon: 'mingcute:pencil-fill',
+                  color: isOpenFileInput ? COLORS.white : COLORS.black,
+                }}
                 onClick={clickEditFileButton}
               />
             )}
@@ -102,12 +99,10 @@ export default function MyPage() {
                     isOpenNicknameInput && 'bg-main',
                     isOpenNicknameInput && 'border-transparent',
                   ]}
-                  leftIcon={
-                    <Icon
-                      icon="mingcute:pencil-fill"
-                      color={isOpenNicknameInput ? COLORS.white : COLORS.black}
-                    />
-                  }
+                  leftIconProps={{
+                    icon: 'mingcute:pencil-fill',
+                    color: isOpenNicknameInput ? COLORS.white : COLORS.black,
+                  }}
                   onClick={clickEditNicknameButton}
                 />
               )}

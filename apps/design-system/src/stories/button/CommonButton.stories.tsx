@@ -1,4 +1,3 @@
-import { InlineIcon } from '@iconify/react/dist/iconify.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CommonButton } from '@yeong/ui';
 
@@ -22,7 +21,7 @@ export const Default: Story = {
 export const Icon: Story = {
   args: {
     text: 'Button',
-    leftIcon: <InlineIcon icon="line-md:heart-filled" />,
-    rightIcon: <InlineIcon icon="line-md:heart-filled" />,
+    leftIconProps: { icon: 'line-md:heart-filled' },
+    rightIconProps: { icon: 'line-md:heart-filled' },
   },
 };

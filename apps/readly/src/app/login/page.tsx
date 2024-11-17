@@ -6,7 +6,6 @@ import {
   loginByGoogleMutation,
 } from '@/service/auth.service';
 import { getRootPage } from '@/utils/route.utils';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import { useGoogleLogin } from '@react-oauth/google';
 import { CommonButton, CommonInput } from '@yeong/ui';
 import { useRouter } from 'next/navigation';
@@ -83,7 +82,7 @@ export default function LoginPage() {
           <CommonButton
             text="구글 로그인"
             className="text-[18px] font-bold"
-            leftIcon={<Icon icon="devicon:google" />}
+            leftIconProps={{ icon: 'devicon:google' }}
             onClick={clickGoogleLoginButton}
           />
         </div>

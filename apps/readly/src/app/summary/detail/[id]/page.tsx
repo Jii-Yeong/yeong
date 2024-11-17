@@ -15,7 +15,6 @@ import {
   getDetailBookSummaryQuery,
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonButton, CommonDivider } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, usePathname, useRouter } from 'next/navigation';
@@ -140,38 +139,39 @@ export default function SummaryDetailPage() {
       <CommonButton
         text={likeButtonText}
         onClick={clickLikeButton}
-        leftIcon={<Icon icon="line-md:heart-filled" color={likeIconColor} />}
+        leftIconProps={{
+          icon: 'line-md:heart-filled',
+          color: likeIconColor,
+        }}
         isLoading={isFetching || isPending}
         className="w-[130px] font-bold text-[20px]"
       />
       {detailSummaryData && likeCountData && (
         <div className="flex flex-row justify-center gap-x-[8px]">
           <CommonButton
-            leftIcon={
-              <Icon
-                icon="simple-icons:kakaotalk"
-                width={30}
-                color={COLORS.brown}
-              />
-            }
+            leftIconProps={{
+              icon: 'simple-icons:kakaotalk',
+              width: 30,
+              color: COLORS.brown,
+            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickKaKaoShareButton}
           />
           <CommonButton
-            leftIcon={
-              <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
-            }
+            leftIconProps={{
+              icon: 'bi:twitter-x',
+              width: 30,
+              color: COLORS.black,
+            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickXShareButton}
           />
           <CommonButton
-            leftIcon={
-              <Icon
-                icon="ant-design:paper-clip-outlined"
-                width={35}
-                color={COLORS.black}
-              />
-            }
+            leftIconProps={{
+              icon: 'ant-design:paper-clip-outlined',
+              width: 35,
+              color: COLORS.black,
+            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickCopyLinkButton}
           />

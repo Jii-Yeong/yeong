@@ -1,23 +1,25 @@
-import { ButtonHTMLAttributes, ReactNode, useMemo } from 'react';
+import { ButtonHTMLAttributes, useMemo } from 'react';
 import { ClassNameValue, twMerge } from 'tailwind-merge';
 import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
+import { Icon, IconProps } from '@iconify/react/dist/iconify.js';
 
 type CommonButtonProps = {
   text?: string;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIconProps?: IconProps;
+  rightIconProps?: IconProps;
   disabled?: boolean;
   isLoading?: boolean;
   loadingColor?: string;
   loadingWidth?: number;
+  className?: string;
   classList?: ClassNameValue;
   onClick?: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CommonButton({
   text = '',
-  leftIcon,
-  rightIcon,
+  leftIconProps,
+  rightIconProps,
   disabled,
   isLoading,
   loadingWidth = 27,
@@ -35,21 +37,26 @@ export default function CommonButton({
   const buttonClassName = useMemo(
     () =>
       twMerge(
-        'hover:opacity-100 bg-white text-black text-[14px] rounded-[8px] p-[8px] border border-gray lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60',
+        'hover:opacity-100 bg-white text-black text-[14px] rounded-[8px] p-[8px] border border-gray lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60 bg-white',
         className,
         classList,
       ),
     [className, classList],
   );
   return (
-    <button className={buttonClassName} onClick={handleClickButton} {...rest}>
+    <button
+      className={buttonClassName}
+      onClick={handleClickButton}
+      disabled={disabled}
+      {...rest}
+    >
       {isLoading ? (
         <LoadingSpinner size={loadingWidth} color={loadingColor} />
       ) : (
         <>
-          {leftIcon}
+          {leftIconProps && <Icon {...leftIconProps} />}
           {text}
-          {rightIcon}
+          {rightIconProps && <Icon {...rightIconProps} />}
         </>
       )}
     </button>
