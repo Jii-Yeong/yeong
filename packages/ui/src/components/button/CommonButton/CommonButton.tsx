@@ -11,7 +11,6 @@ type CommonButtonProps = {
   isLoading?: boolean;
   loadingColor?: string;
   loadingWidth?: number;
-  className?: string;
   classList?: ClassNameValue;
   onClick?: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -37,7 +36,7 @@ export default function CommonButton({
   const buttonClassName = useMemo(
     () =>
       twMerge(
-        'hover:opacity-100 bg-white text-black text-[14px] rounded-[8px] p-[8px] border border-gray lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60 bg-white',
+        'hover:opacity-100 bg-white text-black text-[14px] rounded-[8px] p-[8px] border border-gray lg:hover:opacity-50 flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60 disabled:hover:opacity-60',
         className,
         classList,
       ),
