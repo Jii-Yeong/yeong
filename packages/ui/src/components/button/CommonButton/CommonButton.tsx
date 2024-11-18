@@ -1,84 +1,147 @@
-import { ButtonHTMLAttributes, ReactNode, useMemo } from 'react';
+import { ButtonHTMLAttributes, forwardRef, memo, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.ts';
 import { cn } from '../../../utils/class-name.utils.ts';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
 
-const ButtonVariants = cva(
-  'hover:opacity-100 text-white text-[16px] border border-transparent rounded-[8px] px-[16px] py-[6px] flex flex-row items-center gap-x-[8px] justify-center disabled:opacity-60 disabled:hover:opacity-60 transition-colors',
+const buttonVariants = cva(
+  [
+    'text-white',
+    'text-[16px]',
+    'border',
+    'border-transparent',
+    'rounded-[8px]',
+    'px-[16px]',
+    'py-[6px]',
+    'flex',
+    'flex-row',
+    'items-center',
+    'gap-x-[8px]',
+    'justify-center',
+    'transition-colors',
+    'hover:opacity-100',
+    'disabled:opacity-60',
+    'disabled:hover:opacity-60',
+  ].join(' '),
   {
     variants: {
       variant: {
-        primary: 'bg-main lg:hover:bg-dark-main disabled:hover:bg-main',
-        secondary: 'bg-gray lg:hover:bg-dark-gray disabled:hover:bg-gray',
-        red: 'bg-red lg:hover:bg-dark-red disabled:hover:bg-red',
-        outline:
-          'bg-white border-gray text-black lg:hover:bg-light-gray disabled:hover:bg-white',
-        ghost:
-          'bg-transparent text-black lg:hover:bg-light-gray disabled:hover:bg-transparent',
-        link: 'bg-transparent text-black underline lg:hover:bg-light-gray disabled:hover:bg-transparent',
+        primary: [
+          'bg-main',
+          'lg:hover:bg-dark-main',
+          'disabled:hover:bg-main',
+        ].join(' '),
+        secondary: [
+          'bg-gray',
+          'lg:hover:bg-dark-gray',
+          'disabled:hover:bg-gray',
+        ].join(' '),
+        red: ['bg-red', 'lg:hover:bg-dark-red', 'disabled:hover:bg-red'].join(
+          ' ',
+        ),
+        outline: [
+          'bg-white',
+          'border-gray',
+          'text-black',
+          'lg:hover:bg-light-gray',
+          'disabled:hover:bg-white',
+        ].join(' '),
+        ghost: [
+          'bg-transparent',
+          'text-black',
+          'lg:hover:bg-light-gray',
+          'disabled:hover:bg-transparent',
+        ].join(' '),
+        link: [
+          'bg-transparent',
+          'text-black',
+          'underline',
+          'lg:hover:bg-light-gray',
+          'disabled:hover:bg-transparent',
+        ].join(' '),
       },
+    },
+    defaultVariants: {
+      variant: 'primary',
     },
   },
 );
 
-type CommonButtonProps = {
-  children: ReactNode;
-  disabled?: boolean;
+type ButtonVariant = NonNullable<
+  VariantProps<typeof buttonVariants>['variant']
+>;
+
+interface ButtonBaseProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
+  className?: ClassNameValue;
   isLoading?: boolean;
   loadingColor?: string;
   loadingWidth?: number;
-  className?: ClassNameValue;
-  variant?: 'primary' | 'secondary' | 'outline' | 'red' | 'ghost' | 'link';
-  onClick?: () => void;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> &
-  VariantProps<typeof ButtonVariants>;
-
-export default function CommonButton({
-  children,
-  disabled,
-  isLoading,
-  loadingWidth = 23,
-  loadingColor = '#5ae9e4',
-  className,
-  variant = 'primary',
-  onClick,
-  ...rest
-}: CommonButtonProps) {
-  const buttonClassName = useMemo(
-    () => cn(ButtonVariants({ variant }), className),
-    [className, variant],
-  );
-
-  const parsedLoadingColor = useMemo(() => {
-    switch (variant) {
-      case 'primary':
-      case 'secondary':
-      case 'red':
-        return UI_COLORS.white;
-      default:
-        return loadingColor;
-    }
-  }, [loadingColor, variant]);
-
-  const handleClickButton = () => {
-    if (disabled || isLoading || !onClick) return;
-    onClick();
-  };
-
-  return (
-    <button
-      className={buttonClassName}
-      onClick={handleClickButton}
-      disabled={disabled}
-      {...rest}
-    >
-      {isLoading ? (
-        <LoadingSpinner size={loadingWidth} color={parsedLoadingColor} />
-      ) : (
-        children
-      )}
-    </button>
-  );
+  variant?: ButtonVariant;
 }
+
+type CommonButtonProps = ButtonBaseProps & VariantProps<typeof buttonVariants>;
+
+const CommonButton = forwardRef<HTMLButtonElement, CommonButtonProps>(
+  (
+    {
+      children,
+      disabled = false,
+      isLoading = false,
+      loadingWidth = 23,
+      loadingColor = '#5ae9e4',
+      className,
+      variant = 'primary',
+      onClick,
+      type = 'button',
+      ...rest
+    },
+    ref,
+  ) => {
+    const buttonClassName = useMemo(
+      () => cn(buttonVariants({ variant }), className),
+      [variant, className],
+    );
+
+    const spinnerColor = useMemo(() => {
+      if (['primary', 'secondary', 'red'].includes(variant)) {
+        return UI_COLORS.white;
+      }
+      return loadingColor;
+    }, [variant, loadingColor]);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || isLoading) return;
+      onClick?.(event);
+    };
+
+    const buttonContent = useMemo(() => {
+      if (isLoading) {
+        return <LoadingSpinner size={loadingWidth} color={spinnerColor} />;
+      }
+      return children;
+    }, [isLoading, loadingWidth, spinnerColor, children]);
+
+    return (
+      <button
+        ref={ref}
+        className={buttonClassName}
+        onClick={handleClick}
+        disabled={disabled || isLoading}
+        type={type}
+        aria-busy={isLoading}
+        {...rest}
+      >
+        {buttonContent}
+      </button>
+    );
+  },
+);
+
+CommonButton.displayName = 'CommonButton';
+
+const MemoizedCommonButton = memo(CommonButton);
+
+export type { CommonButtonProps, ButtonVariant };
+export { MemoizedCommonButton as default, buttonVariants };
