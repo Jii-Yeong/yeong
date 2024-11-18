@@ -93,7 +93,7 @@ export default function CommonPagination({
               isMatchPagination(item) ? 'text-white' : 'text-black',
               isMatchPagination(item) ? 'border-white' : 'border-gray',
             ]}
-            clickButton={() => clickPaginationButton(item)}
+            onClick={() => clickPaginationButton(item)}
           />
         ))}
       </div>
