@@ -173,12 +173,13 @@ export default function BookSummaryCreateSection({
         />
       </div>
       <CommonButton
-        text="작성"
         onClick={clickEndButton}
         className="text-[16px] font-bold bg-main text-white border-transparent px-[10px] py-[16px]"
         isLoading={isCreatePending || isEditPending}
         loadingColor={COLORS.white}
-      />
+      >
+        작성
+      </CommonButton>
     </div>
   );
 }

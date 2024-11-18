@@ -44,12 +44,18 @@ export default function DefaultHeader() {
               userName={data.nickname}
               textClassName="text-white font-bold"
             />
-            <CommonButton text="요약 작성하기" onClick={goToWriteSummary} />
+            <CommonButton onClick={goToWriteSummary} variant="outline">
+              요약 작성하기
+            </CommonButton>
           </>
         ) : (
           <>
-            <CommonButton text="로그인" onClick={clickLoginButton} />
-            <CommonButton text="회원가입" onClick={clickSignUpButton} />
+            <CommonButton onClick={clickLoginButton} variant="outline">
+              로그인
+            </CommonButton>
+            <CommonButton onClick={clickSignUpButton} variant="outline">
+              회원가입
+            </CommonButton>
           </>
         )}
       </div>

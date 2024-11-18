@@ -85,16 +85,17 @@ export default function CommonPagination({
       <div className="flex flex-row gap-x-[8px]">
         {buttonList.map((item) => (
           <CommonButton
-            text={String(item + 1)}
             key={item}
-            className="w-[35px] h-[35px] rounded-full text-[14px] p-0"
-            classList={[
+            className={[
+              'w-[35px] h-[35px] rounded-full text-[14px] p-0',
               isMatchPagination(item) ? 'bg-main' : 'bg-white',
               isMatchPagination(item) ? 'text-white' : 'text-black',
               isMatchPagination(item) ? 'border-white' : 'border-gray',
             ]}
             onClick={() => clickPaginationButton(item)}
-          />
+          >
+            {String(item + 1)}
+          </CommonButton>
         ))}
       </div>
       <div

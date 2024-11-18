@@ -10,6 +10,7 @@ import {
   editUserProfileImageMutation,
   getUserInfoQuery,
 } from '@/service/user.service';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import {
   CommonButton,
   CommonFileInput,
@@ -69,23 +70,25 @@ export default function MyPage() {
             <ProfileImage imageSrc={infoData?.profile_image} size={150} />
             {infoData?.is_my && (
               <CommonButton
-                className="rounded-full w-[24px] h-[24px] p-0 absolute right-[-16px]"
-                classList={[
+                className={[
+                  'rounded-full w-[24px] h-[24px] p-0 absolute right-[-16px]',
                   isOpenFileInput && 'bg-main',
                   isOpenFileInput && 'border-transparent',
                 ]}
-                leftIconProps={{
-                  icon: 'mingcute:pencil-fill',
-                  color: isOpenFileInput ? COLORS.white : COLORS.black,
-                }}
                 onClick={clickEditFileButton}
-              />
+                variant="outline"
+              >
+                <Icon
+                  icon="mingcute:pencil-fill"
+                  color={isOpenFileInput ? COLORS.white : COLORS.black}
+                />
+              </CommonButton>
             )}
           </div>
           {isOpenFileInput && (
             <div className="flex flex-row gap-x-[16px]">
               <CommonFileInput onChange={setFiles} />
-              <CommonButton text="수정" onClick={clickEnterEditProfile} />
+              <CommonButton onClick={clickEnterEditProfile}>수정</CommonButton>
             </div>
           )}
 
@@ -94,17 +97,19 @@ export default function MyPage() {
               <p className="text-lg">{infoData?.nickname}</p>
               {infoData?.is_my && (
                 <CommonButton
-                  className="rounded-full w-[24px] h-[24px] p-0 absolute right-[-32px] bottom-0"
-                  classList={[
+                  className={[
+                    'rounded-full w-[24px] h-[24px] p-0 absolute right-[-32px] bottom-0',
                     isOpenNicknameInput && 'bg-main',
                     isOpenNicknameInput && 'border-transparent',
                   ]}
-                  leftIconProps={{
-                    icon: 'mingcute:pencil-fill',
-                    color: isOpenNicknameInput ? COLORS.white : COLORS.black,
-                  }}
+                  variant="outline"
                   onClick={clickEditNicknameButton}
-                />
+                >
+                  <Icon
+                    icon="mingcute:pencil-fill"
+                    color={isOpenNicknameInput ? COLORS.white : COLORS.black}
+                  />
+                </CommonButton>
               )}
             </div>
           </div>
@@ -115,7 +120,7 @@ export default function MyPage() {
                 placeholder="수정할 닉네임"
                 setInputValue={setNickname}
               />
-              <CommonButton text="수정" onClick={clickEnterEditNickname} />
+              <CommonButton onClick={clickEnterEditNickname}>수정</CommonButton>
             </div>
           )}
         </div>

@@ -15,6 +15,7 @@ import {
   getDetailBookSummaryQuery,
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonButton, CommonDivider } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, usePathname, useRouter } from 'next/navigation';
@@ -118,15 +119,19 @@ export default function SummaryDetailPage() {
               {detailSummaryData.is_my && (
                 <div className="flex flex-row gap-x-[8px] justify-end">
                   <CommonButton
-                    text="수정"
                     onClick={clickEditButton}
                     className="text-[14px] px-[8px] py-[2px]"
-                  />
+                    variant="outline"
+                  >
+                    수정
+                  </CommonButton>
                   <CommonButton
-                    text="삭제"
                     onClick={clickDeleteButton}
                     className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
-                  />
+                    variant="red"
+                  >
+                    삭제
+                  </CommonButton>
                 </div>
               )}
             </div>
@@ -137,44 +142,45 @@ export default function SummaryDetailPage() {
         <BookSummaryDetailSkeleton />
       )}
       <CommonButton
-        text={likeButtonText}
         onClick={clickLikeButton}
-        leftIconProps={{
-          icon: 'line-md:heart-filled',
-          color: likeIconColor,
-        }}
         isLoading={isFetching || isPending}
-        className="w-[130px] font-bold text-[20px]"
-      />
+        className="w-[150px] h-[44px] font-bold text-[20px]"
+        variant="outline"
+      >
+        <Icon icon="line-md:heart-filled" color={likeIconColor} />
+        {likeButtonText}
+      </CommonButton>
       {detailSummaryData && likeCountData && (
         <div className="flex flex-row justify-center gap-x-[8px]">
           <CommonButton
-            leftIconProps={{
-              icon: 'simple-icons:kakaotalk',
-              width: 30,
-              color: COLORS.brown,
-            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickKaKaoShareButton}
-          />
+            variant="ghost"
+          >
+            <Icon
+              icon="simple-icons:kakaotalk"
+              width={30}
+              color={COLORS.brown}
+            />
+          </CommonButton>
           <CommonButton
-            leftIconProps={{
-              icon: 'bi:twitter-x',
-              width: 30,
-              color: COLORS.black,
-            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickXShareButton}
-          />
+            variant="ghost"
+          >
+            <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
+          </CommonButton>
           <CommonButton
-            leftIconProps={{
-              icon: 'ant-design:paper-clip-outlined',
-              width: 35,
-              color: COLORS.black,
-            }}
             className="p-[4px] rounded-full border-transparent"
             onClick={clickCopyLinkButton}
-          />
+            variant="ghost"
+          >
+            <Icon
+              icon="ant-design:paper-clip-outlined"
+              width={35}
+              color={COLORS.black}
+            />
+          </CommonButton>
         </div>
       )}
       <CommonDivider />

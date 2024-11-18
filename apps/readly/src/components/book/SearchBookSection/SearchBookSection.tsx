@@ -86,7 +86,7 @@ export default function SearchBookSection({
           alertText={alertText}
           wrapperClassName="flex-1"
         />
-        <CommonButton text="검색" onClick={searchBook} />
+        <CommonButton onClick={searchBook}>검색</CommonButton>
       </div>
       {isOpenResult && (
         <div className="flex flex-col items-center gap-y-[16px]">
@@ -113,7 +113,7 @@ export default function SearchBookSection({
               ))}
           </div>
           {selectedBook && (
-            <CommonButton text="선택" onClick={clickSelectBook} />
+            <CommonButton onClick={clickSelectBook}>선택</CommonButton>
           )}
         </div>
       )}

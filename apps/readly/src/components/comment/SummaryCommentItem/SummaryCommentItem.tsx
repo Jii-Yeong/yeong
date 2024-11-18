@@ -59,24 +59,24 @@ export default function SummaryCommentItem({
           userName={userName}
         />
         {isLoggedIn && !isReply && (
-          <CommonButton
-            text={replyButtonText}
-            className="text-[12px]"
-            onClick={clickReplyButton}
-          />
+          <CommonButton className="text-[12px]" onClick={clickReplyButton}>
+            {replyButtonText}
+          </CommonButton>
         )}
         {isMy && (
           <div className="flex flex-row gap-x-[8px]">
             {/* <CommonButton text="수정" fontSize={12} padding="2px 8px" /> */}
             <CommonButton
-              text="삭제"
-              className="text-[12px] text-white bg-red border-transparent px-[8px] py-[2px]"
+              className="text-[12px] px-[8px] py-[2px]"
               onClick={clickCommentDeleteButton}
               isLoading={isDeletePending}
               disabled={isDeletePending}
               loadingColor={COLORS.white}
               loadingWidth={20}
-            />
+              variant="red"
+            >
+              삭제
+            </CommonButton>
           </div>
         )}
       </div>

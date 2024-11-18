@@ -131,10 +131,11 @@ export default function SignUpPage() {
           alertText={errors.nickname?.message}
         />
         <CommonButton
-          text="회원가입"
           type="submit"
           className="bg-main border-transparent text-[18px] text-white font-bold"
-        />
+        >
+          회원가입
+        </CommonButton>
       </form>
     </div>
   );

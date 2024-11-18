@@ -9,15 +9,17 @@ export default {
     extend: {
       colors: {
         main: '#5ae9e4',
+        'dark-main': '#47b6b2',
         black: '#111111',
         gray: '#d3d3d3',
         'light-gray': '#efefef',
         'dark-gray': '#898989',
         'light-blue': '#eff3ff',
         red: '#ff0000',
+        'dark-red': '#be0000',
         green: '#00ff32',
         yellow: '#FFFF00',
-        brown: '#964B00'
+        brown: '#964B00',
       },
       fontSize: {
         sm: '12px',

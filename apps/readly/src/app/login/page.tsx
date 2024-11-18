@@ -6,6 +6,7 @@ import {
   loginByGoogleMutation,
 } from '@/service/auth.service';
 import { getRootPage } from '@/utils/route.utils';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { useGoogleLogin } from '@react-oauth/google';
 import { CommonButton, CommonInput } from '@yeong/ui';
 import { useRouter } from 'next/navigation';
@@ -73,18 +74,20 @@ export default function LoginPage() {
         {message && <p className="text-red">{message}</p>}
         <div className="flex flex-col gap-y-[16px]">
           <CommonButton
-            text="로그인"
             type="submit"
             className="bg-main border-transparent text-[18px] text-white font-bold"
             isLoading={isDefaultPending}
             loadingColor={COLORS.white}
-          />
+          >
+            로그인
+          </CommonButton>
           <CommonButton
-            text="구글 로그인"
             className="text-[18px] font-bold"
-            leftIconProps={{ icon: 'devicon:google' }}
             onClick={clickGoogleLoginButton}
-          />
+          >
+            <Icon icon="devicon:google" />
+            구글 로그인
+          </CommonButton>
         </div>
       </form>
     </div>

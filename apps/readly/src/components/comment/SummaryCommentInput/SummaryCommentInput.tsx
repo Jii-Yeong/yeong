@@ -46,13 +46,14 @@ export default function SummaryCommentInput({
         alertText={alertMessage}
       />
       <CommonButton
-        text="입력"
         className="w-[90px] text-[16px] bg-main text-white border-transparent"
         onClick={clickCommentInputButton}
         isLoading={isPending}
         loadingColor={COLORS.white}
         disabled={disabled}
-      />
+      >
+        입력
+      </CommonButton>
     </div>
   );
 }
