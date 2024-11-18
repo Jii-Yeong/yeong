@@ -7,11 +7,13 @@ import * as CommonButtonStories from './CommonButton.stories';
 
 일반적으로 사용되는 버튼 컴포넌트 입니다.
 
-<Primary />
+<Canvas of={CommonButtonStories.All} />
 
 ## Props
 
-<Controls />
+<Canvas of={CommonButtonStories.Default} />
+
+<Controls of={CommonButtonStories.Default} />
 
 ## Stories
 
@@ -19,6 +21,10 @@ import * as CommonButtonStories from './CommonButton.stories';
 
 <Canvas of={CommonButtonStories.Default} />
 
-### Icon
+### Only Icon
 
-<Canvas of={CommonButtonStories.Icon} />
+<Canvas of={CommonButtonStories.OnlyIcon} />
+
+### With Icon
+
+<Canvas of={CommonButtonStories.WithIcon} />

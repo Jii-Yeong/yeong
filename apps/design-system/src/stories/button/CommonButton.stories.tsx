@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CommonButton } from '@yeong/ui';
+import { Icon } from '@iconify/react';
 
 const meta = {
   title: 'UI/Button/CommonButton',
@@ -8,8 +9,12 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    text: {
-      description: '버튼 안 텍스트',
+    children: {
+      description: '버튼 안 컨텐츠',
+    },
+    variant: {
+      control: { type: 'radio' },
+      description: '버튼의 종류',
     },
     disabled: {
       description: '비활성화 여부',
@@ -26,22 +31,9 @@ const meta = {
     className: {
       description:
         '`<button />` 태그의 className, Tailwind CSS value 적용 가능',
-      type: 'string',
-    },
-    classList: {
-      description:
-        '`<button />` 태그의 classList, 변동되는 값에 따른 Tailwind CSS value 적용 가능 (tailwind-merge의 ClassNameValue와 동일)',
     },
     onClick: {
       description: '버튼 클릭 이벤트 함수',
-    },
-    leftIconProps: {
-      description:
-        '왼쪽에 표기될 아이콘의 Props, `@iconify/react` 라이브러리 컴포넌트의 Props와 동일',
-    },
-    rightIconProps: {
-      description:
-        '오른쪽에 표기될 아이콘의 Props, `@iconify/react` 라이브러리 컴포넌트의 Props와 동일',
     },
   },
 } satisfies Meta<typeof CommonButton>;
@@ -49,18 +41,72 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const All: Story = {
+  args: {
+    children: 'Button',
+  },
+  parameters: {
+    controls: {
+      disable: true,
+    },
+  },
+  decorators: (Story) => {
+    return (
+      <div className="flex flex-row gap-x-[16px]">
+        <Story args={{ variant: 'primary', children: 'Button' }} />
+        <Story args={{ variant: 'secondary', children: 'Button' }} />
+        <Story args={{ variant: 'red', children: 'Button' }} />
+        <Story args={{ variant: 'outline', children: 'Button' }} />
+        <Story args={{ variant: 'ghost', children: 'Button' }} />
+        <Story args={{ variant: 'link', children: 'Button' }} />
+        <Story
+          args={{
+            variant: 'outline',
+            children: <Icon icon="ant-design:paper-clip-outlined" width={20} />,
+            className: 'rounded-full p-[8px]',
+          }}
+        />
+        <Story
+          args={{
+            variant: 'outline',
+            children: (
+              <>
+                <Icon icon="ant-design:paper-clip-outlined" width={20} />
+                Copy
+              </>
+            ),
+          }}
+        />
+      </div>
+    );
+  },
+};
+
 export const Default: Story = {
   args: {
-    text: 'Button',
+    children: 'Button',
+    variant: 'primary',
     disabled: false,
     isLoading: false,
   },
 };
 
-export const Icon: Story = {
+export const OnlyIcon: Story = {
   args: {
-    text: 'Button',
-    leftIconProps: { icon: 'line-md:heart-filled' },
-    rightIconProps: { icon: 'line-md:heart-filled' },
+    children: <Icon icon="line-md:heart-filled" />,
+    variant: 'outline',
+    className: 'rounded-full p-[8px]',
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    children: (
+      <>
+        <Icon icon="line-md:heart-filled" />
+        Icon Button
+      </>
+    ),
+    variant: 'outline',
   },
 };
