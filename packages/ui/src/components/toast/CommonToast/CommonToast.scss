@@ -1,0 +1,12 @@
+.common-toast {
+  animation: move 0.3s;
+}
+
+@keyframes move {
+  from {
+    right: -280px;
+  }
+  to {
+    right: 16px;
+  }
+}

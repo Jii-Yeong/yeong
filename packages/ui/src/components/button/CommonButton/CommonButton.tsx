@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef, memo, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { cva, type VariantProps } from 'class-variance-authority';
-import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.ts';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 import { cn } from '../../../utils/class-name.utils.ts';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
 
