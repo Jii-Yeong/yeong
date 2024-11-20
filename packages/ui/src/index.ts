@@ -1,3 +1,5 @@
+"use client"
+
 import CommonButton from './components/button/CommonButton/CommonButton.tsx';
 import CommonChip from './components/chip/CommonChip/CommonChip.tsx';
 import { CommonChipProps } from './components/chip/CommonChip/CommonChip.tsx';
@@ -13,6 +15,7 @@ import CommonDropdownInner from './components/dropdown/CommonDropdownInner/Commo
 import CommonDropdownItem from './components/dropdown/CommonDropdownItem/CommonDropdownItem.tsx';
 import CommonFileInput from './components/input/CommonFileInput/CommonFileInput.tsx';
 import CommonToast from './components/toast/CommonToast/CommonToast.tsx';
+import CommonToaster from './components/toast/CommonToaster/CommonToaster.tsx';
 import { useToast } from './hooks/useToast.tsx';
 
 export {
@@ -30,6 +33,7 @@ export {
   CommonDropdownItem,
   CommonFileInput,
   CommonToast,
+  CommonToaster,
   useToast
 };
 

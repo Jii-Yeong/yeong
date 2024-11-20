@@ -14,6 +14,7 @@ const meta = {
     },
     variant: {
       control: { type: 'radio' },
+      options: ['primary', 'secondary', 'red', 'outline', 'ghost', 'link'],
       description: '버튼의 종류',
     },
     disabled: {

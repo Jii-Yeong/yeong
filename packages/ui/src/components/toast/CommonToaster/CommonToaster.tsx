@@ -1,34 +1,12 @@
-import { createContext, useRef } from 'react';
 import { CommonToast, useToast } from '../../../index.ts';
-
-type CommonToasterContextType = {
-  setTitle: (title: string) => void;
-  setDescription: (description: string) => void;
-  setIsShow: (isShow: boolean) => void;
-};
-
-export const CommonToasterContext = createContext<CommonToasterContextType>({
-  setTitle: () => {},
-  setDescription: () => {},
-  setIsShow: () => {},
-});
 
 export default function CommonToaster() {
   const { toasts } = useToast();
-  const toastRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div>
+    <div className="absolute right-0 top-[16px] flex flex-col gap-y-[16px]">
       {toasts?.map((toast, index) => {
-        return (
-          <CommonToast
-            key={toast.id}
-            {...toast}
-            index={index}
-            height={toastRef.current?.offsetHeight}
-            ref={toastRef}
-          />
-        );
+        return <CommonToast key={toast.id} {...toast} />;
       })}
     </div>
   );

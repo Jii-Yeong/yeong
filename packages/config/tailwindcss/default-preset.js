@@ -28,6 +28,9 @@ export default {
         lg: '24px',
         xl: '32px',
       },
+      animation: {
+        'show-toast': 'show-toast 0.3s',
+      },
       screens: {
         sm: '640px',
         md: '768px',

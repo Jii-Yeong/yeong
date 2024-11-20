@@ -1,4 +1,4 @@
-import { cva } from 'class-variance-authority';
+import { cva, VariantProps } from 'class-variance-authority';
 import {
   forwardRef,
   HTMLAttributes,
@@ -15,14 +15,14 @@ import './CommonToast.scss';
 const toastVariants = cva(
   [
     'w-[280px]',
-    'border',
-    'border-gray',
     'rounded-[8px]',
     'p-[16px]',
-    'absolute',
+    'relative',
     'top-[16px]',
     'right-[16px]',
-    'transition-all',
+    'animate-show-toast',
+    'text-white',
+    'z-100',
   ].join(' '),
   {
     variants: {
@@ -30,9 +30,21 @@ const toastVariants = cva(
         true: 'right-[16px]',
         false: 'right-[-280px]',
       },
+      variant: {
+        normal: ['bg-main'].join(' '),
+        outline: ['border', 'border-gray', 'bg-white', 'text-black'].join(' '),
+        success: ['bg-green'].join(' '),
+        error: ['bg-red'].join(' '),
+      },
+    },
+    defaultVariants: {
+      show: true,
+      variant: 'normal',
     },
   },
 );
+
+type ToastVariant = NonNullable<VariantProps<typeof toastVariants>>;
 
 interface CommonToastProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
@@ -41,12 +53,9 @@ interface CommonToastProps
   title?: string;
   description?: string;
   isShow?: boolean;
-  index?: number;
-  height?: number;
   id?: string;
+  variant?: ToastVariant['variant'];
 }
-
-const TOP_MARGIN = 16;
 
 const CommonToast = forwardRef(
   (
@@ -56,45 +65,53 @@ const CommonToast = forwardRef(
       description,
       closeChildren,
       isShow,
-      index,
-      height,
       id,
+      variant,
     }: CommonToastProps,
     ref: Ref<HTMLDivElement>,
   ) => {
-    const { dismiss } = useToast();
+    const { deleteToast } = useToast();
     const divClassName = useMemo(
-      () => cn(toastVariants({ show: isShow }), className),
-      [className, isShow],
+      () =>
+        cn(
+          toastVariants({
+            show: isShow,
+            variant,
+          }),
+          className,
+        ),
+      [className, isShow, variant],
     );
 
     const closeContent = useMemo(
       () =>
-        closeChildren || <CommonButton variant="outline">닫기</CommonButton>,
+        closeChildren || (
+          <CommonButton
+            variant="outline"
+            className="text-md px-[8px] py-[4px] rounded-[4px]"
+          >
+            닫기
+          </CommonButton>
+        ),
       [closeChildren],
     );
 
-    const topPosition = useMemo(() => {
-      if (!height || !index) return TOP_MARGIN;
-      return (height + TOP_MARGIN) * index + TOP_MARGIN;
-    }, [height, index]);
-
     const handleClickClose = () => {
       if (!id) return;
-      dismiss(id);
+      deleteToast(id);
     };
 
     return (
-      <div
-        className={`common-toast ${divClassName}`}
-        ref={ref}
-        style={{ top: topPosition }}
-      >
-        <div className="flex flex-row justify-between">
-          {title && <p className="font-bold">{title}</p>}
-          <div onClick={handleClickClose}>{closeContent}</div>
+      <div className={`common-toast ${divClassName}`} ref={ref}>
+        <div className="flex flex-row justify-between gap-x-[8px]">
+          <div className="flex-1">
+            {title && <p className="font-bold break-all">{title}</p>}
+            {description && <p className="text-md break-all">{description}</p>}
+          </div>
+          <div className="cursor-pointer" onClick={handleClickClose}>
+            {closeContent}
+          </div>
         </div>
-        {description && <p className="text-md">{description}</p>}
       </div>
     );
   },

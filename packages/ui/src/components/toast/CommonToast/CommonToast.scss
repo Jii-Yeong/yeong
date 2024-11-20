@@ -1,8 +1,8 @@
 .common-toast {
-  animation: move 0.3s;
+  transition: right 0.3s;
 }
 
-@keyframes move {
+@keyframes show-toast {
   from {
     right: -280px;
   }
