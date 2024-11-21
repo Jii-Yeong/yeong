@@ -109,11 +109,13 @@ export const useToast = () => {
 
     const isAllClose = toastState.toasts.every((toast) => !toast.isShow);
 
-    const timer = setTimeout(() => {
-      if (toastState.toasts.length > 0 && isAllClose) {
+    let timer: NodeJS.Timeout;
+
+    if (toastState.toasts.length > 0 && isAllClose) {
+      timer = setTimeout(() => {
         dispatch(ACTION_TYPES.DELETE_ALL);
-      }
-    }, 500);
+      }, 500);
+    }
 
     return () => {
       const index = listeners.indexOf(setToastState);
