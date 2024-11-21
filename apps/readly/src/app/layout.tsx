@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import Provider from './provider';
 import KaKaoScript from './script/KaKaoScript';
+import { CommonToaster } from '@yeong/ui';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <Provider>
           <div className="flex flex-col items-center">
@@ -39,6 +40,7 @@ export default function RootLayout({
             </div>
           </div>
         </Provider>
+        <CommonToaster />
       </body>
       <KaKaoScript />
     </html>

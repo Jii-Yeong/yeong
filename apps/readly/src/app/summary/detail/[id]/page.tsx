@@ -16,7 +16,7 @@ import {
 } from '@/service/book.service';
 import { getRootPage, getSummaryEditPage } from '@/utils/route.utils';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton, CommonDivider } from '@yeong/ui';
+import { CommonButton, CommonDivider, useToast } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -25,6 +25,7 @@ export default function SummaryDetailPage() {
   const { id } = useParams();
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
   const { data: detailSummaryData } = getDetailBookSummaryQuery(Number(id));
   const { data: likeCountData, isFetching } = getBookSummaryLikeCountQuery(
     Number(id),
@@ -85,7 +86,22 @@ export default function SummaryDetailPage() {
   };
 
   const clickCopyLinkButton = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        toast({
+          description: '링크 복사가 완료되었습니다.',
+          variant: 'outline',
+          closeChildren: <Icon icon="iconamoon:close-bold" width={20} />,
+        });
+      })
+      .catch(() => {
+        toast({
+          description: '링크 복사를 실패하였습니다.',
+          variant: 'error',
+          closeChildren: <Icon icon="iconamoon:close-bold" width={20} />,
+        });
+      });
   };
 
   return (
@@ -153,7 +169,7 @@ export default function SummaryDetailPage() {
       {detailSummaryData && likeCountData && (
         <div className="flex flex-row justify-center gap-x-[8px]">
           <CommonButton
-            className="p-[4px] rounded-full border-transparent"
+            className="p-[4px] rounded-full w-[44px] h-[44px]"
             onClick={clickKaKaoShareButton}
             variant="ghost"
           >
@@ -164,14 +180,14 @@ export default function SummaryDetailPage() {
             />
           </CommonButton>
           <CommonButton
-            className="p-[4px] rounded-full border-transparent"
+            className="p-[4px] rounded-full w-[44px] h-[44px]t"
             onClick={clickXShareButton}
             variant="ghost"
           >
             <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
           </CommonButton>
           <CommonButton
-            className="p-[4px] rounded-full border-transparent"
+            className="p-[4px] rounded-full w-[44px] h-[44px]"
             onClick={clickCopyLinkButton}
             variant="ghost"
           >
