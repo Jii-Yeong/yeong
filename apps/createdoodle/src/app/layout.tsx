@@ -1,5 +1,4 @@
 import CommonHeader from '@/components/header/CommonHeader';
-import '@/styles/reset.css';
 import type {Metadata} from 'next';
 import './globals.css';
 
