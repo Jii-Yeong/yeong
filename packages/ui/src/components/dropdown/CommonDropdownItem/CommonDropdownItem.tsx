@@ -1,12 +1,28 @@
-import { useContext } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { ReactNode, useContext, useMemo } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
 import { CommonDropdownContext } from '../CommonDropdown/CommonDropdown.tsx';
+import { cva } from 'class-variance-authority';
+import { cn } from '../../../utils/class-name.utils.ts';
 
-type CommonDropdownItemProps = {
-  children: string;
+export type CommonDropdownItemProps = {
+  children: ReactNode;
   value: string;
-  className?: string;
+  className?: ClassNameValue;
 };
+
+const commonDropdownItemVariants = cva(
+  ['p-[8px]', 'hover:bg-gray/40', 'cursor-pointer', 'bg-white'].join(' '),
+  {
+    variants: {
+      isSelected: {
+        true: 'bg-main/40',
+      },
+    },
+    defaultVariants: {
+      isSelected: false,
+    },
+  },
+);
 
 export default function CommonDropdownItem({
   children,
@@ -14,10 +30,14 @@ export default function CommonDropdownItem({
   className,
 }: CommonDropdownItemProps) {
   const { clickDropdownItem, currentValue } = useContext(CommonDropdownContext);
-  const divClassName = twMerge(
-    'p-[8px] hover:bg-gray/40 first:rounded-t-[8px] last:rounded-b-[8px] cursor-pointer',
-    className,
-    currentValue === value && 'bg-main/40',
+
+  const divClassName = useMemo(
+    () =>
+      cn(
+        commonDropdownItemVariants({ isSelected: currentValue === value }),
+        className,
+      ),
+    [currentValue, value, className],
   );
 
   const handleClickItem = () => {

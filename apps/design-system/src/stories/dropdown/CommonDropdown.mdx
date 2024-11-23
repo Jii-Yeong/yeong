@@ -1,0 +1,82 @@
+import {
+  Meta,
+  Controls,
+  Primary,
+  Story,
+  Canvas,
+  Source,
+} from '@storybook/blocks';
+import * as CommonDropdownStories from './CommonDropdown.stories';
+
+<Meta title="UI/Dropdown/CommonDropdown" of={CommonDropdownStories} />
+
+# CommonDropdown
+
+일반적으로 사용되는 드롭다운 컴포넌트 입니다.
+
+## Test
+
+<Story of={CommonDropdownStories.Default} />
+
+## Props
+
+<Controls of={CommonDropdownStories.Default} />
+
+## Usage
+
+<Source code={`
+import {
+  CommonChip,
+  CommonDropdown,
+  CommonDropdownInner,
+  CommonDropdownItem,
+  CommonDropdownItemProps,
+} from '@yeong/ui';
+
+export default function Page() {
+  const [value, setValue] = useState('')
+
+const list: CommonDropdownItemProps = [
+{
+children: '테스트1',
+value: 'test1',
+},
+{
+children: '테스트2',
+value: 'test2',
+},
+{
+children: '테스트3',
+value: 'test3',
+},
+];
+
+const changeValue = (value: string) => {
+setValue(value)
+}
+
+return (
+
+<CommonDropdown value={value} onChange={changeValue}>
+  <CommonDropdownInner>
+    {list.map((item) => (
+      <CommonDropdownItem value={item.value} key={item.value}>
+        {item.children}
+      </CommonDropdownItem>
+    ))}
+  </CommonDropdownInner>
+</CommonDropdown>
+)
+
+}
+`} />
+
+## Stories
+
+### Default
+
+<Story of={CommonDropdownStories.Default} />
+
+### Component Item
+
+<Story of={CommonDropdownStories.ComponentItem} />

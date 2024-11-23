@@ -17,6 +17,7 @@ import CommonFileInput from './components/input/CommonFileInput/CommonFileInput.
 import CommonToast from './components/toast/CommonToast/CommonToast.tsx';
 import CommonToaster from './components/toast/CommonToaster/CommonToaster.tsx';
 import { useToast } from './hooks/useToast.tsx';
+import { CommonDropdownItemProps } from './components/dropdown/CommonDropdownItem/CommonDropdownItem.tsx';
 
 export {
   CommonButton,
@@ -39,4 +40,5 @@ export {
 
 export type {
   CommonChipProps,
+  CommonDropdownItemProps,
 }
