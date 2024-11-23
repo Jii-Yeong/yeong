@@ -25,6 +25,7 @@ type CommonDropdownProps = {
   placeholder?: string;
   className?: ClassNameValue;
   isLoading?: boolean;
+  label?: ReactNode;
   onChange: (value: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'className'>;
 
@@ -72,6 +73,7 @@ const CommonDropdown = forwardRef(
       className,
       children,
       isLoading,
+      label,
       onChange,
       ...rest
     }: CommonDropdownProps,
@@ -79,7 +81,7 @@ const CommonDropdown = forwardRef(
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const divRef = useRef<HTMLDivElement | null>(null);
-    const [itemChildren, setItemChildren] = useState<ReactNode | null>(null);
+    const [itemChildren, setItemChildren] = useState<ReactNode | null>(label);
 
     const divClassName = useMemo(
       () => cn(dropdownVariants({ isLoading }), className),
