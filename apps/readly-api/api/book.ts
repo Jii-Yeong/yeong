@@ -200,8 +200,9 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     summaries.*,
     book_category.name AS category_name,
     users.nickname AS user_name,
-    users.profile_image AS user_image
-  FROM 
+    users.profile_image AS user_image,
+    COUNT(summary_comment.id)::INTEGER AS comment_count
+  FROM
     summaries
   LEFT JOIN 
     users
@@ -211,10 +212,18 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     book_category
   ON 
     summaries.category_id = book_category.id
+  LEFT JOIN
+    summary_comment
+  ON summaries.id = summary_comment.summary_id
   WHERE 
     (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
   AND
     (summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL)
+  GROUP BY 
+    summaries.id, 
+    book_category.name, 
+    users.nickname, 
+    users.profile_image
   ORDER BY summaries.created_at DESC;
   `;
 
