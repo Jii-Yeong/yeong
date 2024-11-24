@@ -1,4 +1,4 @@
-import { UI_COLORS } from '../../../constants/color.constants.ts';
+import { cva, VariantProps } from 'class-variance-authority';
 import {
   forwardRef,
   HTMLAttributes,
@@ -7,7 +7,7 @@ import {
   Ref,
   useMemo,
 } from 'react';
-import { cva, VariantProps } from 'class-variance-authority';
+import { UI_COLORS } from '../../../constants/color.constants.ts';
 import { cn } from '../../../utils/class-name.utils.ts';
 
 const chipVariants = cva(
@@ -83,7 +83,6 @@ type CommonChipProps = {
   text: string;
   value?: string;
   className?: string;
-  classList?: string;
   backgroundColor?: string;
   activeColor?: string;
   isActive?: boolean;
