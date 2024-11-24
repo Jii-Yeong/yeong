@@ -1,6 +1,6 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
-import { BookSummaryItemModel } from './book.model';
 import { UserInfoDto } from '../user.dto';
+import { BookSummaryItemModel } from './book.model';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -40,8 +40,8 @@ export type EditBookSummaryRequest = CreateBookSummaryRequest;
 
 export type BookSummaryListRequest = {
   category_id?: BookCategoryDto['id'] | null;
-  user_id?: UserInfoDto['id'] | null
-}
+  user_id?: UserInfoDto['id'] | null;
+};
 
 export type BookSummaryItemDto = {
   id: number;
@@ -63,6 +63,7 @@ export type BookSummaryItemDto = {
   is_my: boolean;
   category_id: number;
   category_name: string;
+  comment_count: number;
 };
 
 export const toBookSummaryItemModel = (
@@ -81,6 +82,9 @@ export const toBookSummaryItemModel = (
     createAt: item.created_at,
     category: item.category_name,
     categoryId: item.category_id,
+    likeCount: item.like_count,
+    viewCount: item.view_count,
+    commentCount: item.comment_count,
   };
 };
 
@@ -90,8 +94,8 @@ export type BookSummaryLikeCountResponse = {
 };
 
 export type BookCategoryDto = {
-  created_at: string
-  id: number
-  name: string
+  created_at: string;
+  id: number;
+  name: string;
   summary_count: number;
-}
+};

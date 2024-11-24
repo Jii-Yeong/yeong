@@ -1,10 +1,11 @@
+import UserProfile from '@/components/user/UserProfile/UserProfile';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonDivider, EllipsisText } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
 import BookCategoryChip from '../BookCategoryChip/BookCategoryChip';
-import UserProfile from '@/components/user/UserProfile/UserProfile';
+import BookSummaryContent from '../BookSummaryContent/BookSummaryContent';
 
 export type BookSummaryItemProps = {
   id: number;
@@ -19,6 +20,9 @@ export type BookSummaryItemProps = {
   createAt: string;
   category?: string;
   categoryId?: number;
+  likeCount?: number;
+  viewCount?: number;
+  commentCount?: number;
 };
 
 export default function BookSummaryItem({
@@ -34,6 +38,9 @@ export default function BookSummaryItem({
   createAt,
   category,
   categoryId,
+  likeCount,
+  viewCount,
+  commentCount,
 }: BookSummaryItemProps) {
   const createAtFromFormat = useMemo(
     () => formatDateToString(new Date(createAt)),
@@ -74,6 +81,20 @@ export default function BookSummaryItem({
             userId={userId}
           />
           <p className="text-dark-gray text-md">{createAtFromFormat}</p>
+        </div>
+      </div>
+      <div className="flex flex-row justify-end gap-x-[8px]">
+        <div className="flex flex-row gap-x-[4px] items-center">
+          <Icon icon="lets-icons:view-alt-fill" />
+          <p className="text-md">{viewCount}</p>
+        </div>
+        <div className="flex flex-row gap-x-[4px] items-center">
+          <Icon icon="mdi:heart" height={14} />
+          <p className="text-md">{likeCount}</p>
+        </div>
+        <div className="flex flex-row gap-x-[4px] items-center">
+          <Icon icon="basil:comment-solid" height={14} />
+          <p className="text-md">{commentCount}</p>
         </div>
       </div>
     </Link>
