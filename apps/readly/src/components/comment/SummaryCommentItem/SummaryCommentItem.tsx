@@ -1,3 +1,4 @@
+import UserProfile from '@/components/user/UserProfile/UserProfile';
 import { COLORS } from '@/constants/color.constants';
 import { useAuth } from '@/hooks/useAuth';
 import { SummaryCommentItemModel } from '@/model/comment/comment.model';
@@ -5,7 +6,6 @@ import { CommonButton } from '@yeong/ui';
 import { formatDateToString } from '@yeong/utils/date';
 import { useMemo, useState } from 'react';
 import SummaryCommentInput from '../SummaryCommentInput/SummaryCommentInput';
-import UserProfile from '@/components/user/UserProfile/UserProfile';
 
 export type SummaryCommentItemProps = SummaryCommentItemModel & {
   isReply?: boolean;
@@ -49,7 +49,7 @@ export default function SummaryCommentItem({
   return (
     <div className="flex flex-col gap-y-[16px] p-[16px]">
       <p className="text-md text-dark-gray">
-        {formatDateToString(new Date(createdAt))}
+        {formatDateToString(new Date(createdAt), 'yyyy.MM.dd HH:mm')}
       </p>
       <div className="whitespace-break-spaces	break-all">{comment}</div>
       <div className="flex flex-row gap-x-[16px]">
