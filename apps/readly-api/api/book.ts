@@ -200,36 +200,57 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     desc: 'ORDER BY summaries.created_at DESC',
     asc: 'ORDER BY summaries.created_at ASC',
     view: 'ORDER BY summaries.view_count DESC',
-    like: 'ORDER BY COUNT(summary_like_count.id) DESC',
+    like: 'ORDER BY COALESCE(like_counts.like_count, 0) DESC',
   };
 
   const orderByQuery = orderByObject[order || 'desc'];
 
   let query = `
-  SELECT 
+  WITH
+    comment_counts AS (
+      SELECT
+        summary_id,
+        COUNT(*) AS comment_count
+      FROM
+        summary_comment
+      GROUP BY
+        summary_id
+    ),
+    like_counts AS (
+      SELECT
+        summary_id,
+        COUNT(*) AS like_count
+      FROM
+        summary_like_count
+      GROUP BY
+        summary_id
+    )
+  SELECT
     summaries.*,
     book_category.name AS category_name,
     users.nickname AS user_name,
     users.profile_image AS user_image,
-    COUNT(summary_comment.id)::INTEGER AS comment_count,
-    COUNT(summary_like_count.id)::INTEGER as like_count
+    COALESCE(comment_counts.comment_count, 0) AS comment_count,
+    COALESCE(like_counts.like_count, 0) AS like_count
   FROM
     summaries
-  LEFT JOIN 
+  LEFT JOIN
     users
   ON
     summaries.user_id = users.id
-  LEFT JOIN 
+  LEFT JOIN
     book_category
-  ON 
+  ON
     summaries.category_id = book_category.id
   LEFT JOIN
-    summary_comment
-  ON summaries.id = summary_comment.summary_id
+    comment_counts
+  ON
+    summaries.id = comment_counts.summary_id
   LEFT JOIN
-    summary_like_count
-  ON summaries.id = summary_like_count.summary_id
-  WHERE 
+    like_counts
+  ON
+    summaries.id = like_counts.summary_id
+  WHERE
     (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
   AND
     (summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL)
@@ -237,7 +258,9 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     summaries.id, 
     book_category.name, 
     users.nickname, 
-    users.profile_image
+    users.profile_image,
+    comment_counts.comment_count,
+    like_counts.like_count
   `;
 
   query += orderByQuery;
