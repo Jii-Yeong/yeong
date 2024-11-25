@@ -1,12 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import {
-  forwardRef,
-  HTMLAttributes,
-  memo,
-  Ref,
-  useMemo,
-  useState,
-} from 'react';
+import { forwardRef, HTMLAttributes, memo, Ref, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { cn } from '../../../utils/class-name.utils.ts';
 
@@ -69,18 +62,18 @@ const buttonVariants = cva(
 type WrapperVariant = VariantProps<typeof wrapperVariants>;
 
 type ToggleButtonProps = {
-  defaultState?: boolean;
+  isOn?: boolean;
   className?: ClassNameValue;
   toggleClassName?: ClassNameValue;
   variant?: NonNullable<WrapperVariant['variant']>;
   size?: NonNullable<WrapperVariant['size']>;
   onClick: (value: boolean) => void;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>;
 
 const ToggleButton = forwardRef(
   (
     {
-      defaultState = false,
+      isOn,
       className,
       toggleClassName,
       variant = 'primary',
@@ -89,7 +82,6 @@ const ToggleButton = forwardRef(
     }: ToggleButtonProps,
     ref: Ref<HTMLDivElement>,
   ) => {
-    const [isOn, setIsOn] = useState(defaultState);
     const divClassName = useMemo(
       () => cn(wrapperVariants({ variant, size, on: isOn }), className),
       [variant, size, isOn, className],
@@ -99,7 +91,6 @@ const ToggleButton = forwardRef(
       [variant, size, isOn, toggleClassName],
     );
     const handleClickToggleButton = () => {
-      setIsOn(!isOn);
       onClick(!isOn);
     };
     return (
