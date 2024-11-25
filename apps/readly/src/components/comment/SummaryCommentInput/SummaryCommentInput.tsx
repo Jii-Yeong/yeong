@@ -31,7 +31,7 @@ export default function SummaryCommentInput({
     await clickInputButton();
   };
   return (
-    <div className="flex flex-row gap-x-[16px] mb-[16px]">
+    <div className="flex flex-col md:flex-row gap-x-[16px] gap-y-[16px] mb-[16px]">
       <CommonTextarea
         setTextareaValue={setCommentValue}
         height={100}
@@ -46,7 +46,7 @@ export default function SummaryCommentInput({
         alertText={alertMessage}
       />
       <CommonButton
-        className="w-[90px] text-[16px] bg-main text-white border-transparent"
+        className="w-full h-[50px] md:w-[90px] md:h-auto text-[16px] bg-main text-white border-transparent"
         onClick={clickCommentInputButton}
         isLoading={isPending}
         loadingColor={COLORS.white}
