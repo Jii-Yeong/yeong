@@ -10,7 +10,7 @@ import {
 import { twMerge } from 'tailwind-merge';
 
 export type CommonInputProps = {
-  value: string;
+  value?: string;
   alertText?: string;
   placeholder?: string;
   className?: string;
