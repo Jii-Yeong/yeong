@@ -266,11 +266,6 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
 
   const userToken = req.headers['authorization']?.split(' ')[1];
 
-  if (!userToken) {
-    res.json({ like_count: rowCount, is_clicked: false });
-    return;
-  }
-
   const decodedInfo = decodeJwtToken(userToken || null);
 
   let specUserId = req.ip
