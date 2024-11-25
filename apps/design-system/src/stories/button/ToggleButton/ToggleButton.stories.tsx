@@ -151,16 +151,15 @@ export const Default: Story = {
     variant: 'primary',
     size: 'medium',
   },
-  decorators: (Story) => {
+  decorators: (Story, { args }) => {
     const [isOn, setIsOn] = useState(true);
     return (
       <Story
         args={{
+          ...args,
           onClick: (value: boolean) => {
             setIsOn(value);
           },
-          variant: 'primary',
-          size: 'medium',
           isOn,
         }}
       />
@@ -172,11 +171,12 @@ export const Custom: Story = {
   args: {
     onClick: () => {},
   },
-  decorators: (Story) => {
+  decorators: (Story, { args }) => {
     const [isOn, setIsOn] = useState(true);
     return (
       <Story
         args={{
+          ...args,
           onClick: (value: boolean) => {
             setIsOn(value);
           },
