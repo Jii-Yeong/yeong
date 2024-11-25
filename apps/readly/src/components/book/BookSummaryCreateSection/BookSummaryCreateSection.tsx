@@ -170,6 +170,7 @@ export default function BookSummaryCreateSection({
         <p className="text-md text-red">{categoryAlertMessage}</p>
       )}
       <h1 className="text-lg font-bold">요약</h1>
+      <p>읽었던 책의 요약 또는 구절, 느낀점 등을 다양하게 기록해 보세요.</p>
       <Editor
         id="tiny-mce-editor"
         apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
