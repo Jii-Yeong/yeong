@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react';
+import { cva } from 'class-variance-authority';
 import {
   createContext,
   forwardRef,
@@ -12,12 +14,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Icon } from '@iconify/react';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
 import { ClassNameValue } from 'tailwind-merge';
-import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
+import { UI_COLORS } from '../../../constants/color.constants.ts';
 import { cn } from '../../../utils/class-name.utils.ts';
-import { cva } from 'class-variance-authority';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonDropdownProps = {
   value: string;
@@ -37,7 +37,7 @@ type CommonDropdownContextType = {
 const dropdownVariants = cva(
   [
     'p-[8px]',
-    ' border',
+    'border',
     'border-solid',
     'border-gray',
     'rounded-[8px]',
@@ -153,5 +153,5 @@ CommonDropdown.displayName = 'CommonDropdown';
 
 const MemoizedCommonDropdown = memo(CommonDropdown);
 
-export type { CommonDropdownProps };
 export { MemoizedCommonDropdown as default, dropdownVariants };
+export type { CommonDropdownProps };
