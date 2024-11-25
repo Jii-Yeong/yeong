@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ToggleButton } from '@yeong/ui';
+import { useState } from 'react';
 
 const meta = {
   title: 'UI/Button/ToggleButton',
@@ -21,8 +22,8 @@ const meta = {
     onClick: {
       description: '버튼 클릭 시 호출되는 이벤트 함수',
     },
-    defaultState: {
-      description: '버튼의 초기 상태',
+    isOn: {
+      description: '버튼의 상태',
       control: {
         disable: true,
       },
@@ -50,24 +51,93 @@ export const All: Story = {
     },
   },
   decorators: (Story) => {
+    const [isPrimaryOn, setIsPrimaryOn] = useState(true);
+    const [isSecondaryOn, setIsSecondaryOn] = useState(true);
+    const [isOutlineOn, setIsOutlineOn] = useState(true);
+    const [isGreenOn, setIsGreenOn] = useState(true);
+    const [isRedOn, setIsRedOn] = useState(true);
+    const [isSmallOn, setIsSmallOn] = useState(true);
+    const [isMediumOn, setIsMediumOn] = useState(true);
+    const [isLargeyOn, setIsLargeOn] = useState(true);
     return (
       <div className="flex flex-col items-center">
         <div className="flex flex-row gap-x-[16px]">
-          <Story args={{ variant: 'primary', defaultState: true }} />
-          <Story args={{ variant: 'secondary', defaultState: true }} />
-          <Story args={{ variant: 'outline', defaultState: true }} />
-          <Story args={{ variant: 'green', defaultState: true }} />
-          <Story args={{ variant: 'red', defaultState: true }} />
+          <Story
+            args={{
+              variant: 'primary',
+              isOn: isPrimaryOn,
+              onClick: (value: boolean) => {
+                setIsPrimaryOn(value);
+              },
+            }}
+          />
+          <Story
+            args={{
+              variant: 'secondary',
+              isOn: isSecondaryOn,
+              onClick: (value: boolean) => {
+                setIsSecondaryOn(value);
+              },
+            }}
+          />
+          <Story
+            args={{
+              variant: 'outline',
+              isOn: isOutlineOn,
+              onClick: (value: boolean) => {
+                setIsOutlineOn(value);
+              },
+            }}
+          />
+          <Story
+            args={{
+              variant: 'green',
+              isOn: isGreenOn,
+              onClick: (value: boolean) => {
+                setIsGreenOn(value);
+              },
+            }}
+          />
+          <Story
+            args={{
+              variant: 'red',
+              isOn: isRedOn,
+              onClick: (value: boolean) => {
+                setIsRedOn(value);
+              },
+            }}
+          />
         </div>
         <div className="flex flex-row gap-x-[16px] mt-[32px] items-end">
           <Story
-            args={{ variant: 'primary', defaultState: true, size: 'small' }}
+            args={{
+              variant: 'primary',
+              isOn: isSmallOn,
+              size: 'small',
+              onClick: (value: boolean) => {
+                setIsSmallOn(value);
+              },
+            }}
           />
           <Story
-            args={{ variant: 'primary', defaultState: true, size: 'medium' }}
+            args={{
+              variant: 'primary',
+              isOn: isMediumOn,
+              size: 'medium',
+              onClick: (value: boolean) => {
+                setIsMediumOn(value);
+              },
+            }}
           />
           <Story
-            args={{ variant: 'primary', defaultState: true, size: 'large' }}
+            args={{
+              variant: 'primary',
+              isOn: isLargeyOn,
+              size: 'large',
+              onClick: (value: boolean) => {
+                setIsLargeOn(value);
+              },
+            }}
           />
         </div>
       </div>
@@ -81,15 +151,42 @@ export const Default: Story = {
     variant: 'primary',
     size: 'medium',
   },
+  decorators: (Story) => {
+    const [isOn, setIsOn] = useState(true);
+    return (
+      <Story
+        args={{
+          onClick: (value: boolean) => {
+            setIsOn(value);
+          },
+          variant: 'primary',
+          size: 'medium',
+          isOn,
+        }}
+      />
+    );
+  },
 };
 
 export const Custom: Story = {
   args: {
     onClick: () => {},
-    variant: 'primary',
-    size: 'medium',
-    defaultState: true,
-    className: 'bg-[#f2f1e3] rounded-none',
-    toggleClassName: 'rounded-none bg-blue',
+  },
+  decorators: (Story) => {
+    const [isOn, setIsOn] = useState(true);
+    return (
+      <Story
+        args={{
+          onClick: (value: boolean) => {
+            setIsOn(value);
+          },
+          variant: 'primary',
+          size: 'medium',
+          className: 'bg-[#f2f1e3] rounded-none',
+          toggleClassName: 'rounded-none bg-blue',
+          isOn,
+        }}
+      />
+    );
   },
 };
