@@ -286,7 +286,8 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
       WHERE summary_id = ${String(id)}
       AND user_id = ${specUserId}
     );`;
-
+  console.log(specUserId)
+  console.log(rows)
   res.json({ like_count: rowCount, is_clicked: isExistRows(rows) });
 });
 
