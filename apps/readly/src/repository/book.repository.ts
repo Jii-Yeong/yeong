@@ -50,14 +50,13 @@ export const deleteDetailBoookSummary = async (
   });
 };
 
-export const getBoookSummaryList = async (params: BookSummaryListRequest) => {
-  const { data } =
-    await readlyApiAxiosInstance().get<BookSummaryItemDto[]>(
-      '/book/summary/list',
-      {
-        params
-      }
-    );
+export const getBookSummaryList = async (params: BookSummaryListRequest) => {
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto[]>(
+    '/book/summary/list',
+    {
+      params,
+    },
+  );
   return data;
 };
 
@@ -81,6 +80,8 @@ export const addBookSummaryLikeCount = async (
 };
 
 export const getBookCategoryList = async () => {
-  const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>('/book/category-list')
-  return data
-}
+  const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>(
+    '/book/category-list',
+  );
+  return data;
+};

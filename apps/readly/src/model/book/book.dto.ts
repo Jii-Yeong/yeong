@@ -41,6 +41,7 @@ export type EditBookSummaryRequest = CreateBookSummaryRequest;
 export type BookSummaryListRequest = {
   category_id?: BookCategoryDto['id'] | null;
   user_id?: UserInfoDto['id'] | null;
+  order?: string;
 };
 
 export type BookSummaryItemDto = {
