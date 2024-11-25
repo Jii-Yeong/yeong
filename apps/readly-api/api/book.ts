@@ -284,10 +284,9 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
       SELECT 1 
       FROM summary_like_count 
       WHERE summary_id = ${String(id)}
-      AND user_id = ${specUserId}
+      AND user_id = ${String(specUserId)}
     );`;
-  console.log(specUserId)
-  console.log(rows)
+
   res.json({ like_count: rowCount, is_clicked: isExistRows(rows) });
 });
 
