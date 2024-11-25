@@ -31,8 +31,8 @@ export type SearchBookItem = {
 export type CreateBookSummaryRequest = {
   content: string;
   bookInfo: SearchBookType;
-  startPage: string;
-  endPage: string;
+  startPage?: number;
+  endPage?: number;
   category_id: number;
 };
 

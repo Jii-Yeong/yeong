@@ -131,6 +131,12 @@ export default function SummaryDetailPage() {
                     value={String(detailSummaryData.category_id)}
                   />
                 )}
+                {detailSummaryData.start_page && detailSummaryData.end_page && (
+                  <div className="flex flex-row text-dark-gray text-md gap-x-[2px]">
+                    <p>{detailSummaryData.start_page}p</p>~
+                    <p>{detailSummaryData.end_page}p</p>
+                  </div>
+                )}
               </div>
               {detailSummaryData.is_my && (
                 <div className="flex flex-row gap-x-[8px] justify-end">

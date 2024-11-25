@@ -80,6 +80,7 @@ export default function SearchBookSection({
     <div className="search-book-section flex flex-col items-center gap-y-[16px]">
       <div className="flex flex-col sm:flex-row gap-x-[16px] gap-y-[8px] w-full">
         <CommonInput
+          value={inputValue}
           setInputValue={setInputValue}
           pressEnter={searchBook}
           placeholder="책 제목을 2자 이상 입력해주세요."
@@ -108,6 +109,7 @@ export default function SearchBookSection({
                     isbn={item.isbn}
                     clickItem={() => clickBookItem(item)}
                     isSelected={item.isbn === selectedBook?.isbn}
+                    isRegist
                   />
                 </div>
               ))}
@@ -129,6 +131,7 @@ export default function SearchBookSection({
             cursor="default"
             isWide
             imageWidth={100}
+            isRegist
           />
         </div>
       )}

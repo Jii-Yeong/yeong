@@ -63,11 +63,13 @@ export default function BookSummaryItem({
             <EllipsisText text={bookTitle} fontSize={14} />
             <p className="text-md text-dark-gray">{bookAuthor}</p>
           </div>
-          <div className="flex flex-row gap-x-[4px] text-sm text-dark-gray">
-            <p>{startPage}p</p>
-            <p>~</p>
-            <p>{endPage}p</p>
-          </div>
+          {startPage && endPage && (
+            <div className="flex flex-row gap-x-[4px] text-sm text-dark-gray">
+              <p>{startPage}p</p>
+              <p>~</p>
+              <p>{endPage}p</p>
+            </div>
+          )}
           <div className="mt-[4px]">
             {category && categoryId && (
               <BookCategoryChip text={category} value={String(categoryId)} />

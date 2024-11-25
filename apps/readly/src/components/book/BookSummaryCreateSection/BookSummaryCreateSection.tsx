@@ -16,6 +16,7 @@ import {
   CommonDropdownInner,
   CommonDropdownItem,
   CommonInput,
+  ToggleButton,
 } from '@yeong/ui';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -23,9 +24,9 @@ import { useEffect, useState } from 'react';
 type BookSummaryCreateSectionProps = {
   defaultBook?: SearchBookType | null;
   defaultContent?: string;
-  defaultStartPage?: string;
-  defaultEndPage?: string;
-  defaultCategory?: string;
+  defaultStartPage?: number;
+  defaultEndPage?: number;
+  defaultCategoryId?: number;
   defaultCategoryName?: string;
   isEdit?: boolean;
   summaryId?: string;
@@ -34,9 +35,9 @@ type BookSummaryCreateSectionProps = {
 export default function BookSummaryCreateSection({
   defaultBook = null,
   defaultContent = '',
-  defaultEndPage = '1',
-  defaultStartPage = '1',
-  defaultCategory = '',
+  defaultEndPage,
+  defaultStartPage,
+  defaultCategoryId,
   defaultCategoryName = '',
   isEdit,
   summaryId,
@@ -44,13 +45,17 @@ export default function BookSummaryCreateSection({
   const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(
     defaultBook,
   );
-  const [categoryId, setCategoryId] = useState(defaultCategory);
+  const [categoryId, setCategoryId] = useState(defaultCategoryId);
   const [content, setContent] = useState(defaultContent);
   const [startPage, setStartPage] = useState(defaultStartPage);
   const [endPage, setEndPage] = useState(defaultEndPage);
   const [bookAlertMessage, setBookAlertMessage] = useState('');
   const [categoryAlertMessage, setCategoryAlertMessage] = useState('');
   const [contentAlertMessage, setContentAlertMessage] = useState('');
+  const [isRecodePage, setIsRecodePage] = useState(
+    Boolean(defaultStartPage && defaultEndPage),
+  );
+
   const { mutateAsync: createMutate, isPending: isCreatePending } =
     createBookSummaryMutation();
   const { mutateAsync: editMutate, isPending: isEditPending } =
@@ -61,6 +66,24 @@ export default function BookSummaryCreateSection({
 
   const handleEditorChange = (content: string) => {
     setContent(content);
+  };
+
+  const clickToggleButton = (value: boolean) => {
+    setStartPage(undefined);
+    setEndPage(undefined);
+    setIsRecodePage(value);
+  };
+
+  const changeStartPage = (value: string) => {
+    setStartPage(Number(value));
+  };
+
+  const changeEndPage = (value: string) => {
+    setEndPage(Number(value));
+  };
+
+  const changeCategoryId = (value: string) => {
+    setCategoryId(Number(value));
   };
 
   const clickEndButton = async () => {
@@ -123,9 +146,9 @@ export default function BookSummaryCreateSection({
       )}
       <h1 className="text-lg font-bold">카테고리</h1>
       <CommonDropdown
-        onChange={setCategoryId}
+        onChange={changeCategoryId}
         className="w-full sm:w-[300px]"
-        value={categoryId}
+        value={String(categoryId)}
         label={defaultCategoryName}
         isLoading={categoryLoading}
       >
@@ -156,22 +179,27 @@ export default function BookSummaryCreateSection({
       {contentAlertMessage && (
         <p className="text-md text-red">{contentAlertMessage}</p>
       )}
-      <h1 className="text-lg font-bold">쪽수</h1>
-      <div className="flex flex-row items-center gap-x-[8px]">
-        <CommonInput
-          setInputValue={setStartPage}
-          type="number"
-          defaultValue={defaultStartPage}
-          wrapperClassName="w-[70px]"
-        />
-        <p>~</p>
-        <CommonInput
-          setInputValue={setEndPage}
-          type="number"
-          defaultValue={defaultEndPage}
-          wrapperClassName="w-[70px]"
-        />
+      <div className="flex flex-row gap-x-[16px]">
+        <h1 className="text-lg font-bold">쪽수 기록</h1>
+        <ToggleButton onClick={clickToggleButton} isOn={isRecodePage} />
       </div>
+      {isRecodePage && (
+        <div className="flex flex-row items-center gap-x-[8px]">
+          <CommonInput
+            setInputValue={changeStartPage}
+            type="number"
+            value={String(startPage)}
+            wrapperClassName="w-[70px]"
+          />
+          <p>~</p>
+          <CommonInput
+            setInputValue={changeEndPage}
+            type="number"
+            value={String(endPage)}
+            wrapperClassName="w-[70px]"
+          />
+        </div>
+      )}
       <CommonButton
         onClick={clickEndButton}
         className="text-[16px] font-bold bg-main text-white border-transparent px-[10px] py-[16px]"

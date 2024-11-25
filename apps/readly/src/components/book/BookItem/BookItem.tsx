@@ -15,6 +15,7 @@ type BookItemProps = {
   imageWidth?: string | number;
   cursor?: 'default' | 'pointer';
   isWide?: boolean;
+  isRegist?: boolean;
   clickItem?: (isbn: string) => void;
 };
 
@@ -29,6 +30,7 @@ export default function BookItem({
   imageWidth = '100%',
   cursor = 'pointer',
   isWide,
+  isRegist,
   clickItem,
 }: BookItemProps) {
   const handleClickItem = () => {
@@ -36,8 +38,9 @@ export default function BookItem({
   };
 
   const pubdateFromFormat = useMemo(() => {
-    if (isWide) return formatDateToString(new Date(pubdate));
-    return formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd'));
+    if (isRegist)
+      return formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd'));
+    return formatDateToString(new Date(pubdate));
   }, [pubdate]);
 
   return (
