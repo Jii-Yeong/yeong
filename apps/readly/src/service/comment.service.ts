@@ -25,7 +25,10 @@ export const getSummaryCommentListQuery = (
     queryKey: [COMMENT_KEY, summaryId],
     queryFn: async () => {
       const data = await getSummaryCommentList(summaryId);
-      return toSummaryCommentListModel(data);
+      return {
+        total: data.length,
+        list: toSummaryCommentListModel(data),
+      };
     },
   });
 };
