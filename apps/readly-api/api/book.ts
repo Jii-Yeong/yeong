@@ -271,14 +271,20 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
     return;
   }
 
-  const decodedInfo = decodeJwtToken(userToken);
+  const decodedInfo = decodeJwtToken(userToken || null);
+
+  let specUserId = req.ip
+
+  if (decodedInfo.id) {
+    specUserId = decodedInfo.id
+  }
 
   const { rows } = await sql`
     SELECT EXISTS (
       SELECT 1 
       FROM summary_like_count 
       WHERE summary_id = ${String(id)}
-      AND user_id = ${decodedInfo.id}
+      AND user_id = ${specUserId}
     );`;
 
   res.json({ like_count: rowCount, is_clicked: isExistRows(rows) });
@@ -287,16 +293,12 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
 bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
-  if (!userToken) {
-    res.status(401).send('Login is required.');
-    return;
-  }
+  let specUserId = req.ip
 
-  const decodedInfo = decodeJwtToken(userToken);
+  const decodedInfo = decodeJwtToken(userToken || null);
 
-  if (!decodedInfo.id) {
-    res.status(401).send('Decoding failed.');
-    return;
+  if (decodedInfo.id) {
+    specUserId = decodedInfo.id
   }
 
   const id = req.body?.id;
@@ -311,19 +313,19 @@ bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
     SELECT 1 
     FROM summary_like_count 
     WHERE summary_id = ${id}
-    AND user_id = ${decodedInfo.id}
+    AND user_id = ${specUserId}
   );`;
 
   if (isExistRows(rows)) {
     await sql`
     DELETE FROM summary_like_count 
     WHERE summary_id = ${id} 
-    AND user_id = ${decodedInfo.id};`;
+    AND user_id = ${specUserId};`;
     res.send('delete like count.');
   } else {
     await sql`
     INSERT INTO summary_like_count (summary_id, user_id) 
-    VALUES (${id}, ${decodedInfo.id});`;
+    VALUES (${id}, ${specUserId});`;
     res.send('insert like count.');
   }
 });

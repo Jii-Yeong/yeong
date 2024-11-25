@@ -30,5 +30,6 @@ app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/book', bookRouter);
 app.use('/comment', commentRouter);
+app.set('trust proxy', true)
 
 module.exports = app;
