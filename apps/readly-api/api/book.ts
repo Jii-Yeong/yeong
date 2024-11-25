@@ -194,14 +194,25 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   const categoryId = (req.query?.category_id as string) || null;
   const userId = (req.query?.user_id as string) || null;
+  const order = (req.query?.order as string) || null;
 
-  const { rows, rowCount } = await sql`
+  const orderByObject = {
+    desc: 'ORDER BY summaries.created_at DESC',
+    asc: 'ORDER BY summaries.created_at ASC',
+    view: 'ORDER BY summaries.view_count DESC',
+    like: 'ORDER BY COUNT(summary_like_count.id) DESC',
+  };
+
+  const orderByQuery = orderByObject[order || 'desc'];
+
+  let query = `
   SELECT 
     summaries.*,
     book_category.name AS category_name,
     users.nickname AS user_name,
     users.profile_image AS user_image,
-    COUNT(summary_comment.id)::INTEGER AS comment_count
+    COUNT(summary_comment.id)::INTEGER AS comment_count,
+    COUNT(summary_like_count.id)::INTEGER as like_count
   FROM
     summaries
   LEFT JOIN 
@@ -215,6 +226,9 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   LEFT JOIN
     summary_comment
   ON summaries.id = summary_comment.summary_id
+  LEFT JOIN
+    summary_like_count
+  ON summaries.id = summary_like_count.summary_id
   WHERE 
     (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
   AND
@@ -224,8 +238,12 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     book_category.name, 
     users.nickname, 
     users.profile_image
-  ORDER BY summaries.created_at DESC;
   `;
+
+  query += orderByQuery;
+  query += ';';
+
+  const { rows, rowCount } = await sql.query(query);
 
   if (!rowCount || rowCount <= 0) {
     res.json([]);
