@@ -6,7 +6,6 @@ export const DATE_FORMAT = {
 
 export const parseDateToFormat = (
   date: string,
-  format = DATE_FORMAT.default
 ) => {
   return DateTime.fromISO(date).toLocaleString()
 }

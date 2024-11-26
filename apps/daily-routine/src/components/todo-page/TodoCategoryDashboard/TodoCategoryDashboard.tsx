@@ -3,80 +3,33 @@ import CategoryListItem from "@/components/list-item/CategoryListItem/CategoryLi
 import { useTodoCategory } from "@/hooks/todo/useTodoCategory"
 import { useScrollLock } from "@/hooks/utils/useScrollLock"
 import { TodoCategoryModel } from "@/model/todo/todo-category.model.ts"
-import { modalState } from "@/recoil/modal/modal"
-import { categoryNameState } from "@/recoil/todo/todo-category"
 import "@/style/todo-item-viewer.scss"
 import { getTodoListPage } from "@/utils/page.utils.ts"
 import { MouseEvent } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { useRecoilState } from "recoil"
+import { useNavigate } from "react-router-dom"
 import "./TodoCategoryDashboard.scoped.scss"
 
 export default function TodoCategoryDashboard() {
-  const {
-    categoryList,
-    clickAddTodoCategory,
-    clickDeleteTodoCategory,
-    clickEditTodoCategoryName,
-  } = useTodoCategory()
+  const { categoryList, clickAddTodoCategory, clickEditTodoCategoryName } =
+    useTodoCategory()
 
-  const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const [modal, setModal] = useRecoilState(modalState)
-  const [categoryName, setCategoryName] = useRecoilState(categoryNameState)
-  const { setScrollLock, offScrollLock } = useScrollLock()
+  const { setScrollLock } = useScrollLock()
 
   const handleCategoryValue = (text: string) => {
     clickAddTodoCategory(text)
   }
 
-  const handleClickCategory = (id: TodoCategoryModel["id"]) => {
-    setSearchParams({ category_id: String(id) })
-  }
+  const handleClickCategory = () => {}
 
   const handleClickAllCategory = () => {
     navigate(getTodoListPage())
-    setCategoryName("전체")
   }
 
-  const setCloseModal = () => {
-    setModal((item) => {
-      return {
-        ...item,
-        isOpenModal: false,
-      }
-    })
-  }
-
-  const handleDeleteCategory = async (id: TodoCategoryModel["id"]) => {
-    await clickDeleteTodoCategory(id)
-    navigate(getTodoListPage())
-    setCategoryName("전체")
-    setCloseModal()
-    offScrollLock()
-  }
-
-  const handleClickCancelButton = () => {
-    setCloseModal()
-    offScrollLock()
-  }
-
-  const handleClickDeleteButton = async (
-    e: MouseEvent,
-    id: TodoCategoryModel["id"]
-  ) => {
+  const handleClickDeleteButton = async (e: MouseEvent) => {
     e.stopPropagation()
     setScrollLock()
-    setModal((item) => {
-      return {
-        ...item,
-        text: "정말로 삭제하시겠습니까? 카테고리 안 투두 리스트가 전부 사라집니다.",
-        isOpenModal: true,
-        clickOkButton: () => handleDeleteCategory(id),
-        clickCalcenButton: handleClickCancelButton,
-      }
-    })
   }
 
   const handleClickEditCategoryName = (
