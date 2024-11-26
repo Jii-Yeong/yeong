@@ -81,4 +81,11 @@ export const postList: PostListItemType[] = [
     description: 'Turborepo를 이용하여 모노레포를 구성하고 여러 내부 패키지를 만드는 방법에 대한 정리',
     route: 9,
   },
+  {
+    id: '10',
+    title: 'Next.js 에서 구글 로그인 구현하기 + 구글 유저 정보 가져오기',
+    category: '라이브러리/프레임워크',
+    description: 'Next.js 에서 구글 로그인 구현과 외부 API를 이용해서 구글 유저 정보 가져오는 방법에 대한 정리',
+    route: 10,
+  },
 ];
