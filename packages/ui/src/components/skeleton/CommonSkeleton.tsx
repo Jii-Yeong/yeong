@@ -1,26 +1,31 @@
-import { parseDomSizeValue } from '@yeong/utils/string';
-import { UI_COLORS } from '../../constants/color.constants.ts';
+import { useMemo } from 'react';
+import { cn } from '../../utils/class-name.utils.ts';
+import { ClassNameValue } from 'tailwind-merge';
 
 type CommonSkeletonProps = {
   backgroundColor?: string;
   width?: string | number;
   height?: string | number;
   borderRadius?: string | number;
+  className?: ClassNameValue;
 };
 
 export default function CommonSkeleton({
-  backgroundColor = UI_COLORS.lightGray,
-  borderRadius = 16,
-  height = '100%',
-  width = '100%',
+  height,
+  width,
+  className,
 }: CommonSkeletonProps) {
+  const divClassName = useMemo(
+    () =>
+      cn(['w-full', 'h-full', 'rounded-[16px]', 'bg-light-gray'], className),
+    [className],
+  );
   return (
     <div
+      className={divClassName}
       style={{
-        backgroundColor,
-        borderRadius: parseDomSizeValue(borderRadius),
-        height: parseDomSizeValue(height),
-        width: parseDomSizeValue(width),
+        height,
+        width,
       }}
     ></div>
   );
