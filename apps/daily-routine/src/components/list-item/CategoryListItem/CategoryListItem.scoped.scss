@@ -1,0 +1,24 @@
+.category-list-item {
+  height: 35px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  @include flexRow(space-between, center);
+  &:hover {
+    background-color: rgba(var(--gray), 1);
+  }
+
+  .control-button {
+    display: flex;
+    column-gap: 8px;
+  }
+}
+
+.category-edit-area {
+  display: flex;
+  column-gap: 8px;
+
+  .todo-input-wrapper {
+    flex: 1;
+  }
+}

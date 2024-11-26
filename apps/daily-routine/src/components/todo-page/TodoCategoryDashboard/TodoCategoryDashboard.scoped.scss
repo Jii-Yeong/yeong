@@ -1,0 +1,20 @@
+.todo-category-dashboard {
+  padding: 8px;
+  @include flexCol(flex-start, flex-start);
+  gap: 16px;
+
+  .catetory-list {
+    width: 100%;
+
+    .category-item {
+      height: 35px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      @include flexRow(space-between, center);
+      &:hover {
+        background-color: rgba(var(--gray), 1);
+      }
+    }
+  }
+}

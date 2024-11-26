@@ -1,0 +1,8 @@
+.todo-input-container {
+  width: 100%;
+  .control-button {
+    @include flexRow(flex-end, center);
+    padding: 8px;
+    column-gap: 8px;
+  }
+}
