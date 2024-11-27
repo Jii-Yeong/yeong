@@ -1,18 +1,16 @@
 import { useMemo } from 'react';
-import { cn } from '../../utils/class-name.utils.ts';
 import { ClassNameValue } from 'tailwind-merge';
+import { cn } from '../../utils/class-name.utils.ts';
 
 type CommonSkeletonProps = {
-  backgroundColor?: string;
   width?: string | number;
   height?: string | number;
-  borderRadius?: string | number;
   className?: ClassNameValue;
 };
 
 export default function CommonSkeleton({
-  height,
   width,
+  height,
   className,
 }: CommonSkeletonProps) {
   const divClassName = useMemo(
