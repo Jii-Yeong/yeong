@@ -1,10 +1,11 @@
+import { UI_COLORS } from '#constants/color.constants.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { getFileInfo } from '@yeong/utils/string';
 import { ChangeEvent, forwardRef, HTMLAttributes, Ref, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { cn } from '../../../utils/class-name.utils.ts';
-import EllipsisText from '../../text/EllipsisText/EllipsisText.tsx';
+
+import EllipsisText from '#components/text/EllipsisText/EllipsisText.tsx';
 
 type CommonFileInputProps = {
   placeholder?: string;

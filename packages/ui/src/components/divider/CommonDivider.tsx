@@ -1,6 +1,6 @@
-import { HTMLAttributes, useMemo } from 'react';
-import { cn } from '../../utils/class-name.utils.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
+import { HTMLAttributes, useMemo } from 'react';
 
 const dividerVariants = cva(['border-solid', 'border-gray'], {
   variants: {

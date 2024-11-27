@@ -1,7 +1,7 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { parseDomSizeValue } from '@yeong/utils/string';
 import { useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cn } from '../../../utils/class-name.utils.ts';
 import './EllipsisText.scss';
 
 type EllipsisTextProps = {

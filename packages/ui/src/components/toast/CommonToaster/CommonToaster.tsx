@@ -1,4 +1,5 @@
-import { CommonToast, useToast } from '../../../index.ts';
+import CommonToast from '#components/toast/CommonToast/CommonToast.tsx';
+import { useToast } from '#hooks/useToast.tsx';
 
 export default function CommonToaster() {
   const { toasts } = useToast();

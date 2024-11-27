@@ -1,5 +1,5 @@
+import { CommonToastProps } from '#components/toast/CommonToast/CommonToast.tsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { CommonToastProps } from '../components/toast/CommonToast/CommonToast.tsx';
 
 const ACTION_TYPES = {
   ADD: 'ADD',

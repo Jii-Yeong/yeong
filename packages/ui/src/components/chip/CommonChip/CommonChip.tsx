@@ -1,3 +1,5 @@
+import { UI_COLORS } from '#constants/color.constants.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
 import {
   forwardRef,
@@ -7,8 +9,6 @@ import {
   Ref,
   useMemo,
 } from 'react';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 const chipVariants = cva(
   [

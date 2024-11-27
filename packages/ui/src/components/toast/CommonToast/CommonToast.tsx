@@ -1,3 +1,6 @@
+import CommonButton from '#components/button/CommonButton/CommonButton.tsx';
+import { useToast } from '#hooks/useToast.tsx';
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
 import {
   forwardRef,
@@ -7,9 +10,7 @@ import {
   Ref,
   useMemo,
 } from 'react';
-import { cn } from '../../../utils/class-name.utils.ts';
 import { ClassNameValue } from 'tailwind-merge';
-import { CommonButton, useToast } from '../../../index.ts';
 import './CommonToast.scss';
 
 const toastVariants = cva(
@@ -120,5 +121,5 @@ const CommonToast = forwardRef(
 CommonToast.displayName = 'CommonToast';
 const MemoizedCommonToast = memo(CommonToast);
 
-export type { CommonToastProps };
 export { MemoizedCommonToast as default };
+export type { CommonToastProps };

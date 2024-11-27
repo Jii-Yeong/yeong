@@ -1,9 +1,9 @@
+import LoadingSpinner from '#components/loading/LoadingSpinner/LoadingSpinner.tsx';
+import { UI_COLORS } from '#constants/color.constants.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes, forwardRef, memo, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { cn } from '../../../utils/class-name.utils.ts';
-import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 const buttonVariants = cva(
   [

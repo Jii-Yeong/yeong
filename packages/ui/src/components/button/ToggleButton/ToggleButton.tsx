@@ -1,7 +1,7 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
 import { forwardRef, HTMLAttributes, memo, Ref, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 const wrapperVariants = cva(
   ['cursor-pointer', 'p-[4px]', 'rounded-full', 'flex', 'flex-row', 'relative'],

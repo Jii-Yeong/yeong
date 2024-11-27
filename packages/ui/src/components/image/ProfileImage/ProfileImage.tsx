@@ -1,7 +1,7 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
 import { forwardRef, memo, Ref, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 const profileImageWrapperVariants = cva(
   [

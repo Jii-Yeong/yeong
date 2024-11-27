@@ -1,3 +1,4 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { cva } from 'class-variance-authority';
 import {
   ChangeEvent,
@@ -8,7 +9,6 @@ import {
   Ref,
   useMemo,
 } from 'react';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 const textareaVariants = cva(
   [

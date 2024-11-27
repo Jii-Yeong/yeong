@@ -1,8 +1,9 @@
+import { UI_COLORS } from '#constants/color.constants.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
 import { useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { cn } from '../../../utils/class-name.utils.ts';
+
 import './LoadingSpinner.scss';
 
 const loadingSpinnerVariants = cva(['rounded-full', 'border', 'border-solid'], {

@@ -1,6 +1,6 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { ReactNode, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 type CommonDropdownInnerProps = {
   children: ReactNode;

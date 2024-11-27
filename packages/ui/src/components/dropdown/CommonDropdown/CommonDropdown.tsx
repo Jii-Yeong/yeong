@@ -1,3 +1,5 @@
+import { UI_COLORS } from '#constants/color.constants.ts';
+import { cn } from '#utils/class-name.utils.ts';
 import { Icon } from '@iconify/react';
 import { cva } from 'class-variance-authority';
 import {
@@ -15,8 +17,7 @@ import {
   useState,
 } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { cn } from '../../../utils/class-name.utils.ts';
+
 import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 type CommonDropdownProps = {

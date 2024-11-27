@@ -1,3 +1,4 @@
+import { cn } from '#utils/class-name.utils.ts';
 import { cva } from 'class-variance-authority';
 import {
   ChangeEvent,
@@ -10,7 +11,6 @@ import {
   useMemo,
 } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cn } from '../../../utils/class-name.utils.ts';
 
 const commonInputWrapperVariants = cva(
   [
