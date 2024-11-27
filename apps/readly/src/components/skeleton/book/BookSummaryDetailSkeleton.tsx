@@ -5,7 +5,7 @@ export default function BookSummaryDetailSkeleton() {
     <>
       <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
         <div className="flex flex-row items-center gap-x-[8px]">
-          <CommonSkeleton width={30} height={30} borderRadius={30} />
+          <CommonSkeleton width={30} height={30} className="rounded-[30px]" />
           <CommonSkeleton width={100} height={24} />
         </div>
         <div className="text-dark-gray flex flex-col gap-y-[8px] items-center">
