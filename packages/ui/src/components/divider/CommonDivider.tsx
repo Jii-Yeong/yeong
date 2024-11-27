@@ -1,24 +1,34 @@
 import { HTMLAttributes, useMemo } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '../../utils/class-name.utils.ts';
+import { cva, VariantProps } from 'class-variance-authority';
+
+const dividerVariants = cva(['border-solid', 'border-gray'], {
+  variants: {
+    type: {
+      horizontal: ['border-b', 'w-full'],
+      vertical: ['border-l', 'h-full'],
+    },
+  },
+  defaultVariants: {
+    type: 'horizontal',
+  },
+});
+
+type DividerVariant = VariantProps<typeof dividerVariants>;
 
 type CommonDividerProps = {
-  color?: string;
-  width?: string | number;
-  borderWidth?: string | number;
-  marginVertical?: string | number;
+  type?: NonNullable<DividerVariant['type']>;
   className?: string;
-  classList?: string[];
 } & HTMLAttributes<HTMLDivElement>;
 
 export default function CommonDivider({
   className,
-  classList,
+  type,
   ...rest
 }: CommonDividerProps) {
   const divClassName = useMemo(
-    () =>
-      twMerge('border-b border-solid border-gray w-full', className, classList),
-    [className, classList],
+    () => cn(dividerVariants({ type }), className),
+    [className, type],
   );
   return <div className={divClassName} {...rest}></div>;
 }
