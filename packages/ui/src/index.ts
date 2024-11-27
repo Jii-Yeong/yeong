@@ -35,6 +35,9 @@ import LoadingSpinner, {
   LoadingSpinnerVariant,
   loadingSpinnerVariants,
 } from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
+import CommonPagination, {
+  CommonPaginationProps,
+} from './components/pagination/CommonPagination/CommonPagination.tsx';
 import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
 import EllipsisText, {
   EllipsisTextProps,
@@ -53,6 +56,7 @@ export {
   CommonFileInput,
   CommonInput,
   commonInputWrapperVariants,
+  CommonPagination,
   CommonSkeleton,
   CommonTextarea,
   CommonToast,
@@ -73,6 +77,7 @@ export type {
   CommonDropdownProps,
   CommonFileInputProps,
   CommonInputProps,
+  CommonPaginationProps,
   EllipsisTextProps,
   LoadingSpinnerProps,
   LoadingSpinnerVariant,
