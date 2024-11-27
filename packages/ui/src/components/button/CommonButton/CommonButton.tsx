@@ -1,9 +1,9 @@
+import { cva, type VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes, forwardRef, memo, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
-import { cva, type VariantProps } from 'class-variance-authority';
-import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
-import { cn } from '../../../utils/class-name.utils.ts';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
+import { cn } from '../../../utils/class-name.utils.ts';
+import LoadingSpinner from '../../loading/LoadingSpinner/LoadingSpinner.tsx';
 
 const buttonVariants = cva(
   [
@@ -23,43 +23,37 @@ const buttonVariants = cva(
     'hover:opacity-100',
     'disabled:opacity-60',
     'disabled:hover:opacity-60',
-  ].join(' '),
+  ],
   {
     variants: {
       variant: {
-        primary: [
-          'bg-main',
-          'lg:hover:bg-dark-main',
-          'disabled:hover:bg-main',
-        ].join(' '),
+        primary: ['bg-main', 'lg:hover:bg-dark-main', 'disabled:hover:bg-main'],
         secondary: [
           'bg-gray',
           'lg:hover:bg-dark-gray',
           'disabled:hover:bg-gray',
-        ].join(' '),
-        red: ['bg-red', 'lg:hover:bg-dark-red', 'disabled:hover:bg-red'].join(
-          ' ',
-        ),
+        ],
+        red: ['bg-red', 'lg:hover:bg-dark-red', 'disabled:hover:bg-red'],
         outline: [
           'bg-white',
           'border-gray',
           'text-black',
           'lg:hover:bg-light-gray',
           'disabled:hover:bg-white',
-        ].join(' '),
+        ],
         ghost: [
           'bg-transparent',
           'text-black',
           'lg:hover:bg-light-gray',
           'disabled:hover:bg-transparent',
-        ].join(' '),
+        ],
         link: [
           'bg-transparent',
           'text-black',
           'underline',
           'lg:hover:bg-light-gray',
           'disabled:hover:bg-transparent',
-        ].join(' '),
+        ],
       },
     },
     defaultVariants: {
@@ -143,5 +137,5 @@ CommonButton.displayName = 'CommonButton';
 
 const MemoizedCommonButton = memo(CommonButton);
 
-export type { CommonButtonProps, ButtonVariant };
-export { MemoizedCommonButton as default, buttonVariants };
+export { buttonVariants, MemoizedCommonButton as default };
+export type { ButtonVariant, CommonButtonProps };
