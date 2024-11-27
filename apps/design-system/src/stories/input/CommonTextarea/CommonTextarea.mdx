@@ -1,0 +1,30 @@
+import { Meta, Controls, Primary, Story, Canvas } from '@storybook/blocks';
+import * as CommonTextareaStories from './CommonTextarea.stories';
+
+<Meta title="UI/Input/CommonTextarea" of={CommonTextareaStories} />
+
+# CommonInput
+
+일반적으로 사용되는 textarea 컴포넌트 입니다.
+
+<Canvas of={CommonTextareaStories.All} />
+
+## Props
+
+<Canvas of={CommonTextareaStories.Default} />
+
+<Controls of={CommonTextareaStories.Default} />
+
+## Stories
+
+### Default
+
+<Canvas of={CommonTextareaStories.Default} />
+
+### Alert Message
+
+<Canvas of={CommonTextareaStories.AlertMessage} />
+
+### Custom Style
+
+<Canvas of={CommonTextareaStories.CustomStyle} />
