@@ -1,86 +1,94 @@
-import { parseDomSizeValue } from '@yeong/utils/string';
+import { cva } from 'class-variance-authority';
 import {
   ChangeEvent,
-  CSSProperties,
   forwardRef,
   HTMLAttributes,
   KeyboardEvent,
+  memo,
   Ref,
   useMemo,
-  useState,
 } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '../../../utils/class-name.utils.ts';
 
-export type CommonTextareaProps = {
-  defaultValue?: string;
-  width?: string | number;
-  height?: string | number;
-  borderRadius?: string | number;
-  padding?: string | number;
+const textareaVariants = cva(
+  [
+    'border',
+    'border-gray',
+    'focus:outline-main',
+    'text-black',
+    'w-full',
+    'h-full',
+    'resize-none',
+    'rounded-[8px]',
+    'p-[8px]',
+  ],
+  {
+    variants: {
+      isAlert: {
+        true: 'border-red',
+      },
+    },
+    defaultVariants: {
+      isAlert: false,
+    },
+  },
+);
+
+type CommonTextareaProps = {
+  value: string;
   placeholder?: string;
-  style?: CSSProperties;
-  type?: string;
   alertText?: string;
   disabled?: boolean;
   className?: string;
-  classList?: string;
-  ref?: Ref<HTMLTextAreaElement>;
-  setTextareaValue: (value: string) => void;
-  pressEnter?: () => void;
+  onChangeValue: (value: string) => void;
+  onEnter?: () => void;
 } & HTMLAttributes<HTMLTextAreaElement>;
 
-export default forwardRef(function CommonTextarea(
-  {
-    defaultValue = '',
-    width = '100%',
-    height = 100,
-    alertText,
-    className,
-    classList,
-    setTextareaValue,
-    pressEnter,
-    ...rest
-  }: CommonTextareaProps,
-  ref: Ref<HTMLTextAreaElement>,
-) {
-  const [value, setValue] = useState(defaultValue);
+const CommonTextarea = forwardRef(
+  (
+    {
+      value,
+      alertText,
+      className,
+      onChangeValue,
+      onEnter,
+      ...rest
+    }: CommonTextareaProps,
+    ref: Ref<HTMLTextAreaElement>,
+  ) => {
+    const textareaClassName = useMemo(
+      () => cn(textareaVariants({ isAlert: Boolean(alertText) }), className),
+      [className, alertText],
+    );
 
-  const textareaClassName = useMemo(
-    () =>
-      twMerge(
-        'border border-gray focus:outline-main text-black w-full h-full resize-none rounded-[8px] p-[8px]',
-        [alertText ? 'border-red' : 'border-gray'],
-        className,
-        classList,
-      ),
-    [className, classList],
-  );
+    const handleChangeTextareaValue = (e: ChangeEvent) => {
+      const element = e.target as HTMLInputElement;
+      onChangeValue(element.value);
+    };
 
-  const changeTextareaValue = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement;
-    setValue(element.value);
-    setTextareaValue(element.value);
-  };
-  const handleKeyUp = (e: KeyboardEvent) => {
-    if (pressEnter && e.code === 'Enter') pressEnter();
-  };
-  return (
-    <div
-      className="flex flex-col relative"
-      style={{
-        width: parseDomSizeValue(width),
-        height: parseDomSizeValue(height),
-      }}
-    >
-      <textarea
-        className={textareaClassName}
-        value={value}
-        onChange={changeTextareaValue}
-        onKeyUp={handleKeyUp}
-        ref={ref}
-        {...rest}
-      />
-      <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
-    </div>
-  );
-});
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (onEnter && e.code === 'Enter') onEnter();
+    };
+
+    return (
+      <div className="flex flex-col relative h-full">
+        <textarea
+          className={textareaClassName}
+          value={value}
+          onChange={handleChangeTextareaValue}
+          onKeyUp={handleKeyUp}
+          ref={ref}
+          {...rest}
+        />
+        <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
+      </div>
+    );
+  },
+);
+
+CommonTextarea.displayName = 'CommonTextarea';
+
+const memoizedCommonTextArea = memo(CommonTextarea);
+
+export { memoizedCommonTextArea as default, textareaVariants };
+export type { CommonTextareaProps };
