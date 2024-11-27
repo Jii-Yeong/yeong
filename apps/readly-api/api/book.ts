@@ -253,7 +253,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   WHERE
     (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
   AND
-    (summaries.user_id = ${userId}::VARCHAR OR ${userId}::VARCHAR IS NULL)
+    (summaries.user_id = $1::TEXT OR $1::TEXT IS NULL)
   GROUP BY 
     summaries.id, 
     book_category.name, 
@@ -266,7 +266,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   query += orderByQuery;
   query += ';';
 
-  const { rows, rowCount } = await sql.query(query);
+  const { rows, rowCount } = await sql.query(query, [userId]);
 
   if (!rowCount || rowCount <= 0) {
     res.json([]);
@@ -291,10 +291,10 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
 
   const decodedInfo = decodeJwtToken(userToken || null);
 
-  let specUserId = req.ip
+  let specUserId = req.ip;
 
   if (decodedInfo.id) {
-    specUserId = decodedInfo.id
+    specUserId = decodedInfo.id;
   }
 
   const { rows } = await sql`
@@ -311,12 +311,12 @@ bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
 bookRouter.post('/summary/click-like', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
-  let specUserId = req.ip
+  let specUserId = req.ip;
 
   const decodedInfo = decodeJwtToken(userToken || null);
 
   if (decodedInfo.id) {
-    specUserId = decodedInfo.id
+    specUserId = decodedInfo.id;
   }
 
   const id = req.body?.id;
