@@ -1,0 +1,36 @@
+import { Meta, Controls, Primary, Story, Canvas } from '@storybook/blocks';
+import * as CommonDividerStories from './CommonDivider.stories';
+
+<Meta title="UI/Divider/CommonDivider" of={CommonDividerStories} />
+
+# CommonButton
+
+구분선이 필요할 때 쓰이는 컴포넌트 입니다.
+
+<Canvas of={CommonDividerStories.All} />
+
+## Props
+
+<Canvas of={CommonDividerStories.Default} />
+
+<Controls of={CommonDividerStories.Default} />
+
+## Usage
+
+CommonDivider 컴포넌트는 기본적으로 border로 되어있기 때문에 색상값이나 스타일, 굵기를 지정할때는 tailwind css border 속성을 부여하면 됩니다.
+
+### 예시
+
+```tsx
+<CommonDivider className="border-red border-[2px] border-dotted">
+```
+
+## Stories
+
+### Default
+
+<Canvas of={CommonDividerStories.Default} />
+
+### Border Style
+
+<Canvas of={CommonDividerStories.BorderStyle} />
