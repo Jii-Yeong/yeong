@@ -67,7 +67,7 @@ export default function MyPage() {
       {!infoFetching && infoData && (
         <div className="w-full flex flex-col items-center">
           <div className="flex flex-row items-end relative mb-[16px]">
-            <ProfileImage imageSrc={infoData?.profile_image} size={150} />
+            <ProfileImage imageSrc={infoData?.profile_image} size="xLarge" />
             {infoData?.is_my && (
               <CommonButton
                 className={[
