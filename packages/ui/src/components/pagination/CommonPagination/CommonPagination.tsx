@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
-import { CommonButton } from '@yeong/ui';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
+import CommonButton from '../../button/CommonButton/CommonButton.tsx';
 
 type CommonPaginationProps = {
   pagination: number;
