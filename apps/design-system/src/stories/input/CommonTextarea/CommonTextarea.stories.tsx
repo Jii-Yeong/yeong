@@ -85,7 +85,7 @@ export const All: Story = {
         <div className="w-[300px] h-[100px]">
           <Story
             args={{
-              placeholder: '제목을 입력해주세요.',
+              placeholder: '텍스트를 입력해주세요.',
               value: customValue,
               onChangeValue: (value: string) => setCustomValue(value),
               className:
