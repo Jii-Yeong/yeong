@@ -32,7 +32,7 @@ export const All: Story = {
   },
   decorators: (Story, { args }) => {
     return (
-      <div className="flex flex-col gap-y-[16px] w-[500px]">
+      <div className="flex flex-col gap-y-[16px] w-[500px] items-center">
         <Story args={{ ...args }} />
         <Story args={{ ...args, className: 'border-[2px]' }} />
         <Story args={{ ...args, className: 'border-[3px]' }} />
