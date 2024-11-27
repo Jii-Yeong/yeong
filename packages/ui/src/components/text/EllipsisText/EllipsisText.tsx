@@ -1,4 +1,7 @@
 import { parseDomSizeValue } from '@yeong/utils/string';
+import { useMemo } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
+import { cn } from '../../../utils/class-name.utils.ts';
 import './EllipsisText.scss';
 
 type EllipsisTextProps = {
@@ -7,18 +10,24 @@ type EllipsisTextProps = {
   height?: string | number;
   lineClamp?: number;
   fontSize?: string | number;
+  className?: ClassNameValue;
 };
 
-export default function EllipsisText({
+const EllipsisText = ({
   text,
   width = 'auto',
   height = 'auto',
   lineClamp = 2,
   fontSize = 16,
-}: EllipsisTextProps) {
+  className,
+}: EllipsisTextProps) => {
+  const divClassName = useMemo(
+    () => cn('ellipsis-text', className),
+    [className],
+  );
   return (
     <div
-      className="ellipsis-text"
+      className={divClassName}
       style={{
         WebkitLineClamp: lineClamp,
         width: parseDomSizeValue(width),
@@ -29,4 +38,7 @@ export default function EllipsisText({
       {text}
     </div>
   );
-}
+};
+
+export { EllipsisText as default };
+export type { EllipsisTextProps };

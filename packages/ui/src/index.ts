@@ -36,7 +36,9 @@ import LoadingSpinner, {
   loadingSpinnerVariants,
 } from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
 import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
-import EllipsisText from './components/text/EllipsisText/EllipsisText.tsx';
+import EllipsisText, {
+  EllipsisTextProps,
+} from './components/text/EllipsisText/EllipsisText.tsx';
 import CommonToast from './components/toast/CommonToast/CommonToast.tsx';
 import CommonToaster from './components/toast/CommonToaster/CommonToaster.tsx';
 import { useToast } from './hooks/useToast.tsx';
@@ -71,6 +73,7 @@ export type {
   CommonDropdownProps,
   CommonFileInputProps,
   CommonInputProps,
+  EllipsisTextProps,
   LoadingSpinnerProps,
   LoadingSpinnerVariant,
   ProfileImageProps,
