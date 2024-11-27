@@ -1,10 +1,9 @@
 'use client';
 
-import CommonPagination from '@/components/pagination/CommonPagination/CommonPagination';
 import { useViewport } from '@/hooks/useViewport';
 import { SearchBookItem } from '@/model/book/book.dto';
 import { searchBookMutation } from '@/service/book.service';
-import { CommonButton, CommonInput } from '@yeong/ui';
+import { CommonButton, CommonInput, CommonPagination } from '@yeong/ui';
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import BookItem from '../BookItem/BookItem';
 import './SearchBookSection.scss';
@@ -29,6 +28,7 @@ export default function SearchBookSection({
     defaultBook,
   );
   const [alertText, setAlertText] = useState('');
+  const [pagination, setPagination] = useState(0);
   const { mutate, data: bookData } = searchBookMutation();
   const { isSm } = useViewport();
 
@@ -56,6 +56,7 @@ export default function SearchBookSection({
   };
 
   const clickPaginationButton = (pagination: number) => {
+    setPagination(pagination);
     mutate({
       query: inputValue,
       start: String(pagination * displayCount + 1),
@@ -92,8 +93,9 @@ export default function SearchBookSection({
       {isOpenResult && (
         <div className="flex flex-col items-center gap-y-[16px]">
           <CommonPagination
+            pagination={pagination}
             totalCount={countState}
-            clickButton={clickPaginationButton}
+            onClickPagination={clickPaginationButton}
             viewButtonCount={isSm ? 5 : 10}
           />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-[8px] gap-y-[8px]">
