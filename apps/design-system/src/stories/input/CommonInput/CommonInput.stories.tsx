@@ -54,6 +54,9 @@ const meta = {
     onEnter: {
       description: 'input에 포커스하고 enter를 누를 경우 발생하는 이벤트 함수',
     },
+    ref: {
+      description: 'input에 적용된 Ref Object (type: `Ref<HTMLInputElement>`)',
+    },
   },
 } satisfies Meta<typeof CommonInput>;
 
