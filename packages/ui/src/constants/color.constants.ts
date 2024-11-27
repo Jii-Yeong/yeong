@@ -11,4 +11,5 @@ export const UI_COLORS = {
   lightBlue: '#eff3ff',
   yellow: '#FFFF00',
   brown: '#964B00',
+  main: '#5ae9e4',
 } as const;
