@@ -30,7 +30,11 @@ import CommonInput, {
   commonInputWrapperVariants,
 } from './components/input/CommonInput/CommonInput.tsx';
 import CommonTextarea from './components/input/CommonTextarea/CommonTextarea.tsx';
-import LoadingSpinner from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
+import LoadingSpinner, {
+  LoadingSpinnerProps,
+  LoadingSpinnerVariant,
+  loadingSpinnerVariants,
+} from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
 import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
 import EllipsisText from './components/text/EllipsisText/EllipsisText.tsx';
 import CommonToast from './components/toast/CommonToast/CommonToast.tsx';
@@ -53,6 +57,7 @@ export {
   CommonToaster,
   EllipsisText,
   LoadingSpinner,
+  loadingSpinnerVariants,
   ProfileImage,
   profileImageWrapperVariants,
   ToggleButton,
@@ -66,6 +71,8 @@ export type {
   CommonDropdownProps,
   CommonFileInputProps,
   CommonInputProps,
+  LoadingSpinnerProps,
+  LoadingSpinnerVariant,
   ProfileImageProps,
   ProfileImageWrapperVariant,
   ToggleButtonProps,

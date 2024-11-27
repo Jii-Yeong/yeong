@@ -27,7 +27,7 @@ type LoadingSpinnerProps = {
   className?: ClassNameValue;
 };
 
-export default function LoadingSpinner({
+function LoadingSpinner({
   color = UI_COLORS.main,
   backgroundColor = UI_COLORS.white,
   size,
@@ -49,3 +49,6 @@ export default function LoadingSpinner({
     ></div>
   );
 }
+
+export { LoadingSpinner as default, loadingSpinnerVariants };
+export type { LoadingSpinnerProps, LoadingSpinnerVariant };
