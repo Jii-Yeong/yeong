@@ -116,9 +116,9 @@ export default function MyPage() {
           {isOpenNicknameInput && (
             <div className="flex flex-row gap-x-[16px] mt-[16px]">
               <CommonInput
-                wrapperClassName="flex-1"
+                className="flex-1"
                 placeholder="수정할 닉네임"
-                setInputValue={setNickname}
+                onChange={setNickname}
               />
               <CommonButton onClick={clickEnterEditNickname}>수정</CommonButton>
             </div>

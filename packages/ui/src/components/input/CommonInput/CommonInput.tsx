@@ -1,82 +1,116 @@
+import { cva } from 'class-variance-authority';
 import {
   ChangeEvent,
   forwardRef,
   HTMLAttributes,
   KeyboardEvent,
+  memo,
   ReactNode,
   Ref,
   useMemo,
 } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { ClassNameValue } from 'tailwind-merge';
+import { cn } from '../../../utils/class-name.utils.ts';
 
-export type CommonInputProps = {
+const commonInputWrapperVariants = cva(
+  [
+    'relative',
+    'border',
+    'border-gray',
+    'focus:outline-main',
+    'rounded-[8px]',
+    'p-[8px]',
+    'flex',
+    'flex-row',
+    'items-center',
+    'border-gray',
+    'gap-x-[4px]',
+  ],
+  {
+    variants: {
+      isAlert: {
+        true: 'border-red',
+      },
+    },
+    defaultVariants: {
+      isAlert: false,
+    },
+  },
+);
+
+type CommonInputProps = {
   value?: string;
   alertText?: string;
   placeholder?: string;
-  className?: string;
-  classList?: string[];
-  wrapperClassName?: string;
-  wrapperClassList?: string[];
-  type?: string;
+  className?: ClassNameValue;
+  innerClassName?: ClassNameValue;
+  type?: NonNullable<'text' | 'number'>;
+  leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  setInputValue?: (value: string) => void;
-  pressEnter?: () => void;
-} & HTMLAttributes<HTMLInputElement>;
+  onChange?: (value: string) => void;
+  onEnter?: () => void;
+} & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
-export default forwardRef(
+const CommonInput = forwardRef(
   (
     {
       value,
       alertText,
-      wrapperClassName,
-      wrapperClassList,
+      placeholder,
       className,
-      classList,
+      innerClassName,
       type,
+      leftIcon,
       rightIcon,
-      setInputValue,
-      pressEnter,
+      onChange,
+      onEnter,
       ...rest
     }: CommonInputProps,
     ref: Ref<HTMLInputElement>,
   ) => {
-    const changeInputValue = (e: ChangeEvent) => {
-      if (!setInputValue) return;
+    const handleChangeInputValue = (e: ChangeEvent) => {
+      if (!onChange) return;
       const element = e.target as HTMLInputElement;
-      setInputValue(element.value);
+      onChange(element.value);
     };
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (pressEnter && e.code === 'Enter') pressEnter();
+      if (onEnter && e.code === 'Enter') onEnter();
     };
 
     const divClassName = useMemo(
       () =>
-        twMerge(
-          'flex flex-col relative border border-gray focus:outline-main rounded-[8px] p-[8px] flex flex-row items-center',
-          [alertText ? 'border-red' : 'border-gray'],
-          wrapperClassName,
-          wrapperClassList,
+        cn(
+          commonInputWrapperVariants({ isAlert: Boolean(alertText) }),
+          className,
         ),
-      [wrapperClassName, wrapperClassList],
+      [className, alertText],
     );
 
     const inputClassName = useMemo(
       () =>
-        twMerge(
-          'focus:outline-none text-black w-full h-full flex-1',
-          className,
-          classList,
+        cn(
+          [
+            'focus:outline-none',
+            'text-black',
+            'w-full',
+            'h-full',
+            'flex-1',
+            'bg-transparent',
+          ],
+          innerClassName,
         ),
-      [className, classList],
+      [innerClassName],
     );
     return (
       <div className={divClassName}>
+        {leftIcon && leftIcon}
         <input
           className={inputClassName}
-          onChange={changeInputValue}
+          onChange={handleChangeInputValue}
           onKeyUp={handleKeyUp}
           type={type}
           value={value}
+          placeholder={placeholder}
           ref={ref}
           {...rest}
         />
@@ -86,3 +120,9 @@ export default forwardRef(
     );
   },
 );
+
+CommonInput.displayName = 'CommonInput';
+const MemoizedCommonInput = memo(CommonInput);
+
+export { commonInputWrapperVariants, MemoizedCommonInput as default };
+export type { CommonInputProps };
