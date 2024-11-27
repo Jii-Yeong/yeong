@@ -4,7 +4,7 @@ export default function CommonToaster() {
   const { toasts } = useToast();
 
   return (
-    <div className="absolute right-0 top-[16px] flex flex-col gap-y-[16px]">
+    <div className="fixed top-[16px] right-0 flex flex-col gap-y-[16px]">
       {toasts?.map((toast, index) => {
         return <CommonToast key={toast.id} {...toast} />;
       })}
