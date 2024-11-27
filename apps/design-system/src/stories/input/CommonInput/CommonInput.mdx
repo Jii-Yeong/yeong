@@ -1,0 +1,38 @@
+import { Meta, Controls, Primary, Story, Canvas } from '@storybook/blocks';
+import * as CommonInputStories from './CommonInput.stories';
+
+<Meta title="UI/Button/CommonButton" of={CommonInputStories} />
+
+# CommonInput
+
+일반적으로 사용되는 input 컴포넌트 입니다.
+
+<Canvas of={CommonInputStories.All} />
+
+## Props
+
+<Canvas of={CommonInputStories.Default} />
+
+<Controls of={CommonInputStories.Default} />
+
+## Stories
+
+### Default
+
+<Canvas of={CommonInputStories.Default} />
+
+### Alert Message
+
+<Canvas of={CommonInputStories.AlertMessage} />
+
+### With Icon
+
+<Canvas of={CommonInputStories.WithIcon} />
+
+### Custom Style
+
+<Canvas of={CommonInputStories.CustomStyle} />
+
+### Number Type
+
+<Canvas of={CommonInputStories.NumberType} />
