@@ -1,45 +1,95 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { getFileInfo } from '@yeong/utils/string';
+import { ChangeEvent, forwardRef, HTMLAttributes, Ref, useMemo } from 'react';
+import { ClassNameValue } from 'tailwind-merge';
 import { UI_COLORS } from '../../../constants/color.constants.ts';
-import { ChangeEvent, useState } from 'react';
+import { cn } from '../../../utils/class-name.utils.ts';
+import EllipsisText from '../../text/EllipsisText/EllipsisText.tsx';
 
 type CommonFileInputProps = {
-  onChange: (files: FileList | null) => void;
-};
+  placeholder?: string;
+  value: FileList | null;
+  onChangeValue: (files: FileList | null) => void;
+  accept?: string;
+  className?: ClassNameValue;
+} & Omit<
+  HTMLAttributes<HTMLInputElement>,
+  'type' | 'id' | 'className' | 'onChange'
+>;
 
-export default function CommonFileInput({ onChange }: CommonFileInputProps) {
-  const [fileName, setFileName] = useState('');
-  const handleChangeInput = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement;
-    const files = element.files;
+const CommonFileInput = forwardRef(
+  (
+    {
+      placeholder = '파일 업로드',
+      value,
+      onChangeValue,
+      accept = '.jpg, .png, .webp',
+      className,
+    }: CommonFileInputProps,
+    ref: Ref<HTMLInputElement>,
+  ) => {
+    const divClassName = useMemo(
+      () =>
+        cn(
+          [
+            'h-[40px]',
+            'bg-white',
+            'border',
+            'border-gray',
+            'border-solid',
+            'rounded-[8px]',
+          ],
+          className,
+        ),
+      [className],
+    );
 
-    if (!files) return;
-    onChange(element.files);
+    const fileInfo = useMemo(() => {
+      if (!value || value.length <= 0 || !value[0]) return null;
+      return getFileInfo(value[0].name);
+    }, [value]);
 
-    const file = files[0];
+    const handleChangeInput = (e: ChangeEvent) => {
+      const element = e.target as HTMLInputElement;
+      const files = element.files;
 
-    if (!file) return;
-    setFileName(file.name);
-  };
+      if (!files) return;
+      onChangeValue(element.files);
+    };
 
-  return (
-    <div className="h-[40px] bg-white border border-gray border-solid rounded-[8px]">
-      <label
-        htmlFor="common-file"
-        className="p-[8px] flex flex-row items-center gap-x-[8px] cursor-pointer"
-      >
-        <Icon
-          icon="line-md:file-filled"
-          width={20}
-          color={UI_COLORS.darkGray}
+    return (
+      <div className={divClassName}>
+        <label
+          htmlFor="common-file"
+          className="p-[8px] flex flex-row items-center gap-x-[8px] cursor-pointer"
+        >
+          <Icon
+            icon="line-md:file-filled"
+            width={20}
+            color={UI_COLORS.darkGray}
+          />
+          <div className="text-md flex-1 flex flex-row">
+            {!fileInfo && <p>{placeholder}</p>}
+            {fileInfo?.name && (
+              <EllipsisText text={fileInfo.name} lineClamp={1} fontSize={14} />
+            )}
+            {fileInfo?.extension && <p>.{fileInfo?.extension}</p>}
+          </div>
+        </label>
+        <input
+          type="file"
+          id="common-file"
+          className="hidden"
+          onChange={handleChangeInput}
+          ref={ref}
+          accept={accept}
         />
-        <p>{fileName || '파일 업로드'}</p>
-      </label>
-      <input
-        type="file"
-        id="common-file"
-        className="hidden"
-        onChange={handleChangeInput}
-      />
-    </div>
-  );
-}
+      </div>
+    );
+  },
+);
+
+CommonFileInput.displayName = 'CommonFileInput';
+
+export { CommonFileInput as default };
+export type { CommonFileInputProps };

@@ -22,8 +22,13 @@ import ProfileImage, {
   ProfileImageWrapperVariant,
   profileImageWrapperVariants,
 } from './components/image/ProfileImage/ProfileImage.tsx';
-import CommonFileInput from './components/input/CommonFileInput/CommonFileInput.tsx';
-import CommonInput from './components/input/CommonInput/CommonInput.tsx';
+import CommonFileInput, {
+  CommonFileInputProps,
+} from './components/input/CommonFileInput/CommonFileInput.tsx';
+import CommonInput, {
+  CommonInputProps,
+  commonInputWrapperVariants,
+} from './components/input/CommonInput/CommonInput.tsx';
 import CommonTextarea from './components/input/CommonTextarea/CommonTextarea.tsx';
 import LoadingSpinner from './components/loading/LoadingSpinner/LoadingSpinner.tsx';
 import CommonSkeleton from './components/skeleton/CommonSkeleton.tsx';
@@ -41,6 +46,7 @@ export {
   CommonDropdownItem,
   CommonFileInput,
   CommonInput,
+  commonInputWrapperVariants,
   CommonSkeleton,
   CommonTextarea,
   CommonToast,
@@ -58,6 +64,8 @@ export type {
   CommonChipProps,
   CommonDropdownItemProps,
   CommonDropdownProps,
+  CommonFileInputProps,
+  CommonInputProps,
   ProfileImageProps,
   ProfileImageWrapperVariant,
   ToggleButtonProps,
