@@ -187,14 +187,14 @@ export default function BookSummaryCreateSection({
       {isRecodePage && (
         <div className="flex flex-row items-center gap-x-[8px]">
           <CommonInput
-            onChange={changeStartPage}
+            onChangeValue={changeStartPage}
             type="number"
             value={String(startPage)}
             className="w-[70px]"
           />
           <p>~</p>
           <CommonInput
-            onChange={changeEndPage}
+            onChangeValue={changeEndPage}
             type="number"
             value={String(endPage)}
             className="w-[70px]"

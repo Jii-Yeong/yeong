@@ -44,12 +44,12 @@ type CommonInputProps = {
   placeholder?: string;
   className?: ClassNameValue;
   innerClassName?: ClassNameValue;
-  type?: NonNullable<'text' | 'number'>;
+  type?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  onChange?: (value: string) => void;
+  onChangeValue?: (value: string) => void;
   onEnter?: () => void;
-} & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>;
+} & HTMLAttributes<HTMLInputElement>;
 
 const CommonInput = forwardRef(
   (
@@ -62,16 +62,16 @@ const CommonInput = forwardRef(
       type,
       leftIcon,
       rightIcon,
-      onChange,
+      onChangeValue,
       onEnter,
       ...rest
     }: CommonInputProps,
     ref: Ref<HTMLInputElement>,
   ) => {
     const handleChangeInputValue = (e: ChangeEvent) => {
-      if (!onChange) return;
+      if (!onChangeValue) return;
       const element = e.target as HTMLInputElement;
-      onChange(element.value);
+      onChangeValue(element.value);
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       if (onEnter && e.code === 'Enter') onEnter();

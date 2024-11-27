@@ -81,7 +81,7 @@ export default function SearchBookSection({
       <div className="flex flex-col sm:flex-row gap-x-[16px] gap-y-[8px] w-full">
         <CommonInput
           value={inputValue}
-          onChange={setInputValue}
+          onChangeValue={setInputValue}
           onEnter={searchBook}
           placeholder="책 제목을 2자 이상 입력해주세요."
           alertText={alertText}

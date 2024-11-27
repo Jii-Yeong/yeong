@@ -42,13 +42,9 @@ const meta = {
       description: '`<input />` 태그의 className, Tailwind CSS value 적용 가능',
     },
     type: {
-      control: {
-        type: 'radio',
-      },
-      options: ['text', 'number'],
       description: 'input의 타입',
     },
-    onChange: {
+    onChangeValue: {
       description: 'input change 이벤트 함수',
     },
     onEnter: {
@@ -78,7 +74,7 @@ export const All: Story = {
           args={{
             placeholder: '제목을 입력해주세요.',
             value,
-            onChange: (value: string) => setValue(value),
+            onChangeValue: (value: string) => setValue(value),
           }}
         />
         <Story
@@ -86,7 +82,7 @@ export const All: Story = {
             placeholder: '제목을 입력해주세요.',
             alertText: '제목을 2자 이상 입력해주세요.',
             value: alertValue,
-            onChange: (value: string) => setAlertValue(value),
+            onChangeValue: (value: string) => setAlertValue(value),
           }}
         />
         <Story
@@ -94,7 +90,7 @@ export const All: Story = {
             placeholder: '제목을 입력해주세요.',
             leftIcon: <Icon icon="ic:outline-cloud" width={20} color="gray" />,
             value: leftIconValue,
-            onChange: (value: string) => setLeftIconValue(value),
+            onChangeValue: (value: string) => setLeftIconValue(value),
           }}
         />
         <Story
@@ -104,14 +100,14 @@ export const All: Story = {
               <Icon icon="mingcute:check-fill" width={20} color="green" />
             ),
             value: rightIconValue,
-            onChange: (value: string) => setRightIconValue(value),
+            onChangeValue: (value: string) => setRightIconValue(value),
           }}
         />
         <Story
           args={{
             placeholder: '제목을 입력해주세요.',
             value: customValue,
-            onChange: (value: string) => setCustomValue(value),
+            onChangeValue: (value: string) => setCustomValue(value),
             className: 'bg-dark-gray border-transparent',
             innerClassName: 'text-white placeholder:text-white',
           }}
@@ -119,7 +115,7 @@ export const All: Story = {
         <Story
           args={{
             value: numberValue,
-            onChange: (value: string) => setNumberValue(value),
+            onChangeValue: (value: string) => setNumberValue(value),
             className: 'w-[70px]',
             type: 'number',
           }}
@@ -141,7 +137,7 @@ export const Default: Story = {
         args={{
           ...args,
           value,
-          onChange: (value: string) => {
+          onChangeValue: (value: string) => {
             setValue(value);
           },
         }}
@@ -163,7 +159,7 @@ export const AlertMessage: Story = {
         args={{
           ...args,
           value,
-          onChange: (value: string) => {
+          onChangeValue: (value: string) => {
             setValue(value);
           },
         }}
@@ -186,7 +182,7 @@ export const WithIcon: Story = {
         args={{
           ...args,
           value,
-          onChange: (value: string) => {
+          onChangeValue: (value: string) => {
             setValue(value);
           },
         }}
@@ -209,7 +205,7 @@ export const CustomStyle: Story = {
         args={{
           ...args,
           value,
-          onChange: (value: string) => {
+          onChangeValue: (value: string) => {
             setValue(value);
           },
         }}
@@ -229,7 +225,7 @@ export const NumberType: Story = {
         args={{
           ...args,
           value,
-          onChange: (value: string) => {
+          onChangeValue: (value: string) => {
             setValue(value);
           },
         }}

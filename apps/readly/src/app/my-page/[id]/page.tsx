@@ -118,7 +118,7 @@ export default function MyPage() {
               <CommonInput
                 className="flex-1"
                 placeholder="수정할 닉네임"
-                onChange={setNickname}
+                onChangeValue={setNickname}
               />
               <CommonButton onClick={clickEnterEditNickname}>수정</CommonButton>
             </div>
