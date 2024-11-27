@@ -19,6 +19,9 @@ const meta = {
       options: ['small', 'medium', 'large'],
       description: '로딩 스피너의 사이즈',
     },
+    customSize: {
+      description: '상세 사이즈, width와 height 모두에 적용, `string | number`',
+    },
     color: { control: 'color', description: '로딩 스피너 메인 컬러' },
     backgroundColor: { control: 'color', description: '로딩 스피너 배경 컬러' },
     className: {

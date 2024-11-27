@@ -50,6 +50,7 @@ export default function SummaryComment() {
           {data.list.map((item, index) => (
             <div key={`${JSON.stringify(item)}-${index}`}>
               <SummaryCommentItem
+                value={replyComment}
                 comment={item.comment}
                 createdAt={item.createdAt}
                 isMy={item.isMy}
@@ -86,6 +87,7 @@ export default function SummaryComment() {
         </div>
       )}
       <SummaryCommentInput
+        value={comment}
         setCommentValue={setComment}
         clickInputButton={clickCommentInputButton}
         disabled={!isLoggedIn || isPending}

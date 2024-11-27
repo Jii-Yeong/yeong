@@ -129,7 +129,7 @@ const CommonDropdown = forwardRef(
             <div>{itemChildren}</div>
           )}
           {isLoading ? (
-            <LoadingSpinner size={20} />
+            <LoadingSpinner customSize={20} />
           ) : (
             <Icon
               icon="bxs:down-arrow"

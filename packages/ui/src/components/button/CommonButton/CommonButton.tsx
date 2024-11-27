@@ -112,7 +112,9 @@ const CommonButton = forwardRef<HTMLButtonElement, CommonButtonProps>(
 
     const buttonContent = useMemo(() => {
       if (isLoading) {
-        return <LoadingSpinner size={loadingWidth} color={spinnerColor} />;
+        return (
+          <LoadingSpinner customSize={loadingWidth} color={spinnerColor} />
+        );
       }
       return children;
     }, [isLoading, loadingWidth, spinnerColor, children]);

@@ -22,6 +22,7 @@ type LoadingSpinnerVariant = VariantProps<typeof loadingSpinnerVariants>;
 
 type LoadingSpinnerProps = {
   color?: string;
+  customSize?: string | number;
   backgroundColor?: string;
   size?: NonNullable<LoadingSpinnerVariant['size']>;
   className?: ClassNameValue;
@@ -32,6 +33,7 @@ function LoadingSpinner({
   backgroundColor = UI_COLORS.white,
   size,
   className,
+  customSize,
 }: LoadingSpinnerProps) {
   const divClassName = useMemo(
     () => cn(loadingSpinnerVariants({ size }), 'loading-spinner', className),
@@ -45,6 +47,8 @@ function LoadingSpinner({
         borderBottomColor: backgroundColor,
         borderLeftColor: backgroundColor,
         borderRightColor: backgroundColor,
+        width: customSize,
+        height: customSize,
       }}
     ></div>
   );

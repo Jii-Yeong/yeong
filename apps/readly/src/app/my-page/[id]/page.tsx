@@ -87,7 +87,7 @@ export default function MyPage() {
           </div>
           {isOpenFileInput && (
             <div className="flex flex-row gap-x-[16px]">
-              <CommonFileInput onChange={setFiles} />
+              <CommonFileInput value={files} onChangeValue={setFiles} />
               <CommonButton onClick={clickEnterEditProfile}>수정</CommonButton>
             </div>
           )}

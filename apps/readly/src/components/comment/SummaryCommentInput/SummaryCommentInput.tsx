@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 type SummaryCommentInputProps = {
   disabled?: boolean;
   isPending?: boolean;
+  value: string;
   setCommentValue: (comment: string) => void;
   clickInputButton: () => Promise<void>;
 };
@@ -12,6 +13,7 @@ type SummaryCommentInputProps = {
 export default function SummaryCommentInput({
   disabled,
   isPending,
+  value,
   setCommentValue,
   clickInputButton,
 }: SummaryCommentInputProps) {
@@ -33,8 +35,9 @@ export default function SummaryCommentInput({
   return (
     <div className="flex flex-col md:flex-row gap-x-[16px] gap-y-[16px] mb-[16px]">
       <CommonTextarea
-        setTextareaValue={setCommentValue}
-        height={100}
+        className="h-[100px]"
+        value={value}
+        onChangeValue={setCommentValue}
         style={{ flex: 1 }}
         ref={ref}
         placeholder={

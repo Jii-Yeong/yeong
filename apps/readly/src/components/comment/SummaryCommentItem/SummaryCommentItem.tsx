@@ -11,6 +11,7 @@ export type SummaryCommentItemProps = SummaryCommentItemModel & {
   isReply?: boolean;
   isPending?: boolean;
   isDeletePending?: boolean;
+  value?: string;
   setCommentValue?: (comment: string) => void;
   clickInputButton?: (commentId?: number) => Promise<void>;
   clickDeleteButton?: (commentId: number) => void;
@@ -27,6 +28,7 @@ export default function SummaryCommentItem({
   isPending,
   isDeletePending,
   userId,
+  value,
   setCommentValue,
   clickInputButton,
   clickDeleteButton,
@@ -80,9 +82,10 @@ export default function SummaryCommentItem({
           </div>
         )}
       </div>
-      {isOpenInput && setCommentValue && clickInputButton && (
+      {isOpenInput && setCommentValue && value && clickInputButton && (
         <SummaryCommentInput
           isPending={isPending}
+          value={value}
           setCommentValue={setCommentValue}
           clickInputButton={() => clickInputButton(id)}
         />
