@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { forwardRef, memo, useMemo } from 'react';
+import { forwardRef, memo, Ref, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 import { cn } from '../../../utils/class-name.utils.ts';
 
@@ -42,7 +42,10 @@ type ProfileImageProps = {
 };
 
 const ProfileImage = forwardRef(
-  ({ imageSrc, size, className }: ProfileImageProps) => {
+  (
+    { imageSrc, size, className }: ProfileImageProps,
+    ref: Ref<HTMLDivElement>,
+  ) => {
     const defaultImage =
       'https://4rwpwj6q9lf5hlkz.public.blob.vercel-storage.com/common/images/default-profile-image-66IPBxnoDBpj8MMfqGw5hh6BM00rm6.png';
 
@@ -51,7 +54,7 @@ const ProfileImage = forwardRef(
       [size, className],
     );
     return (
-      <div className={divClassName}>
+      <div className={divClassName} ref={ref}>
         <img
           src={imageSrc || defaultImage}
           alt="profile-image"
