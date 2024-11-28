@@ -8,7 +8,7 @@ import {
 import { useState } from 'react';
 
 const meta = {
-  title: 'UI/Dropdown/CommonDropdown',
+  title: 'Components/Dropdown/CommonDropdown',
   component: CommonDropdown,
   parameters: {
     layout: 'centered',
