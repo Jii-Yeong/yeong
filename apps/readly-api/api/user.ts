@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import { sql } from '@vercel/postgres';
 import express, { Request, Response } from 'express';
 import { decodeJwtToken } from '../utils/auth';
@@ -87,6 +87,20 @@ userRouter.post('/edit/profile-image', async (req: Request, res: Response) => {
 
   const decodedInfo = decodeJwtToken(userToken);
 
+  const { rows } = await sql`SELECT profile_image FROM users WHERE id = ${decodedInfo.id}`
+
+  if (!rows || rows.length <= 0) {
+    res.status(401).send('User does not exist.');
+    return;
+  }
+
+  const row = rows[0]
+
+  if (row.profile_image) {
+    await del(row.profile_image)
+  }
+
+
   let image = req.files?.image;
 
   if (!image) {
@@ -110,6 +124,7 @@ userRouter.post('/edit/profile-image', async (req: Request, res: Response) => {
   UPDATE users
   SET profile_image = ${blob.url}
   WHERE id = ${decodedInfo.id};`;
+
 
   res.send('Success edited.');
 });
