@@ -26,6 +26,7 @@ export default function MyPage() {
   const [files, setFiles] = useState<FileList | null>(null);
   const [isOpenNicknameInput, setIsOpenNicknameInput] = useState(false);
   const [isOpenFileInput, setIsOpenFileInput] = useState(false);
+  const [nicknameAlertMessage, setNicknameAlertMessage] = useState('');
 
   const { data: infoData, isFetching: infoFetching } = getUserInfoQuery(
     String(id),
@@ -33,8 +34,10 @@ export default function MyPage() {
   const { data: myListData, isLoading: listLoading } = getBookSummaryListQuery({
     user_id: String(id),
   });
-  const { mutate: nicknameMutate } = editUserNicknameMutation();
-  const { mutate: imageMutate } = editUserProfileImageMutation();
+  const { mutateAsync: nicknameMutate, isPending: nicknamePending } =
+    editUserNicknameMutation();
+  const { mutateAsync: imageMutate, isPending: imagePending } =
+    editUserProfileImageMutation();
 
   const clickEditNicknameButton = () => {
     setIsOpenNicknameInput(!isOpenNicknameInput);
@@ -44,11 +47,24 @@ export default function MyPage() {
     setIsOpenFileInput(!isOpenFileInput);
   };
 
-  const clickEnterEditNickname = () => {
-    nicknameMutate({ nickname });
+  const clickEnterEditNickname = async () => {
+    setNicknameAlertMessage('');
+
+    if (nickname.length <= 1) {
+      setNicknameAlertMessage('닉네임을 2자 이상 입력해주세요.');
+      return;
+    }
+
+    if (nickname.length > 8) {
+      setNicknameAlertMessage('닉네임을 8자 이하로 입력해주세요.');
+      return;
+    }
+
+    await nicknameMutate({ nickname });
+    setIsOpenNicknameInput(false);
   };
 
-  const clickEnterEditProfile = () => {
+  const clickEnterEditProfile = async () => {
     if (!files) return;
 
     const image = files[0];
@@ -58,7 +74,8 @@ export default function MyPage() {
     const formData = new FormData();
     formData.append('image', image);
 
-    imageMutate(formData);
+    await imageMutate(formData);
+    setIsOpenFileInput(false);
   };
 
   return (
@@ -88,7 +105,12 @@ export default function MyPage() {
           {isOpenFileInput && (
             <div className="flex flex-row gap-x-[16px]">
               <CommonFileInput value={files} onChangeValue={setFiles} />
-              <CommonButton onClick={clickEnterEditProfile}>수정</CommonButton>
+              <CommonButton
+                onClick={clickEnterEditProfile}
+                isLoading={imagePending}
+              >
+                수정
+              </CommonButton>
             </div>
           )}
 
@@ -119,8 +141,14 @@ export default function MyPage() {
                 className="flex-1"
                 placeholder="수정할 닉네임"
                 onChangeValue={setNickname}
+                alertText={nicknameAlertMessage}
               />
-              <CommonButton onClick={clickEnterEditNickname}>수정</CommonButton>
+              <CommonButton
+                onClick={clickEnterEditNickname}
+                isLoading={nicknamePending}
+              >
+                수정
+              </CommonButton>
             </div>
           )}
         </div>

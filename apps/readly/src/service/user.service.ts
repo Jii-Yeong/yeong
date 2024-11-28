@@ -4,7 +4,11 @@ import { editUserNickname, editUserProfileImage, getUserInfoData, getUserMyInfoD
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const getUserInfoQuery = (id: string) => {
-  return useQuery({ queryKey: [USERS_QUERY_KEY, id], queryFn: () => getUserInfoData(id) })
+  return useQuery({
+    queryKey: [USERS_QUERY_KEY, id], queryFn: () => getUserInfoData(id),
+    staleTime: Infinity,
+    gcTime: Infinity,
+  })
 }
 
 
@@ -20,7 +24,9 @@ export const editUserNicknameMutation = () => {
   return useMutation({
     mutationFn: editUserNickname,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY, BOOK_SUMMARY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [MY_USERS_QUERY_KEY] });
     }
   })
 }
@@ -29,7 +35,9 @@ export const editUserProfileImageMutation = () => {
   return useMutation({
     mutationFn: editUserProfileImage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY, BOOK_SUMMARY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [MY_USERS_QUERY_KEY] });
     }
   })
 }
