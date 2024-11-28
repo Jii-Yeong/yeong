@@ -14,7 +14,7 @@ const meta = {
       description: '이미지 사이즈',
     },
     imageSrc: {
-      description: '이미지',
+      description: '이미지 src',
     },
     className: {
       description:

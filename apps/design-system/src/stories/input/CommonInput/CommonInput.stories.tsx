@@ -75,6 +75,7 @@ export const All: Story = {
             placeholder: '제목을 입력해주세요.',
             value,
             onChangeValue: (value: string) => setValue(value),
+            className: 'w-[200px]',
           }}
         />
         <Story
@@ -83,6 +84,7 @@ export const All: Story = {
             alertText: '제목을 2자 이상 입력해주세요.',
             value: alertValue,
             onChangeValue: (value: string) => setAlertValue(value),
+            className: 'w-[200px]',
           }}
         />
         <Story
@@ -91,6 +93,7 @@ export const All: Story = {
             leftIcon: <Icon icon="ic:outline-cloud" width={20} color="gray" />,
             value: leftIconValue,
             onChangeValue: (value: string) => setLeftIconValue(value),
+            className: 'w-[200px]',
           }}
         />
         <Story
@@ -101,6 +104,7 @@ export const All: Story = {
             ),
             value: rightIconValue,
             onChangeValue: (value: string) => setRightIconValue(value),
+            className: 'w-[200px]',
           }}
         />
         <Story
@@ -129,6 +133,7 @@ export const Default: Story = {
   args: {
     type: 'text',
     placeholder: '제목을 입력해주세요.',
+    className: 'w-[200px]',
   },
   decorators: (Story, { args }) => {
     const [value, setValue] = useState('');
@@ -150,7 +155,8 @@ export const AlertMessage: Story = {
   args: {
     type: 'text',
     placeholder: '제목을 입력해주세요.',
-    alertText: '제목을 2자 이상 입력해주세요,',
+    alertText: '제목을 2자 이상 입력해주세요.',
+    className: 'w-[200px]',
   },
   decorators: (Story, { args }) => {
     const [value, setValue] = useState('');

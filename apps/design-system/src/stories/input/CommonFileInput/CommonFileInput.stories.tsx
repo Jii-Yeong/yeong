@@ -11,6 +11,9 @@ const meta = {
   argTypes: {
     value: {
       description: '파일 input의 value, `FileList | null`',
+      control: {
+        disable: true,
+      },
     },
     onChangeValue: {
       description: '업로드된 파일에 따라 value를 바꾸는 이벤트 함수',

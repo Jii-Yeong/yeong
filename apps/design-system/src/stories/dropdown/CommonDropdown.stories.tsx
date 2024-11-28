@@ -38,6 +38,12 @@ const meta = {
     isLoading: {
       description: '데이터 로딩 여부, true일시 로딩스피너가 나타남',
     },
+    label: {
+      description: '드롭다운 컨트롤러에 보일 컨텐츠',
+      control: {
+        disable: true,
+      },
+    },
   },
 } satisfies Meta<typeof CommonDropdown>;
 
