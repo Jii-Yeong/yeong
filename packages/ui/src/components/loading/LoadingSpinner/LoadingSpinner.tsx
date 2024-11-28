@@ -31,7 +31,7 @@ type LoadingSpinnerProps = {
 
 function LoadingSpinner({
   color = UI_COLORS.main,
-  backgroundColor = UI_COLORS.white,
+  backgroundColor = 'rgba(255, 255, 255, 0.5)',
   size,
   className,
   customSize,
