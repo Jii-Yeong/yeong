@@ -115,7 +115,9 @@ const CommonInput = forwardRef(
           {...rest}
         />
         {rightIcon && rightIcon}
-        <p className="text-md text-red absolute bottom-[-20px]">{alertText}</p>
+        <p className="text-md text-red absolute bottom-[-20px] whitespace-nowrap">
+          {alertText}
+        </p>
       </div>
     );
   },
