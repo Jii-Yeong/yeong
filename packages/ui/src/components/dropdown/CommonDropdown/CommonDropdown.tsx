@@ -142,7 +142,7 @@ const CommonDropdown = forwardRef(
         <CommonDropdownContext.Provider
           value={{ clickDropdownItem, currentValue: value }}
         >
-          {isOpen && children}
+          {isOpen && !isLoading && children}
         </CommonDropdownContext.Provider>
         <input type="hidden" value={value} aria-hidden="true" {...rest} />
       </div>
