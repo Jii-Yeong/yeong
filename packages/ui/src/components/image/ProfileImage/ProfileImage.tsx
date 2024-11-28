@@ -1,6 +1,6 @@
 import { cn } from '#utils/class-name.utils.ts';
 import { cva, VariantProps } from 'class-variance-authority';
-import { forwardRef, memo, Ref, useMemo } from 'react';
+import { forwardRef, memo, Ref, SyntheticEvent, useMemo } from 'react';
 import { ClassNameValue } from 'tailwind-merge';
 
 const profileImageWrapperVariants = cva(
@@ -53,12 +53,18 @@ const ProfileImage = forwardRef(
       () => cn(profileImageWrapperVariants({ size }), className),
       [size, className],
     );
+
+    const handleErrorImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+      const element = e.target as HTMLImageElement;
+      element.src = defaultImage;
+    };
     return (
       <div className={divClassName} ref={ref}>
         <img
           src={imageSrc || defaultImage}
           alt="profile-image"
           className="w-full"
+          onError={handleErrorImage}
         />
       </div>
     );
