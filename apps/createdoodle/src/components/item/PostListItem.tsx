@@ -9,7 +9,6 @@ type PostListItemProps = {
 };
 
 export default function PostListItem({item}: PostListItemProps) {
-  // const thumbnail = require(`public/thumbnail/${item.thumbnail}.png`);
   return (
     <Link
       href={`/post/${item.id}`}
