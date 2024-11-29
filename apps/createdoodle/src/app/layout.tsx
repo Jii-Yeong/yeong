@@ -1,6 +1,7 @@
 import CommonHeader from '@/components/header/CommonHeader';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Suspense } from 'react';
 import './globals.css';
 
 const nanumFont = localFont({ src: '../../public/fonts/NanumGothic.ttf' });
@@ -17,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={nanumFont.className}>
-        <CommonHeader />
-        <div className="py-[76px] flex flex-col items-center">{children}</div>
+        <Suspense>
+          <CommonHeader />
+          <div className="py-[76px] flex flex-col items-center">{children}</div>
+        </Suspense>
       </body>
     </html>
   );
