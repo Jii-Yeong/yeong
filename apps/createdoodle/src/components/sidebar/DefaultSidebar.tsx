@@ -1,14 +1,39 @@
-import { COLORS } from '@/constants/colors.constants';
 import { usePost } from '@/hooks/usePost';
 import { CategoryId } from '@/types/category.types';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
+import { cva } from 'class-variance-authority';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 type DefaultSidebarProps = {
   isShow?: boolean;
   onClickClose: () => void;
 };
+
+const sidebarItemVariants = cva(
+  [
+    'flex',
+    'flex-row',
+    'justify-between',
+    'cursor-pointer',
+    'text-[18px]',
+    'py-[8px]',
+    'px-[16px]',
+    'rounded-[8px]',
+    'transition',
+  ],
+  {
+    variants: {
+      isCurrent: {
+        true: ['bg-main', 'text-white'],
+        false: ['bg-white', 'text-black', 'md:hover:bg-light-gray'],
+      },
+    },
+    defaultVariants: {
+      isCurrent: false,
+    },
+  },
+);
 
 export default function DefaultSidebar({
   isShow,
@@ -71,13 +96,10 @@ export default function DefaultSidebar({
         {categoryList.map((item) => (
           <div key={item.value}>
             <div
-              className="flex flex-row justify-between cursor-pointer text-[18px] py-[8px] px-[16px] md:hover:bg-light-gray rounded-[8px]"
+              className={sidebarItemVariants({
+                isCurrent: item.value === categoryId,
+              })}
               onClick={() => handleClickCategoryItem(item.value)}
-              style={{
-                backgroundColor:
-                  item.value === categoryId ? COLORS.main : COLORS.white,
-                color: item.value === categoryId ? COLORS.white : COLORS.black,
-              }}
             >
               <p>{item.label}</p>
               <p>{item.count}</p>
