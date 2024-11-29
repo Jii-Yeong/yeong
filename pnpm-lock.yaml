@@ -20,6 +20,9 @@ importers:
 
   apps/createdoodle:
     dependencies:
+      '@iconify/react':
+        specifier: ^5.0.2
+        version: 5.0.2(react@18.3.1)
       '@yeong/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -577,7 +580,7 @@ importers:
         version: 3.5.0
       typescript:
         specifier: latest
-        version: 5.6.3
+        version: 5.7.2
 
 packages:
 
@@ -9309,6 +9312,11 @@ packages:
 
   typescript@5.6.3:
     resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -20925,6 +20933,8 @@ snapshots:
   typescript@5.5.4: {}
 
   typescript@5.6.3: {}
+
+  typescript@5.7.2: {}
 
   ufo@1.5.4: {}
 
