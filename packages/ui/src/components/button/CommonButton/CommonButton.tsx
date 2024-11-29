@@ -27,31 +27,31 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: ['bg-main', 'lg:hover:bg-dark-main', 'disabled:hover:bg-main'],
+        primary: ['bg-main', 'md:hover:bg-dark-main', 'disabled:hover:bg-main'],
         secondary: [
           'bg-gray',
-          'lg:hover:bg-dark-gray',
+          'md:hover:bg-dark-gray',
           'disabled:hover:bg-gray',
         ],
-        red: ['bg-red', 'lg:hover:bg-dark-red', 'disabled:hover:bg-red'],
+        red: ['bg-red', 'md:hover:bg-dark-red', 'disabled:hover:bg-red'],
         outline: [
           'bg-white',
           'border-gray',
           'text-black',
-          'lg:hover:bg-light-gray',
+          'md:hover:bg-gray/30',
           'disabled:hover:bg-white',
         ],
         ghost: [
           'bg-transparent',
           'text-black',
-          'lg:hover:bg-light-gray',
+          'md:hover:bg-gray/30',
           'disabled:hover:bg-transparent',
         ],
         link: [
           'bg-transparent',
           'text-black',
           'underline',
-          'lg:hover:bg-light-gray',
+          'md:hover:bg-gray/30',
           'disabled:hover:bg-transparent',
         ],
       },
