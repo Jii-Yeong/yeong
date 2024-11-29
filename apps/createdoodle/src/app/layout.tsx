@@ -1,5 +1,5 @@
 import CommonHeader from '@/components/header/CommonHeader';
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <CommonHeader />
-        <div className="py-[76px]">{children}</div>
+        <div className="py-[76px] flex flex-col items-center">{children}</div>
       </body>
     </html>
   );

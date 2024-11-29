@@ -69,9 +69,8 @@ export default function DefaultSidebar({
       </div>
       <div className="flex flex-col gap-y-[8px]">
         {categoryList.map((item) => (
-          <>
+          <div key={item.value}>
             <div
-              key={item.value}
               className="flex flex-row justify-between cursor-pointer text-[18px] py-[8px] px-[16px] md:hover:bg-light-gray rounded-[8px]"
               onClick={() => handleClickCategoryItem(item.value)}
               style={{
@@ -84,7 +83,7 @@ export default function DefaultSidebar({
               <p>{item.count}</p>
             </div>
             {item.value === null && <CommonDivider className="my-[16px]" />}
-          </>
+          </div>
         ))}
       </div>
     </div>
