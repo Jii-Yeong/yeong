@@ -10,6 +10,7 @@ export const POST_LIST: PostListItemType[] = [
     description: 'fs 모듈을 이용하여 Nuxt3 페이지에 마크다운을 나타냅니다.',
     thumbnail: '1',
     route: 1,
+    date: '2022.03.15',
   },
   {
     id: '2',
@@ -20,6 +21,7 @@ export const POST_LIST: PostListItemType[] = [
     description: 'vercel과 nuxt3에서 전역 환경변수를 설정합니다.',
     thumbnail: '2',
     route: 2,
+    date: '2022.03.17',
   },
   {
     id: '3',
@@ -31,6 +33,7 @@ export const POST_LIST: PostListItemType[] = [
       'vue3 <script setup>에서 자주 사용하는 기본 문법을 정리합니다.',
     thumbnail: '3',
     route: 3,
+    date: '2022.03.19',
   },
   {
     id: '4',
@@ -41,6 +44,7 @@ export const POST_LIST: PostListItemType[] = [
       'vue-gtag를 이용하여 nuxt3 프로젝트를 구글 애널리틱스에 등록합니다.',
     thumbnail: '4',
     route: 4,
+    date: '2022.03.19',
   },
   {
     id: '5',
@@ -50,6 +54,7 @@ export const POST_LIST: PostListItemType[] = [
     description: '복잡도와 Big O 표기법에 대한 정리',
     thumbnail: '5',
     route: 5,
+    date: '2022.03.27',
   },
   {
     id: '6',
@@ -62,6 +67,7 @@ export const POST_LIST: PostListItemType[] = [
       'vue3 setup script 에서 부모 컴포넌트에서 자식 컴포넌트 변수/함수를 사용할 수 있습니다.',
     thumbnail: '6',
     route: 6,
+    date: '2022.04.15',
   },
   {
     id: '7',
@@ -72,6 +78,7 @@ export const POST_LIST: PostListItemType[] = [
     description: '백준 1712번 손익분기점에 대한 문제 해설입니다.',
     thumbnail: '7',
     route: 7,
+    date: '2022.04.17',
   },
   {
     id: '8',
@@ -81,6 +88,7 @@ export const POST_LIST: PostListItemType[] = [
     description: '버블 정렬에 대한 정리',
     thumbnail: '8',
     route: 8,
+    date: '2022.07.29',
   },
   {
     id: '9',
@@ -90,6 +98,7 @@ export const POST_LIST: PostListItemType[] = [
     description:
       'Turborepo를 이용하여 모노레포를 구성하고 여러 내부 패키지를 만드는 방법에 대한 정리',
     route: 9,
+    date: '2024.10.31',
   },
   {
     id: '10',
@@ -99,5 +108,6 @@ export const POST_LIST: PostListItemType[] = [
     description:
       'Next.js 에서 구글 로그인 구현과 외부 API를 이용해서 구글 유저 정보 가져오는 방법에 대한 정리',
     route: 10,
+    date: '2024.11.26',
   },
 ];

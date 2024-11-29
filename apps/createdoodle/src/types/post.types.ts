@@ -9,4 +9,5 @@ export interface PostListItemType {
   category: string;
   categoryId: NonNullable<CategoryId>;
   subCategory?: string;
+  date: string;
 }
