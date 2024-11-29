@@ -1,10 +1,11 @@
 'use client';
 
 import DefaultSidebar from '@/components/sidebar/DefaultSidebar';
-import {COLORS} from '@/constants/colors.constants';
-import {Icon} from '@iconify/react/dist/iconify.js';
+import { COLORS } from '@/constants/colors.constants';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { CommonButton } from '@yeong/ui';
 import Link from 'next/link';
-import {useState} from 'react';
+import { useState } from 'react';
 
 export default function CommonHeader() {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
@@ -19,13 +20,18 @@ export default function CommonHeader() {
   return (
     <>
       <div className="w-full bg-[#cac3f8b3] h-[60px] flex flex-row justify-between items-center px-[16px] fixed">
-        <Icon
-          icon="icon-park-outline:menu-unfold"
-          color={COLORS.white}
-          width={35}
-          className="cursor-pointer z-100"
+        <CommonButton
           onClick={clickMenuButton}
-        />
+          variant="ghost"
+          className="p-[4px]"
+        >
+          <Icon
+            icon="icon-park-outline:menu-unfold"
+            color={COLORS.white}
+            width={35}
+            className="cursor-pointer z-100"
+          />
+        </CommonButton>
         <Link href="/" className="text-[24px] text-[#FFFFFF] font-bold">
           끄적끄적
         </Link>

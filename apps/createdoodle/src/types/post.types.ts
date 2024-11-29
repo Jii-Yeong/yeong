@@ -1,3 +1,5 @@
+import { CategoryId } from './category.types';
+
 export interface PostListItemType {
   id: string;
   title: string;
@@ -5,5 +7,6 @@ export interface PostListItemType {
   thumbnail?: string;
   route: number;
   category: string;
+  categoryId: NonNullable<CategoryId>;
   subCategory?: string;
 }

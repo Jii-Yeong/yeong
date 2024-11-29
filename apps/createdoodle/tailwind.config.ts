@@ -6,9 +6,9 @@ const config = {
     extend: {
       colors: {
         main: '#6862a8',
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 export default config;
