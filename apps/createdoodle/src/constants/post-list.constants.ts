@@ -110,4 +110,13 @@ export const POST_LIST: PostListItemType[] = [
     route: 10,
     date: '2024.11.26',
   },
+  {
+    id: '11',
+    title: '네이버 책 검색 API를 사용해보자',
+    category: '오픈소스',
+    categoryId: 'open-source',
+    description: '네이버 책 검색 API를 사용하는 방법에 대한 정리',
+    route: 11,
+    date: '2024.11.29',
+  },
 ];
