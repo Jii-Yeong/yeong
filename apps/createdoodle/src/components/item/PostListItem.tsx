@@ -12,7 +12,7 @@ export default function PostListItem({ item }: PostListItemProps) {
   return (
     <Link
       href={`/post/${item.id}`}
-      className="flex flex-col bg-[#ffffff] rounded-lg p-6 min-h-[129px] gap-x-[32px] w-full"
+      className="flex flex-col bg-[#ffffff] rounded-lg p-6 min-h-[129px] gap-x-[32px] w-full md:hover:bg-light-gray transition"
     >
       <div className="flex flex-row justify-between">
         <p className="text-[#7b71be]">{item.category}</p>
