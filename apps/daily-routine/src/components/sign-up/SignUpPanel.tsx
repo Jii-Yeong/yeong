@@ -1,81 +1,83 @@
-import DefaultInput from "@/components/input/DefaultInput/DefaultInput"
+import DefaultInput from '@/components/input/DefaultInput/DefaultInput';
 import {
   CONFIRM_PASSWORD_MESSAGE,
   EMAIL_CONFIRM_MESSAGE,
   PASSWORD_CONFIRM_MESSAGE,
-} from "@/constants/auth-confirm-message.constants"
-import { signUpWithPassword } from "@/supabase/auth"
-import { getRootPage } from "@/utils/page.utils"
-import { emailRegex } from "@/utils/regexp.utils"
-import { ChangeEvent, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import AuthPanel from "../panel/AuthPanel/AuthPanel"
-import "./SignUpPanel.scoped.scss"
+} from '@/constants/auth-confirm-message.constants';
+import { signUpWithPassword } from '@/supabase/auth';
+import { getRootPage } from '@/utils/page.utils';
+import { emailRegex } from '@/utils/regexp.utils';
+import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthPanel from '../panel/AuthPanel/AuthPanel';
+import './SignUpPanel.scoped.scss';
 
 export default function SignUpPanel() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [passwordConfirm, setPasswordConfirm] = useState("")
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [wrongEmailText, setWrongEmailText] = useState(
     EMAIL_CONFIRM_MESSAGE.emptyEmail
-  )
+  );
   const [wrongPasswordText, setWrongPasswordText] = useState(
     PASSWORD_CONFIRM_MESSAGE.emptyPassword
-  )
+  );
   const [wrongPasswordConfirmText, setWrongPasswordConfirmText] = useState(
     CONFIRM_PASSWORD_MESSAGE.emptyPasswordConfirm
-  )
-  const [isWrongEmail, setWrongEmail] = useState(false)
-  const [isWrongPassword, setWrongPassword] = useState(false)
-  const [isWrongPasswordComfirm, setWrongPasswordConfirm] = useState(false)
+  );
+  const [isWrongEmail, setWrongEmail] = useState(false);
+  const [isWrongPassword, setWrongPassword] = useState(false);
+  const [isWrongPasswordComfirm, setWrongPasswordConfirm] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSetEmail = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement
-    setEmail(element.value)
+    const element = e.target as HTMLInputElement;
+    setEmail(element.value);
 
     if (!element.value) {
-      setWrongEmail(true)
-      setWrongEmailText(EMAIL_CONFIRM_MESSAGE.emptyEmail)
+      setWrongEmail(true);
+      setWrongEmailText(EMAIL_CONFIRM_MESSAGE.emptyEmail);
     } else if (!emailRegex.test(element.value)) {
-      setWrongEmail(true)
-      setWrongEmailText(EMAIL_CONFIRM_MESSAGE.unstyledEmail)
+      setWrongEmail(true);
+      setWrongEmailText(EMAIL_CONFIRM_MESSAGE.unstyledEmail);
     } else {
-      setWrongEmail(false)
+      setWrongEmail(false);
     }
-  }
+  };
 
   const handleSetPassword = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement
-    setPassword(element.value)
+    const element = e.target as HTMLInputElement;
+    setPassword(element.value);
 
     if (!element.value) {
-      setWrongPassword(true)
-      setWrongPasswordText(PASSWORD_CONFIRM_MESSAGE.emptyPassword)
+      setWrongPassword(true);
+      setWrongPasswordText(PASSWORD_CONFIRM_MESSAGE.emptyPassword);
     } else if (element.value.length < 6) {
-      setWrongPassword(true)
-      setWrongPasswordText(PASSWORD_CONFIRM_MESSAGE.wrongPasswordLength)
+      setWrongPassword(true);
+      setWrongPasswordText(PASSWORD_CONFIRM_MESSAGE.wrongPasswordLength);
     } else {
-      setWrongPassword(false)
+      setWrongPassword(false);
     }
-  }
+  };
   const handleSetPasswordConfirm = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement
-    setPasswordConfirm(element.value)
+    const element = e.target as HTMLInputElement;
+    setPasswordConfirm(element.value);
 
     if (!element.value) {
-      setWrongPasswordConfirm(true)
-      setWrongPasswordConfirmText(CONFIRM_PASSWORD_MESSAGE.emptyPasswordConfirm)
+      setWrongPasswordConfirm(true);
+      setWrongPasswordConfirmText(
+        CONFIRM_PASSWORD_MESSAGE.emptyPasswordConfirm
+      );
     } else if (password !== element.value) {
-      setWrongPasswordConfirm(true)
+      setWrongPasswordConfirm(true);
       setWrongPasswordConfirmText(
         CONFIRM_PASSWORD_MESSAGE.notMathPasswordConfirm
-      )
+      );
     } else {
-      setWrongPasswordConfirm(false)
+      setWrongPasswordConfirm(false);
     }
-  }
+  };
 
   const handleClickSignUpButton = () => {
     if (
@@ -86,18 +88,18 @@ export default function SignUpPanel() {
       isWrongPassword ||
       isWrongPasswordComfirm
     )
-      return
+      return;
 
     signUpWithPassword(email, password).then(() => {
       alert(
-        "해당 이메일로 회원가입 확인 메일을 보내드렸으니 확인 부탁드립니다."
-      )
-    })
-  }
+        '해당 이메일로 회원가입 확인 메일을 보내드렸으니 확인 부탁드립니다.'
+      );
+    });
+  };
 
   const handleClickChangePage = () => {
-    navigate(getRootPage())
-  }
+    navigate(getRootPage());
+  };
 
   return (
     <AuthPanel
@@ -134,5 +136,5 @@ export default function SignUpPanel() {
         wrongText={wrongPasswordConfirmText}
       />
     </AuthPanel>
-  )
+  );
 }

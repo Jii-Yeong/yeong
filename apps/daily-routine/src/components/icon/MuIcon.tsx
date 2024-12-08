@@ -1,25 +1,33 @@
-import { parseDomSizeValue } from "@/utils/string.utils.ts"
+import { parseDomSizeValue } from '@/utils/string.utils.ts';
+import { useMemo } from 'react';
 
 type MuIcon = {
-  icon: string
-  cursor?: string
-  size?: string | number
-  clickIcon?: () => void
-}
+  icon: string;
+  cursor?: string;
+  size?: string | number;
+  className?: string;
+  clickIcon?: () => void;
+};
 
 export default function MuIcon({
-  size = "16",
+  size = '16',
   icon,
-  cursor = "default",
+  cursor = 'default',
+  className,
   clickIcon,
 }: MuIcon) {
   const iconStyle = {
     fontSize: parseDomSizeValue(size),
     cursor,
-  }
+  };
+
+  const iconClassName = useMemo(
+    () => `material-icons ${className}`,
+    [className]
+  );
   return (
-    <span className="material-icons" style={iconStyle} onClick={clickIcon}>
+    <span className={iconClassName} style={iconStyle} onClick={clickIcon}>
       {icon}
     </span>
-  )
+  );
 }

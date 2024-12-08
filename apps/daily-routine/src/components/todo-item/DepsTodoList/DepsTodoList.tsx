@@ -1,11 +1,11 @@
-import AddButton from "@/components/button/AddButton/AddButton"
-import MuIcon from "@/components/icon/MuIcon"
-import EditorInputWrapper from "@/components/input/EditorInputWrapper/EditorInputWrapper"
-import DefaultTodoItem from "@/components/list-item/DefaultTodoItem/DefaultTodoItem"
-import { useTodoList } from "@/hooks/todo/useTodoList"
-import { TodoItemModel } from "@/model/todo/todo-item.model"
-import { DragEvent, useState } from "react"
-import "./DepsTodoList.scoped.scss"
+import AddButton from '@/components/button/AddButton/AddButton';
+import MuIcon from '@/components/icon/MuIcon';
+import EditorInputWrapper from '@/components/input/EditorInputWrapper/EditorInputWrapper';
+import DefaultTodoItem from '@/components/list-item/DefaultTodoItem/DefaultTodoItem';
+import { useTodoList } from '@/hooks/todo/useTodoList';
+import { TodoItemModel } from '@/model/todo/todo-item.model';
+import { DragEvent, useState, MouseEvent } from 'react';
+import './DepsTodoList.scoped.scss';
 
 export default function DepsTodoList() {
   const {
@@ -15,42 +15,42 @@ export default function DepsTodoList() {
     clickDeleteButton,
     editTodoItemValue,
     dragStartTodoItem,
-    dragOverTodoItem,
-    dropTodoItem,
     dragEndTodoItem,
     clickRandomTodoListButton,
-  } = useTodoList()
+    mouseOverItemWrapper,
+    mouseOutItemWrapper,
+  } = useTodoList();
 
-  const [editorValue, setEditorValue] = useState("")
-  const [isClickAddButton, setIsClickAddButton] = useState(false)
+  const [editorValue, setEditorValue] = useState('');
+  const [isClickAddButton, setIsClickAddButton] = useState(false);
   const handleClickSubmitButton = async () => {
-    await enterTodoItem(editorValue)
-    setIsClickAddButton(false)
-  }
+    await enterTodoItem(editorValue);
+    setIsClickAddButton(false);
+  };
 
   const handleClickAddButton = () => {
-    setIsClickAddButton(true)
-  }
+    setIsClickAddButton(true);
+  };
 
   const handleClickCancelButton = () => {
-    setIsClickAddButton(false)
-  }
+    setIsClickAddButton(false);
+  };
 
   const handleDragStartTodoItem = (e: DragEvent, item: TodoItemModel) => {
-    dragStartTodoItem(e, item)
-  }
+    dragStartTodoItem(e, item);
+  };
 
-  const handleDragOverTodoItem = (e: DragEvent) => {
-    dragOverTodoItem(e)
-  }
+  const handleDragEndTodoItem = (e: DragEvent) => {
+    dragEndTodoItem(e);
+  };
 
-  const handleDropTodoItem = (e: DragEvent, item: TodoItemModel) => {
-    dropTodoItem(e, item)
-  }
+  const handleMouseOverTodoWrapper = (e: MouseEvent) => {
+    mouseOverItemWrapper(e);
+  };
 
-  const handleDragEndTodoItem = () => {
-    dragEndTodoItem()
-  }
+  const handleMouseOutTodoWrapper = (e: MouseEvent) => {
+    mouseOutItemWrapper(e);
+  };
 
   return (
     <div className="deps-todo-item">
@@ -66,31 +66,41 @@ export default function DepsTodoList() {
                 isShowAddButton={false}
               />
             </div>
-          )
-        })
+          );
+        });
         return (
           <div
-            className="one-deps-todo-item"
             key={item.id}
-            onDragStart={(e) => handleDragStartTodoItem(e, item)}
-            onDragOver={handleDragOverTodoItem}
-            onDrop={(e) => handleDropTodoItem(e, item)}
-            onDragEnd={handleDragEndTodoItem}
-            draggable={true}
+            data-id={String(item.id)}
+            onMouseOver={handleMouseOverTodoWrapper}
+            onMouseOut={handleMouseOutTodoWrapper}
+            className="flex flex-row gap-x-[8px] items-center p-[16px] w-full"
           >
-            <MuIcon icon="drag_indicator" cursor="pointer" />
-            <div className="todo-item-wrapper">
-              <DefaultTodoItem
-                item={item}
-                clickCheckbox={clickCheckboxButton}
-                clickDelete={clickDeleteButton}
-                editTodoItem={editTodoItemValue}
-                enterTodoItem={enterTodoItem}
-              />
-              <div className="two-deps-todo-item">{subItem}</div>
+            <div
+              onDragStart={(e) => handleDragStartTodoItem(e, item)}
+              onDragEnd={handleDragEndTodoItem}
+              draggable
+              className="h-min"
+            >
+              <MuIcon icon="drag_indicator" size={25} className="select-none" />
+            </div>
+
+            <div className="relative w-full flex-1">
+              <div className="one-deps-todo-item" id={`todo-item-${item.id}`}>
+                <div className="todo-item-wrapper">
+                  <DefaultTodoItem
+                    item={item}
+                    clickCheckbox={clickCheckboxButton}
+                    clickDelete={clickDeleteButton}
+                    editTodoItem={editTodoItemValue}
+                    enterTodoItem={enterTodoItem}
+                  />
+                  <div className="two-deps-todo-item">{subItem}</div>
+                </div>
+              </div>
             </div>
           </div>
-        )
+        );
       })}
 
       {isClickAddButton ? (
@@ -114,5 +124,5 @@ export default function DepsTodoList() {
         </div>
       )}
     </div>
-  )
+  );
 }
