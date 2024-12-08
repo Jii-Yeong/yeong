@@ -37,11 +37,7 @@ import LinkTo from '@storybook/addon-links/react';
 
 import { CommonToaster } from '@yeong/ui';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en">
       <body>
@@ -97,8 +93,8 @@ interface CommonToastProps
 }
 
 type ToastFunctionParams = {
-closeTime?: number; // 자동 닫힘 시간 (default: 3000)
-isNotAutoClose?: boolean; // 자동 닫힘 비활성화 (default: false)
+  closeTime?: number; // 자동 닫힘 시간 (default: 3000)
+  isNotAutoClose?: boolean; // 자동 닫힘 비활성화 (default: false)
 } & CommonToastProps;
 `}
 language="typescript"

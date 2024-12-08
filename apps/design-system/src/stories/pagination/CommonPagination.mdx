@@ -31,16 +31,16 @@ import { CommonPagination } from '@yeong/ui';
 export default function Page() {
   const [pagination, setPagination] = useState(0)
 
-const clickPagination = (value: number) => {
-setPagination(pagination)
-// 그 외 페이지 클릭 시 발생시킬 이벤트
-}
+  const clickPagination = (value: number) => {
+    setPagination(pagination)
+    // 그 외 페이지 클릭 시 발생시킬 이벤트
+  }
 
-return (
-<div>
-<CommonPagination totalCount={25} pagination={pagination} onClickPagination={clickPagination} />
-</div>
-)
+  return (
+    <div>
+      <CommonPagination totalCount={25} pagination={pagination} onClickPagination={clickPagination} />
+    </div>
+  )
 }
 `} />
 
