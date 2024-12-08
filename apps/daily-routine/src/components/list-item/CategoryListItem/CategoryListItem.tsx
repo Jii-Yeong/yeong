@@ -1,20 +1,20 @@
-import DefaultButton from "@/components/button/DefaultButton/DefaultButton"
-import MuIcon from "@/components/icon/MuIcon"
-import TodoInput from "@/components/input/TodoInput/TodoInput"
-import { TodoCategoryDto } from "@/model/todo/todo-category.dto"
-import { TodoCategoryModel } from "@/model/todo/todo-category.model"
-import { MouseEvent, useState } from "react"
-import "./CategoryListItem.scoped.scss"
+import DefaultButton from '@/components/button/DefaultButton/DefaultButton';
+import MuIcon from '@/components/icon/MuIcon';
+import TodoInput from '@/components/input/TodoInput/TodoInput';
+import { TodoCategoryDto } from '@/model/todo/todo-category.dto';
+import { TodoCategoryModel } from '@/model/todo/todo-category.model';
+import { MouseEvent, useState } from 'react';
+import './CategoryListItem.scoped.scss';
 
 type CategoryListItemProps = {
-  item: TodoCategoryModel
-  clickCategory: (id: TodoCategoryModel["id"]) => void
-  clickDeleteButton: (e: MouseEvent, id: TodoCategoryModel["id"]) => void
+  item: TodoCategoryModel;
+  clickCategory: (item: TodoCategoryModel) => void;
+  clickDeleteButton: (e: MouseEvent, id: TodoCategoryModel['id']) => void;
   clickEditName: (
-    id: TodoCategoryModel["id"],
-    category: TodoCategoryModel["name"]
-  ) => void
-}
+    id: TodoCategoryModel['id'],
+    category: TodoCategoryModel['name']
+  ) => void;
+};
 
 export default function CategoryListItem({
   item,
@@ -22,21 +22,21 @@ export default function CategoryListItem({
   clickDeleteButton,
   clickEditName,
 }: CategoryListItemProps) {
-  const [isEditCategoryName, setIsEditCategoryName] = useState(false)
+  const [isEditCategoryName, setIsEditCategoryName] = useState(false);
 
-  const handleSetEditCategoryName = (text: TodoCategoryDto["name"]) => {
-    clickEditName(item.id, text)
-    setIsEditCategoryName(false)
-  }
+  const handleSetEditCategoryName = (text: TodoCategoryDto['name']) => {
+    clickEditName(item.id, text);
+    setIsEditCategoryName(false);
+  };
 
   const handleClickEditCategoryName = (e: MouseEvent) => {
-    e.stopPropagation()
-    setIsEditCategoryName(true)
-  }
+    e.stopPropagation();
+    setIsEditCategoryName(true);
+  };
 
   const handleCancelEditCategoryName = () => {
-    setIsEditCategoryName(false)
-  }
+    setIsEditCategoryName(false);
+  };
 
   return (
     <>
@@ -44,7 +44,7 @@ export default function CategoryListItem({
         <li
           className="category-list-item"
           key={item.id}
-          onClick={() => clickCategory(item.id)}
+          onClick={() => clickCategory(item)}
         >
           {item.name}
           <div className="control-button">
@@ -75,5 +75,5 @@ export default function CategoryListItem({
         </div>
       )}
     </>
-  )
+  );
 }
