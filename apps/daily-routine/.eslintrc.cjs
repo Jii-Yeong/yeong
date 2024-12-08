@@ -5,25 +5,25 @@ module.exports = {
     node: true,
   },
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:storybook/recommended",
-    "prettier",
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:storybook/recommended',
+    'prettier',
   ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["react-refresh", "prettier"],
+  plugins: ['react-refresh', 'prettier'],
   rules: {
-    "prettier/prettier": [
-      "error",
-      { endOfLine: "auto", printWidth: 80, semi: false },
+    'prettier/prettier': [
+      'error',
+      { endOfLine: 'auto', printWidth: 80, semi: true },
     ],
-    "react-refresh/only-export-components": "warn",
-    quotes: ["error", "double"],
-    semi: ["error", "never"],
+    'react-refresh/only-export-components': 'warn',
+    quotes: ['error', 'double'],
+    semi: ['error', 'never'],
   },
-}
+};
