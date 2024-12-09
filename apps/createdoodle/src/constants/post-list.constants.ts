@@ -1,4 +1,4 @@
-import { PostListItemType } from '@/types/post.types';
+import {PostListItemType} from '@/types/post.types';
 
 export const POST_LIST: PostListItemType[] = [
   {
@@ -118,5 +118,15 @@ export const POST_LIST: PostListItemType[] = [
     description: '네이버 책 검색 API를 사용하는 방법에 대한 정리',
     route: 11,
     date: '2024.11.29',
+  },
+  {
+    id: '12',
+    title: 'Vercel Serverless 에다가 express 애플리케이션 작성/배포하기',
+    category: '라이브러리/프레임워크',
+    categoryId: 'library-and-framework',
+    description:
+      'Vercel Serverless 에 express 애플리케이션 작성/배포하는 방법 정리',
+    route: 12,
+    date: '2024.12.09',
   },
 ];
