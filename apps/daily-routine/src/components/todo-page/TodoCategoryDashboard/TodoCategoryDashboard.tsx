@@ -20,11 +20,11 @@ export default function TodoCategoryDashboard() {
     clickEditTodoCategoryName,
   } = useTodoCategory();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [modal, setModal] = useRecoilState(modalState);
-  const [categoryName, setCategoryName] = useRecoilState(categoryNameState);
+  const [_modal, setModal] = useRecoilState(modalState);
+  const [_categoryName, setCategoryName] = useRecoilState(categoryNameState);
 
   const { setScrollLock, offScrollLock } = useScrollLock();
 

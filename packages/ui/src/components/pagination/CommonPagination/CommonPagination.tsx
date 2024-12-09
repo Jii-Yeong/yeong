@@ -28,7 +28,7 @@ const CommonPagination = ({
   );
 
   const pageList = useMemo(() => {
-    return new Array(totalCount).fill(0).map((item, index) => index);
+    return new Array(totalCount).fill(0).map((_, index) => index);
   }, [totalCount]);
 
   const isEndPrev = useCallback(() => currentSection <= 0, [currentSection]);
