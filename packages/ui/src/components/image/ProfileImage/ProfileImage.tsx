@@ -36,7 +36,7 @@ type ProfileImageWrapperVariant = VariantProps<
 >;
 
 type ProfileImageProps = {
-  imageSrc?: string;
+  imageSrc?: string | null;
   size?: ProfileImageWrapperVariant['size'];
   className?: ClassNameValue;
 };
@@ -63,7 +63,7 @@ const ProfileImage = forwardRef(
         <img
           src={imageSrc || defaultImage}
           alt="profile-image"
-          className="w-full"
+          className="w-full h-full"
           onError={handleErrorImage}
         />
       </div>
