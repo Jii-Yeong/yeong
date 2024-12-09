@@ -80,9 +80,14 @@ export default function DepsTodoList() {
               onDragStart={(e) => handleDragStartTodoItem(e, item)}
               onDragEnd={handleDragEndTodoItem}
               draggable
-              className="h-min"
+              className="h-min cursor-pointer"
             >
-              <MuIcon icon="drag_indicator" size={25} className="select-none" />
+              <MuIcon
+                icon="drag_indicator"
+                size={25}
+                className="select-none"
+                cursor="pointer"
+              />
             </div>
 
             <div className="relative w-full flex-1">

@@ -203,6 +203,7 @@ export const useTodoList = () => {
     const dataId = element.dataset?.id;
     if (!isDragging || !dataId) return;
     element.style.backgroundColor = COLORS.lightGray;
+    element.style.cursor = 'pointer';
   };
 
   const mouseOutItemWrapper = (e: React.MouseEvent) => {
@@ -210,6 +211,7 @@ export const useTodoList = () => {
     const dataId = element.dataset?.id;
     if (!dataId) return;
     element.style.backgroundColor = COLORS.white;
+    element.style.cursor = 'default';
   };
 
   useEffect(() => {
