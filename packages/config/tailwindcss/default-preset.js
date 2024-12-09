@@ -30,7 +30,7 @@ export default {
         sm: '12px',
         md: '14px',
         base: '16px',
-        lg: '24px',
+        lg: '22px',
         xl: '32px',
       },
       animation: {
