@@ -91,7 +91,10 @@ export default function TodoCategoryDashboard() {
   return (
     <div className="todo-category-dashboard">
       <ul className="catetory-list">
-        <li className="category-item" onClick={handleClickAllCategory}>
+        <li
+          className="category-item hover:bg-light-gray"
+          onClick={handleClickAllCategory}
+        >
           전체
         </li>
         {categoryList.map((item) => {

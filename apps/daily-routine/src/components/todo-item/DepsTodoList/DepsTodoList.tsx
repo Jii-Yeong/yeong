@@ -24,6 +24,7 @@ export default function DepsTodoList() {
   const [editorValue, setEditorValue] = useState('');
   const [isClickAddButton, setIsClickAddButton] = useState(false);
   const handleClickSubmitButton = async () => {
+    setEditorValue('');
     await enterTodoItem(editorValue);
     setIsClickAddButton(false);
   };
@@ -33,6 +34,7 @@ export default function DepsTodoList() {
   };
 
   const handleClickCancelButton = () => {
+    setEditorValue('');
     setIsClickAddButton(false);
   };
 

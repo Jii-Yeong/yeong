@@ -1,18 +1,18 @@
-import checkImage from "@/assets/images/todo-item/check-image.webp"
-import MuIcon from "@/components/icon/MuIcon.tsx"
-import EditorInputWrapper from "@/components/input/EditorInputWrapper/EditorInputWrapper"
-import { TodoItemModel } from "@/model/todo/todo-item.model.ts"
-import { useState } from "react"
-import "./DefaultTodoItem.scoped.scss"
+import checkImage from '@/assets/images/todo-item/check-image.webp';
+import MuIcon from '@/components/icon/MuIcon.tsx';
+import EditorInputWrapper from '@/components/input/EditorInputWrapper/EditorInputWrapper';
+import { TodoItemModel } from '@/model/todo/todo-item.model.ts';
+import { useState } from 'react';
+import './DefaultTodoItem.scoped.scss';
 
 type DefaultTodoItemProps = {
-  item: TodoItemModel
-  clickCheckbox: (id: number, checked: boolean) => void
-  editTodoItem: (id: number, text: string) => void
-  clickDelete: (id: number) => void
-  enterTodoItem?: (text: string, itemId?: TodoItemModel["id"]) => void
-  isShowAddButton?: boolean
-}
+  item: TodoItemModel;
+  clickCheckbox: (id: number, checked: boolean) => void;
+  editTodoItem: (id: number, text: string) => void;
+  clickDelete: (id: number) => void;
+  enterTodoItem?: (text: string, itemId?: TodoItemModel['id']) => void;
+  isShowAddButton?: boolean;
+};
 
 export default function DefaultTodoItem({
   item,
@@ -22,49 +22,51 @@ export default function DefaultTodoItem({
   enterTodoItem,
   isShowAddButton = true,
 }: DefaultTodoItemProps) {
-  const [isClickEdit, setIsClickEdit] = useState(false)
-  const [isClickAdd, setIsClickAdd] = useState(false)
-  const [editorValue, setEditorValue] = useState("")
-  const [editEditorValue, setEditEditorValue] = useState(item.text)
+  const [isClickEdit, setIsClickEdit] = useState(false);
+  const [isClickAdd, setIsClickAdd] = useState(false);
+  const [editorValue, setEditorValue] = useState('');
+  const [editEditorValue, setEditEditorValue] = useState(item.text);
 
   const handleClickCheckbox = () => {
-    clickCheckbox(item.id, !item.checked)
-  }
+    clickCheckbox(item.id, !item.checked);
+  };
 
   const handleClickDeleteButton = () => {
-    clickDelete(item.id)
-  }
+    clickDelete(item.id);
+  };
 
   const handleClickEditButton = () => {
-    setIsClickEdit(!isClickEdit)
-  }
+    setIsClickEdit(!isClickEdit);
+  };
 
   const handleEditValue = () => {
-    editTodoItem(item.id, editEditorValue)
-    setIsClickEdit(false)
-  }
+    editTodoItem(item.id, editEditorValue);
+    setIsClickEdit(false);
+  };
 
   const handleSetEditorValue = (value: string) => {
-    setEditEditorValue(value)
-  }
+    setEditEditorValue(value);
+  };
 
   const handleCancelEdit = () => {
-    setIsClickEdit(false)
-  }
+    setIsClickEdit(false);
+  };
 
   const handleClickSubmitButton = () => {
-    if (!enterTodoItem) return
-    enterTodoItem(editorValue, item.id)
-    setIsClickAdd(false)
-  }
+    if (!enterTodoItem) return;
+    enterTodoItem(editorValue, item.id);
+    setIsClickAdd(false);
+    setEditorValue('');
+  };
 
   const handleClickAddButton = () => {
-    setIsClickAdd(true)
-  }
+    setIsClickAdd(true);
+  };
 
   const handleClickCancelButton = () => {
-    setIsClickAdd(false)
-  }
+    setEditorValue('');
+    setIsClickAdd(false);
+  };
 
   return (
     <>
@@ -135,5 +137,5 @@ export default function DefaultTodoItem({
         </div>
       )}
     </>
-  )
+  );
 }

@@ -1,10 +1,19 @@
 import DepsTodoList from '@/components/todo-item/DepsTodoList/DepsTodoList';
-import { categoryNameState } from '@/recoil/todo/todo-category';
-import { useRecoilValue } from 'recoil';
 import './TodoDashboard.scoped.scss';
+import { useMemo } from 'react';
+import { useTodoCategory } from '@/hooks/todo/useTodoCategory';
+import { useSearchParams } from 'react-router-dom';
 
 export default function TodoDashboard() {
-  const categoryName = useRecoilValue(categoryNameState);
+  const [searchParams] = useSearchParams();
+  const { categoryList } = useTodoCategory();
+  const categoryName = useMemo(
+    () =>
+      categoryList.find(
+        (item) => item.id === Number(searchParams.get('category_id'))
+      )?.name || '전체',
+    [categoryList, searchParams]
+  );
   return (
     <div className="todo-dash-board">
       <p>{categoryName}</p>

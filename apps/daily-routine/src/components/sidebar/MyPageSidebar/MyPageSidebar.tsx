@@ -1,9 +1,11 @@
-import defaultImage from "@/assets/images/profiles/default-profile-image.png"
-import DefaultButton from "@/components/button/DefaultButton/DefaultButton"
-import DefaultInput from "@/components/input/DefaultInput/DefaultInput"
-import FileInput from "@/components/input/FileInput/FileInput"
-import { useUserProfile } from "@/hooks/user/useUserProfile"
-import "./MyPageSidebar.scoped.scss"
+import { useUserProfile } from '@/hooks/user/useUserProfile';
+import './MyPageSidebar.scoped.scss';
+import {
+  CommonButton,
+  CommonFileInput,
+  CommonInput,
+  ProfileImage,
+} from '@yeong/ui';
 
 export default function MyPageSidebar() {
   const {
@@ -11,6 +13,7 @@ export default function MyPageSidebar() {
     isEditImage,
     isEditUserName,
     userName,
+    userImage,
     handleChangeFileInputValue,
     handleClickCancelEditImageButton,
     handleClickEditImageButton,
@@ -18,33 +21,33 @@ export default function MyPageSidebar() {
     handleClickCancelEditNameButton,
     handleClickEditNameButton,
     handleClickEditUserName,
-  } = useUserProfile()
+  } = useUserProfile();
 
   return (
     <div className="my-page-sidebar">
       <div className="user-image-area">
-        {user?.user_image ? (
-          <img className="user-image" src={user.user_image} alt="user-image" />
-        ) : (
-          <img
-            className="user-image"
-            src={defaultImage}
-            alt="default-user-image"
-          />
-        )}
+        <ProfileImage
+          imageSrc={user?.user_image}
+          size="xLarge"
+          className="w-[150px] h-[150px]"
+        />
         {isEditImage ? (
-          <div className="file-input-area">
-            <FileInput setInputValue={handleChangeFileInputValue} />
-            <DefaultButton
-              text="취소"
-              onClickButton={handleClickCancelEditImageButton}
+          <div className="file-input-area flex flex-row gap-x-[8px]">
+            <CommonFileInput
+              value={userImage}
+              onChangeValue={handleChangeFileInputValue}
             />
+            <CommonButton
+              variant="outline"
+              onClick={handleClickCancelEditImageButton}
+            >
+              취소
+            </CommonButton>
           </div>
         ) : (
-          <DefaultButton
-            text="유저 이미지 수정"
-            onClickButton={handleClickEditImageButton}
-          />
+          <CommonButton variant="outline" onClick={handleClickEditImageButton}>
+            유저 이미지 수정
+          </CommonButton>
         )}
       </div>
       <div className="user-name-area">
@@ -53,32 +56,36 @@ export default function MyPageSidebar() {
             <div className="user-name-inner">
               <p className="user-name">{user?.user_name}</p>
               <div className="edit-user-name-button">
-                <DefaultButton
-                  text="수정"
-                  onClickButton={handleClickEditNameButton}
-                />
+                <CommonButton
+                  variant="outline"
+                  onClick={handleClickEditNameButton}
+                >
+                  수정
+                </CommonButton>
               </div>
             </div>
           </>
         ) : (
           <div className="edit-user-name">
             <div className="edit-input-area">
-              <DefaultInput
-                inputValue={userName}
-                changeInput={handleChangeUserName}
+              <CommonInput
+                value={userName}
+                onChangeValue={handleChangeUserName}
               />
             </div>
-            <DefaultButton
-              text="완료"
-              onClickButton={handleClickEditUserName}
-            />
-            <DefaultButton
-              text="취소"
-              onClickButton={handleClickCancelEditNameButton}
-            />
+
+            <CommonButton variant="outline" onClick={handleClickEditUserName}>
+              완료
+            </CommonButton>
+            <CommonButton
+              variant="outline"
+              onClick={handleClickCancelEditNameButton}
+            >
+              취소
+            </CommonButton>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

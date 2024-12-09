@@ -1,13 +1,13 @@
-import DefaultButton from "@/components/button/DefaultButton/DefaultButton"
-import EditorInput from "@/components/input/EditorInput/EditorInput"
-import "./EditorInputWrapper.scoped.scss"
+import EditorInput from '@/components/input/EditorInput/EditorInput';
+import './EditorInputWrapper.scoped.scss';
+import { CommonButton } from '@yeong/ui';
 
 type EditorInputWrapperProps = {
-  editorValue: string
-  setEditorValue: (value: string) => void
-  clickSubmitButton: () => void
-  clickCancelButton: () => void
-}
+  editorValue: string;
+  setEditorValue: (value: string) => void;
+  clickSubmitButton: () => void;
+  clickCancelButton: () => void;
+};
 
 export default function EditorInputWrapper({
   editorValue,
@@ -19,9 +19,13 @@ export default function EditorInputWrapper({
     <div className="todo-input-container">
       <EditorInput value={editorValue} setValue={setEditorValue} />
       <div className="control-button">
-        <DefaultButton text="입력" onClickButton={clickSubmitButton} />
-        <DefaultButton text="취소" onClickButton={clickCancelButton} />
+        <CommonButton onClick={clickSubmitButton} variant="outline">
+          입력
+        </CommonButton>
+        <CommonButton onClick={clickCancelButton} variant="outline">
+          취소
+        </CommonButton>
       </div>
     </div>
-  )
+  );
 }

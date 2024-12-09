@@ -1,51 +1,58 @@
-import DefaultButton from "@/components/button/DefaultButton/DefaultButton.tsx"
-import DefaultInput from "@/components/input/DefaultInput/DefaultInput.tsx"
-import { ChangeEvent, KeyboardEvent, useState } from "react"
-import "./TodoInput.scoped.scss"
+import { useState } from 'react';
+import './TodoInput.scoped.scss';
+import { CommonButton, CommonInput } from '@yeong/ui';
 
 type TodoInputProps = {
-  setTodoItemValue: (text: string) => void
-  defaultInputValue?: string
-  buttonText: string
-  buttonFontSize?: string | number
-}
+  setTodoItemValue: (text: string) => void;
+  defaultInputValue?: string;
+  buttonText: string;
+  buttonFontSize?: string | number;
+};
 
 export default function TodoInput({
   setTodoItemValue,
-  defaultInputValue = "",
+  defaultInputValue = '',
   buttonText,
-  buttonFontSize,
 }: TodoInputProps) {
-  const [inputText, setInputText] = useState(defaultInputValue)
+  const [inputText, setInputText] = useState(defaultInputValue);
+  const [alertText, setAlertText] = useState('');
 
-  const changeInput = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement
-    const value = element.value
-    setInputText(value)
-  }
+  const changeInput = (value: string) => {
+    setInputText(value);
+  };
   const clickTodoItemButton = () => {
-    setTodoItemValue(inputText)
-  }
-
-  const enterTodoItem = (e: KeyboardEvent) => {
-    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      setTodoItemValue(inputText)
+    if (inputText.length <= 0) {
+      setAlertText('카테고리 제목을 입력해주세요.');
+      return;
     }
-  }
+    setTodoItemValue(inputText);
+  };
+
+  const enterTodoItem = () => {
+    if (inputText.length <= 0) {
+      setAlertText('카테고리 제목을 입력해주세요.');
+      return;
+    }
+    setTodoItemValue(inputText);
+  };
   return (
     <div className="todo-input">
       <div className="input-container">
-        <DefaultInput
-          changeInput={changeInput}
-          enterInput={enterTodoItem}
-          inputValue={inputText}
+        <CommonInput
+          value={inputText}
+          onChangeValue={changeInput}
+          onEnter={enterTodoItem}
+          alertText={alertText}
+          placeholder="카테고리 제목"
         />
       </div>
-      <DefaultButton
-        text={buttonText}
-        onClickButton={clickTodoItemButton}
-        fontSize={buttonFontSize}
-      />
+      <CommonButton
+        onClick={clickTodoItemButton}
+        className="text-md"
+        variant="outline"
+      >
+        {buttonText}
+      </CommonButton>
     </div>
-  )
+  );
 }

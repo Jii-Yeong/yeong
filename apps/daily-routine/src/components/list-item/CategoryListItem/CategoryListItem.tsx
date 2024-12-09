@@ -42,7 +42,7 @@ export default function CategoryListItem({
     <>
       {!isEditCategoryName ? (
         <li
-          className="category-list-item"
+          className="category-list-item hover:bg-light-gray"
           key={item.id}
           onClick={() => clickCategory(item)}
         >
