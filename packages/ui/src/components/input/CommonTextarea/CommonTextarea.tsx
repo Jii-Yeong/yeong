@@ -71,7 +71,7 @@ const CommonTextarea = forwardRef(
     };
 
     return (
-      <div className="flex flex-col relative h-full">
+      <div className="flex flex-col relative h-full w-full">
         <textarea
           className={textareaClassName}
           value={value}
