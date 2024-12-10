@@ -45,4 +45,22 @@
   .left-line {
     border-left: 3px solid #dfe2e5;
   }
+  table {
+    width: 100%;
+    th {
+      padding: 10px 16px;
+      background-color: #235c91;
+      color: #ffffff;
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #dfe2e5;
+
+      code {
+        color: #235c91 !important;
+        background-color: #1b1f230d;
+      }
+    }
+  }
 }
