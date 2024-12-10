@@ -67,7 +67,6 @@ const CommonPagination = ({
   const resetPagination = () => {
     setButtonList(pageList.slice(0, viewButtonCount));
     setCurrentSection(0);
-    onClickPagination(0);
   };
 
   useEffect(() => {
