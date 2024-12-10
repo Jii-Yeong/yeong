@@ -48,3 +48,20 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 - [React v18](https://ko.react.dev/)
 - [Storybook v8](https://storybook.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+
+### Daily Routine
+
+![image](https://github.com/user-attachments/assets/ffb68c6c-ff1d-45e6-b9c9-b3f984feff1c)
+
+손쉽게 할일을 관리할 수 있는 웹 애플리케이션 프로젝트 입니다.
+
+- 배포 URL : https://yeong-daily-routine.vercel.app/
+- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/apps/daily-routine
+
+#### 주요 패키지
+
+- [React v18](https://ko.react.dev/)
+- [Sass](https://sass-lang.com/)
+- [Supabase](https://supabase.com/)
+- [Recoil](https://recoiljs.org/ko/)
+- [tinyMCE](https://www.tiny.cloud/)
