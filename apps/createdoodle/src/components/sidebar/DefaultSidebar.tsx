@@ -84,6 +84,13 @@ export default function DefaultSidebar({
     window.open('https://github.com/Jii-Yeong', '_blank');
   };
 
+  const handleClickNotionButton = () => {
+    window.open(
+      'https://jazzy-chanter-d66.notion.site/cb9a128e18254e878159b6a65b1cfe1e',
+      '_blank',
+    );
+  };
+
   const sidebarClassName = useMemo(() => sidebarVariants({isShow}), [isShow]);
 
   return (
@@ -104,7 +111,10 @@ export default function DefaultSidebar({
         <ProfileImage size="large" imageSrc="/images/profile-image.png" />
         <p className="text-lg">지영</p>
         <div className="flex flex-row gap-x-[8px] justify-center">
-          <CommonButton className="rounded-full p-[4px]" variant="outline">
+          <CommonButton
+            className="rounded-full p-[4px]"
+            variant="outline"
+            onClick={handleClickNotionButton}>
             <Icon icon="mingcute:notion-fill" width={32} />
           </CommonButton>
           <CommonButton
