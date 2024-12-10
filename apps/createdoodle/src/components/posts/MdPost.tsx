@@ -6,14 +6,22 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import './MdPost.scss';
+import {POST_LIST} from '@/constants/post-list.constants';
 
 type MdPostProps = {
   markdownText: string;
+  postId: string;
 };
 
-export default function MdPost({markdownText}: MdPostProps) {
+export default function MdPost({markdownText, postId}: MdPostProps) {
+  const currentPost = POST_LIST.find((item) => item.id === postId);
+
   return (
     <div className="md-post bg-white rounded-2xl p-[24px] sm:p-16 w-full lg:max-w-[1000px]">
+      <div className="flex sm:flex-row justify-between flex-col">
+        <p className="text-[#7b71be]">{currentPost?.category}</p>
+        <p className="text-md text-dark-gray">{currentPost?.date}</p>
+      </div>
       <Markdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}

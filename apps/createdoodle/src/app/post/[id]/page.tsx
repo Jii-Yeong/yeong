@@ -12,7 +12,7 @@ export default async function Post({params}: PostProps) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <MdPost markdownText={text} />
+      <MdPost markdownText={text} postId={params.id} />
     </div>
   );
 }
