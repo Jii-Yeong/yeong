@@ -19,7 +19,24 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
 ## 프로젝트
 
+### CreateDoodle
+
+![thumbnail](https://4rwpwj6q9lf5hlkz.public.blob.vercel-storage.com/common/images/readme_thumbnail-JOGQ0zTn8dchP7mKKD7M6yHrcjXne4.png)
+
+서버 연결 없이 작성된 정적 개인 블로그 프로젝트 입니다.
+
+- 배포 URL: https://createdoodle.dev/
+- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/apps/createdoodle
+
+#### 주요 패키지
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [react-markdown](https://github.com/remarkjs/react-markdown)
+
 ### design-system
+
+![thumbnail](https://4rwpwj6q9lf5hlkz.public.blob.vercel-storage.com/common/images/design-system-thumbnail-REGwOM8TFcWeHkRquCunBhwpiNyEX2.PNG)
 
 @yeong/ui 패키지의 UI 스토리북 문서 프로젝트 입니다.
 
