@@ -38,7 +38,6 @@ export default function SummaryCommentInput({
         className="h-[100px]"
         value={value}
         onChangeValue={setCommentValue}
-        style={{ flex: 1 }}
         ref={ref}
         placeholder={
           disabled

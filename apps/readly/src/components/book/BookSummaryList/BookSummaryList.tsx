@@ -107,14 +107,16 @@ export default function BookSummaryList() {
         </CommonDropdown>
       </div>
       <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-x-[16px] gap-y-[16px] w-full">
-        {listFetching && <BookSummaryListSkeleton />}
-        {listData &&
+        {listData && !listFetching ? (
           listData.map((item, index) => (
             <BookSummaryItem
               {...item}
               key={`${JSON.stringify(item)}-${index}`}
             />
-          ))}
+          ))
+        ) : (
+          <BookSummaryListSkeleton />
+        )}
       </div>
     </div>
   );

@@ -139,7 +139,7 @@ export default function SummaryDetailPage() {
                 )}
               </div>
               {detailSummaryData.is_my && (
-                <div className="flex flex-row gap-x-[8px] justify-end">
+                <div className="flex flex-row gap-x-[8px] justify-end items-start">
                   <CommonButton
                     onClick={clickEditButton}
                     className="text-[14px] px-[8px] py-[2px]"
