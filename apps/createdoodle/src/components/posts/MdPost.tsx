@@ -15,7 +15,7 @@ type MdPostProps = {
 
 export default function MdPost({markdownText}: MdPostProps) {
   return (
-    <div className="md-post bg-white rounded-2xl p-16 max-w-[1000px]">
+    <div className="md-post bg-white rounded-2xl p-[24px] sm:p-16 w-full lg:max-w-[1000px]">
       <Markdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}

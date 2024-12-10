@@ -1,14 +1,40 @@
-import { usePost } from '@/hooks/usePost';
-import { CategoryId } from '@/types/category.types';
-import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
-import { cva } from 'class-variance-authority';
-import { useRouter, useSearchParams } from 'next/navigation';
+import {usePost} from '@/hooks/usePost';
+import {CategoryId} from '@/types/category.types';
+import {Icon} from '@iconify/react/dist/iconify.js';
+import {CommonButton, CommonDivider, ProfileImage} from '@yeong/ui';
+import {cva} from 'class-variance-authority';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {useMemo} from 'react';
 
 type DefaultSidebarProps = {
   isShow?: boolean;
   onClickClose: () => void;
 };
+
+const sidebarVariants = cva(
+  [
+    'fixed',
+    'w-full',
+    'sm:w-[300px]',
+    'h-screen',
+    'bg-white',
+    'p-[16px]',
+    'transition-all',
+    'shadow-lg',
+    'flex',
+    'flex-col',
+    'gap-y-[16px]',
+    'z-10',
+  ],
+  {
+    variants: {
+      isShow: {
+        true: ['left-0'],
+        false: ['left-[-100%]', 'sm:left-[-300px]'],
+      },
+    },
+  },
+);
 
 const sidebarItemVariants = cva(
   [
@@ -42,7 +68,7 @@ export default function DefaultSidebar({
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentParams = new URLSearchParams(searchParams.toString());
-  const { categoryList, categoryId } = usePost();
+  const {categoryList, categoryId} = usePost();
 
   const handleClickCategoryItem = (value: CategoryId) => {
     if (!value) {
@@ -50,7 +76,7 @@ export default function DefaultSidebar({
     } else {
       currentParams.set('category', value);
     }
-    router.push(`?${currentParams.toString()}`);
+    router.push(`/?${currentParams.toString()}`);
     onClickClose();
   };
 
@@ -58,17 +84,15 @@ export default function DefaultSidebar({
     window.open('https://github.com/Jii-Yeong', '_blank');
   };
 
+  const sidebarClassName = useMemo(() => sidebarVariants({isShow}), [isShow]);
+
   return (
-    <div
-      className="fixed w-full sm:w-[300px] h-screen bg-white p-[16px] transition-all shadow-lg flex flex-col gap-y-[16px]"
-      style={{ left: isShow ? '0' : '-300px' }}
-    >
+    <div className={sidebarClassName}>
       <div className="w-full flex flex-row justify-end">
         <CommonButton
           variant="ghost"
           onClick={onClickClose}
-          className="p-[4px]"
-        >
+          className="p-[4px]">
           <Icon
             icon="eva:menu-arrow-outline"
             width={35}
@@ -86,8 +110,7 @@ export default function DefaultSidebar({
           <CommonButton
             className="rounded-full p-[4px]"
             variant="outline"
-            onClick={handleClickGithubButton}
-          >
+            onClick={handleClickGithubButton}>
             <Icon icon="mdi:github" width={32} />
           </CommonButton>
         </div>
@@ -99,8 +122,7 @@ export default function DefaultSidebar({
               className={sidebarItemVariants({
                 isCurrent: item.value === categoryId,
               })}
-              onClick={() => handleClickCategoryItem(item.value)}
-            >
+              onClick={() => handleClickCategoryItem(item.value)}>
               <p>{item.label}</p>
               <p>{item.count}</p>
             </div>

@@ -23,7 +23,7 @@ export default function Post() {
   }, [getMarkdownText]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       {isLoading ? <PostSkeleton /> : <MdPost markdownText={markdownText} />}
     </div>
   );

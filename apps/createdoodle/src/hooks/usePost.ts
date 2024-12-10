@@ -1,7 +1,7 @@
-import { CATEGORY_LIST } from '@/constants/category.constants';
-import { POST_LIST } from '@/constants/post-list.constants';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import {CATEGORY_LIST} from '@/constants/category.constants';
+import {POST_LIST} from '@/constants/post-list.constants';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {useMemo} from 'react';
 
 export const usePost = () => {
   const viewPostCount = 6;

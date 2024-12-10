@@ -1,11 +1,11 @@
 'use client';
 
 import DefaultSidebar from '@/components/sidebar/DefaultSidebar';
-import { COLORS } from '@/constants/colors.constants';
-import { Icon } from '@iconify/react/dist/iconify.js';
-import { CommonButton } from '@yeong/ui';
+import {COLORS} from '@/constants/colors.constants';
+import {Icon} from '@iconify/react/dist/iconify.js';
+import {CommonButton} from '@yeong/ui';
 import Link from 'next/link';
-import { useState } from 'react';
+import {useState} from 'react';
 
 export default function CommonHeader() {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
@@ -23,8 +23,7 @@ export default function CommonHeader() {
         <CommonButton
           onClick={clickMenuButton}
           variant="ghost"
-          className="p-[4px]"
-        >
+          className="p-[4px]">
           <Icon
             icon="icon-park-outline:menu-unfold"
             color={COLORS.white}
