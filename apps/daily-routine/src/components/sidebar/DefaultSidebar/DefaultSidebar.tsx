@@ -1,7 +1,7 @@
-import Loading from "@/components/loading/LoadingSpinner/LoadingSpinner"
-import UserProfile from "@/components/profile/UserProfile/UserProfile.tsx"
-import TodoCategoryDashboard from "@/components/todo-page/TodoCategoryDashboard/TodoCategoryDashboard"
-import { Suspense } from "react"
+import Loading from '@/components/loading/LoadingSpinner/LoadingSpinner';
+import UserProfile from '@/components/profile/UserProfile/UserProfile';
+import TodoCategoryDashboard from '@/components/todo-page/TodoCategoryDashboard/TodoCategoryDashboard';
+import { Suspense } from 'react';
 
 export default function DefaultSidebar() {
   return (
@@ -13,5 +13,5 @@ export default function DefaultSidebar() {
         <TodoCategoryDashboard />
       </Suspense>
     </div>
-  )
+  );
 }
