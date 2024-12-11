@@ -101,7 +101,11 @@ export default function BookSummaryList() {
         >
           <CommonDropdownInner>
             {orderList.map((item) => (
-              <CommonDropdownItem children={item.children} value={item.value} />
+              <CommonDropdownItem
+                children={item.children}
+                value={item.value}
+                key={item.value}
+              />
             ))}
           </CommonDropdownInner>
         </CommonDropdown>
