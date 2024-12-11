@@ -93,12 +93,6 @@ export default function SearchBookSection({
       </div>
       {isOpenResult && (
         <div className="flex flex-col items-center gap-y-[16px]">
-          <CommonPagination
-            pagination={pagination}
-            totalCount={countState}
-            onClickPagination={clickPaginationButton}
-            viewButtonCount={isSm ? 5 : 10}
-          />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-[8px] gap-y-[8px]">
             {bookData?.items &&
               bookData.items.map((item, index) => (
@@ -117,6 +111,12 @@ export default function SearchBookSection({
                 </div>
               ))}
           </div>
+          <CommonPagination
+            pagination={pagination}
+            totalCount={countState}
+            onClickPagination={clickPaginationButton}
+            viewButtonCount={isSm ? 5 : 10}
+          />
           {selectedBook && (
             <CommonButton onClick={clickSelectBook}>선택</CommonButton>
           )}
