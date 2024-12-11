@@ -53,8 +53,12 @@ commentRouter.get('/list', async (req: Request, res: Response) => {
 
   const decodedInfo = decodeJwtToken(userToken || null);
 
-  const { rows } =
-    await sql`SELECT * FROM summary_comment WHERE summary_id = ${String(summaryId)}`;
+  const { rows } = await sql`
+    SELECT summary_comment.*, users.nickname AS user_name, users.profile_image AS user_image
+    FROM summary_comment
+    LEFT JOIN users
+    ON summary_comment.user_id = users.id
+    WHERE summary_comment.summary_id = ${String(summaryId)}`;
 
   const parsedRows = rows.map((item) => {
     return {
