@@ -8,7 +8,7 @@ Turborepo 를 이용하여 구축한 모노레포 Repository 입니다.
 
 yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
-- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/packages/ui
+- 저장소 및 상세 설명 : https://github.com/Jii-Yeong/yeong/tree/main/packages/ui
 
 #### 주요 패키지
 
@@ -25,8 +25,8 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
 서버 연결 없이 작성된 정적 개인 블로그 프로젝트 입니다.
 
+- 저장소 및 상세 설명 : https://github.com/Jii-Yeong/yeong/tree/main/apps/createdoodle
 - 배포 URL: https://createdoodle.dev/
-- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/apps/createdoodle
 
 #### 주요 패키지
 
@@ -40,8 +40,8 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
 @yeong/ui 패키지의 UI 스토리북 문서 프로젝트 입니다.
 
+- 저장소 및 상세 설명 : https://github.com/Jii-Yeong/yeong/tree/main/apps/design-system
 - 배포 URL: https://design-system-silk-xi.vercel.app/
-- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/apps/design-system
 
 #### 주요 패키지
 
@@ -55,8 +55,8 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
 손쉽게 할일을 관리할 수 있는 웹 애플리케이션 프로젝트 입니다.
 
+- 저장소 및 상세 설명 : https://github.com/Jii-Yeong/yeong/tree/main/apps/daily-routine
 - 배포 URL : https://yeong-daily-routine.vercel.app/
-- 코드 : https://github.com/Jii-Yeong/yeong/tree/main/apps/daily-routine
 
 #### 주요 패키지
 
