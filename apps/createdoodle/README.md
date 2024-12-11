@@ -17,6 +17,19 @@ https://createdoodle.dev/
 - Styling : `Sass(Scss)`, `Tailwind CSS`
 - 기타 : `react-markdown`, `@iconify/react`
 
+## 폴더 구조
+
+```
+ㄴsrc
+  ㄴcomponents : 컴포넌트를 모아둔 폴더
+  ㄴconstants : 상수값들을 모아둔 폴더
+  ㄴrepository : api 호출 함수들을 모아둔 폴더
+  ㄴhooks : 컴포넌트의 비즈니스 로직을 모아둔 폴더
+  ㄴapp : 페이지 컴포넌트를 모아둔 폴더
+  ㄴstyle : 공통 스타일을 모아둔 폴더
+  ㄴtypes : 공통 타입을 모아둔 폴더
+```
+
 ## 주요 기능
 
 - 마크다운 (.md) 로 작성된 파일 띄우기
