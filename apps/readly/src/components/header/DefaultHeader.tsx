@@ -1,6 +1,5 @@
 'use client';
 
-import { getUserMyInfoQuery } from '@/service/user.service';
 import {
   getLoginPage,
   getSignUpPage,
@@ -10,9 +9,11 @@ import { CommonButton } from '@yeong/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import UserProfile from '../user/UserProfile/UserProfile';
+import { getUserMyInfoQuery } from '@/service/user.service';
+import Cookies from 'js-cookie';
 
 export default function DefaultHeader() {
-  const { data } = getUserMyInfoQuery();
+  const { data, refetch } = getUserMyInfoQuery();
   const router = useRouter();
 
   const clickLoginButton = () => {
@@ -25,6 +26,11 @@ export default function DefaultHeader() {
 
   const clickSignUpButton = () => {
     router.push(getSignUpPage());
+  };
+
+  const clictLogoutButton = () => {
+    Cookies.remove('access_token');
+    refetch();
   };
 
   return (
@@ -46,6 +52,9 @@ export default function DefaultHeader() {
             />
             <CommonButton onClick={goToWriteSummary} variant="outline">
               요약 작성하기
+            </CommonButton>
+            <CommonButton onClick={clictLogoutButton} variant="outline">
+              로그아웃
             </CommonButton>
           </>
         ) : (
