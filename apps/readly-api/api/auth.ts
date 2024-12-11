@@ -147,8 +147,8 @@ authRouter.post('/login/google', async (req: Request, res: Response) => {
 
   await sql`
   INSERT INTO users 
-    (id, email, profile_image, nickname) 
-  VALUES (${userInfo.id}, ${userInfo.email}, ${userInfo.picture}, ${userInfo.name});`;
+    (id, email, nickname) 
+  VALUES (${userInfo.id}, ${userInfo.email}, ${userInfo.name});`;
   res.send({ message: 'regist user', accessToken });
 });
 
