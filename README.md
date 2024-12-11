@@ -34,7 +34,7 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 - [Tailwind CSS](https://tailwindcss.com/)
 - [react-markdown](https://github.com/remarkjs/react-markdown)
 
-### design-system
+### Design System
 
 ![thumbnail](https://4rwpwj6q9lf5hlkz.public.blob.vercel-storage.com/common/images/design-system-thumbnail-REGwOM8TFcWeHkRquCunBhwpiNyEX2.PNG)
 
