@@ -1,14 +1,14 @@
-import DefaultInformation from "@/components/information/DefaultInformation/DefaultInformation"
-import CategoryTodoListChart from "@/components/my-page/CategoryTodoListChart/CategoryTodoListChart"
-import CheckTodoListChart from "@/components/my-page/CheckTodoListChart/CheckTodoListChart"
-import DateTodoListChart from "@/components/my-page/DateTodoListChart/DateTodoListChart"
-import { useTodoCategory } from "@/hooks/todo/useTodoCategory"
-import { useTodoList } from "@/hooks/todo/useTodoList"
-import "./MyPageChartWrapper.scoped.scss"
+import DefaultInformation from '@/components/information/DefaultInformation/DefaultInformation';
+import CategoryTodoListChart from '@/components/my-page/CategoryTodoListChart/CategoryTodoListChart';
+import CheckTodoListChart from '@/components/my-page/CheckTodoListChart/CheckTodoListChart';
+import DateTodoListChart from '@/components/my-page/DateTodoListChart/DateTodoListChart';
+import { useTodoCategory } from '@/hooks/todo/useTodoCategory';
+import { useTodoList } from '@/hooks/todo/useTodoList';
+import './MyPageChartWrapper.scoped.scss';
 
 export default function MyPageChartWrapper() {
-  const { todoList } = useTodoList()
-  const { categoryList } = useTodoCategory()
+  const { todoList } = useTodoList();
+  const { categoryList } = useTodoCategory();
 
   return (
     <>
@@ -27,5 +27,5 @@ export default function MyPageChartWrapper() {
         <DefaultInformation text="아직 투두리스트가 없습니다. 새로 생성해보세요!" />
       )}
     </>
-  )
+  );
 }
