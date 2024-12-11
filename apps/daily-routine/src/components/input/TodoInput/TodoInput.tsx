@@ -26,6 +26,7 @@ export default function TodoInput({
       return;
     }
     setTodoItemValue(inputText);
+    setInputText('');
   };
 
   const enterTodoItem = () => {
