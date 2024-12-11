@@ -50,6 +50,12 @@ export default function SummaryDetailPage() {
     return `${detailSummaryData?.user_name} 님이 작성한 책 ${detailSummaryData?.book_title}의 요약 - Readly에서 확인해보세요.`;
   }, [detailSummaryData]);
 
+  const metadataTitle = useMemo(() => {
+    return detailSummaryData?.book_title
+      ? `${detailSummaryData?.book_title}의 요약`
+      : 'Readly';
+  }, [detailSummaryData]);
+
   const clickLikeButton = () => {
     likeMutate({ id: Number(id) });
   };
@@ -105,121 +111,125 @@ export default function SummaryDetailPage() {
   };
 
   return (
-    <div className="flex flex-col gap-y-[32px] items-center mt-[32px] w-full">
-      {detailSummaryData ? (
-        <>
-          <div className="w-full flex flex-col gap-y-[8px]">
-            <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
-              <UserProfile
-                userId={detailSummaryData.user_id}
-                userImage={detailSummaryData.user_image}
-                userName={detailSummaryData.user_name}
-              />
-              <div className="flex flex-row gap-x-[16px]">
-                <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
-                  <span>{createAt}</span>
-                  <span>|</span>
-                  <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
+    <>
+      <title>{metadataTitle}</title>
+      <div className="flex flex-col gap-y-[32px] items-center mt-[32px] w-full">
+        {detailSummaryData ? (
+          <>
+            <div className="w-full flex flex-col gap-y-[8px]">
+              <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
+                <UserProfile
+                  userId={detailSummaryData.user_id}
+                  userImage={detailSummaryData.user_image}
+                  userName={detailSummaryData.user_name}
+                />
+                <div className="flex flex-row gap-x-[16px]">
+                  <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
+                    <span>{createAt}</span>
+                    <span>|</span>
+                    <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-row justify-between">
-              <div>
-                {detailSummaryData.category_name && (
-                  <BookCategoryChip
-                    text={detailSummaryData.category_name}
-                    value={String(detailSummaryData.category_id)}
-                  />
-                )}
-                {detailSummaryData.start_page && detailSummaryData.end_page && (
-                  <div className="flex flex-row text-dark-gray text-md gap-x-[2px]">
-                    <p>{detailSummaryData.start_page}p</p>~
-                    <p>{detailSummaryData.end_page}p</p>
+              <div className="flex flex-row justify-between">
+                <div>
+                  {detailSummaryData.category_name && (
+                    <BookCategoryChip
+                      text={detailSummaryData.category_name}
+                      value={String(detailSummaryData.category_id)}
+                    />
+                  )}
+                  {detailSummaryData.start_page &&
+                    detailSummaryData.end_page && (
+                      <div className="flex flex-row text-dark-gray text-md gap-x-[2px]">
+                        <p>{detailSummaryData.start_page}p</p>~
+                        <p>{detailSummaryData.end_page}p</p>
+                      </div>
+                    )}
+                </div>
+                {detailSummaryData.is_my && (
+                  <div className="flex flex-row gap-x-[8px] justify-end items-start">
+                    <CommonButton
+                      onClick={clickEditButton}
+                      className="text-[14px] px-[8px] py-[2px]"
+                      variant="outline"
+                    >
+                      수정
+                    </CommonButton>
+                    <CommonButton
+                      onClick={clickDeleteButton}
+                      className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
+                      variant="red"
+                    >
+                      삭제
+                    </CommonButton>
                   </div>
                 )}
               </div>
-              {detailSummaryData.is_my && (
-                <div className="flex flex-row gap-x-[8px] justify-end items-start">
-                  <CommonButton
-                    onClick={clickEditButton}
-                    className="text-[14px] px-[8px] py-[2px]"
-                    variant="outline"
-                  >
-                    수정
-                  </CommonButton>
-                  <CommonButton
-                    onClick={clickDeleteButton}
-                    className="text-[14px] text-white bg-red px-[8px] py-[2px] border-transparent"
-                    variant="red"
-                  >
-                    삭제
-                  </CommonButton>
-                </div>
-              )}
             </div>
+            <BookSummaryContent content={detailSummaryData.contents} />
+          </>
+        ) : (
+          <BookSummaryDetailSkeleton />
+        )}
+        <CommonButton
+          onClick={clickLikeButton}
+          isLoading={isFetching || isPending}
+          className="w-[150px] h-[44px] font-bold text-[20px]"
+          variant="outline"
+        >
+          <Icon icon="line-md:heart-filled" color={likeIconColor} />
+          {likeButtonText}
+        </CommonButton>
+        {detailSummaryData && likeCountData && (
+          <div className="flex flex-row justify-center gap-x-[8px]">
+            <CommonButton
+              className="p-[4px] rounded-full w-[44px] h-[44px]"
+              onClick={clickKaKaoShareButton}
+              variant="ghost"
+            >
+              <Icon
+                icon="simple-icons:kakaotalk"
+                width={30}
+                color={COLORS.brown}
+              />
+            </CommonButton>
+            <CommonButton
+              className="p-[4px] rounded-full w-[44px] h-[44px]t"
+              onClick={clickXShareButton}
+              variant="ghost"
+            >
+              <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
+            </CommonButton>
+            <CommonButton
+              className="p-[4px] rounded-full w-[44px] h-[44px]"
+              onClick={clickCopyLinkButton}
+              variant="ghost"
+            >
+              <Icon
+                icon="ant-design:paper-clip-outlined"
+                width={35}
+                color={COLORS.black}
+              />
+            </CommonButton>
           </div>
-          <BookSummaryContent content={detailSummaryData.contents} />
-        </>
-      ) : (
-        <BookSummaryDetailSkeleton />
-      )}
-      <CommonButton
-        onClick={clickLikeButton}
-        isLoading={isFetching || isPending}
-        className="w-[150px] h-[44px] font-bold text-[20px]"
-        variant="outline"
-      >
-        <Icon icon="line-md:heart-filled" color={likeIconColor} />
-        {likeButtonText}
-      </CommonButton>
-      {detailSummaryData && likeCountData && (
-        <div className="flex flex-row justify-center gap-x-[8px]">
-          <CommonButton
-            className="p-[4px] rounded-full w-[44px] h-[44px]"
-            onClick={clickKaKaoShareButton}
-            variant="ghost"
-          >
-            <Icon
-              icon="simple-icons:kakaotalk"
-              width={30}
-              color={COLORS.brown}
-            />
-          </CommonButton>
-          <CommonButton
-            className="p-[4px] rounded-full w-[44px] h-[44px]t"
-            onClick={clickXShareButton}
-            variant="ghost"
-          >
-            <Icon icon="bi:twitter-x" width={30} color={COLORS.black} />
-          </CommonButton>
-          <CommonButton
-            className="p-[4px] rounded-full w-[44px] h-[44px]"
-            onClick={clickCopyLinkButton}
-            variant="ghost"
-          >
-            <Icon
-              icon="ant-design:paper-clip-outlined"
-              width={35}
-              color={COLORS.black}
-            />
-          </CommonButton>
-        </div>
-      )}
-      <CommonDivider />
-      {detailSummaryData ? (
-        <BookItem
-          isWide
-          author={detailSummaryData.book_author}
-          image={detailSummaryData.book_image}
-          pubdate={detailSummaryData.book_pubdate}
-          title={detailSummaryData.book_title}
-          publisher={detailSummaryData.book_publisher}
-          imageWidth={150}
-        />
-      ) : (
-        <BookItemSkeleton isWide imageWidth={150} />
-      )}
-      <SummaryComment />
-    </div>
+        )}
+        <CommonDivider />
+        {detailSummaryData ? (
+          <BookItem
+            isWide
+            author={detailSummaryData.book_author}
+            image={detailSummaryData.book_image}
+            pubdate={detailSummaryData.book_pubdate}
+            title={detailSummaryData.book_title}
+            publisher={detailSummaryData.book_publisher}
+            imageWidth={150}
+          />
+        ) : (
+          <BookItemSkeleton isWide imageWidth={150} />
+        )}
+        <SummaryComment />
+      </div>
+    </>
   );
 }
