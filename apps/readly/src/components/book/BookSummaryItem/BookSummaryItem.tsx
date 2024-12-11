@@ -51,7 +51,7 @@ export default function BookSummaryItem({
       href={`summary/detail/${id}`}
       className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col"
     >
-      <div className="bg-light-blue p-[8px] rounded-[8px] ">
+      <div className="bg-light-gray p-[8px] rounded-[8px] ">
         <div className="overflow-hidden h-[120px]">
           <BookSummaryContent content={content} />
         </div>
