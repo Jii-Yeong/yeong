@@ -53,6 +53,7 @@ export default function SearchBookSection({
     }
     setIsOpenResult(true);
     mutate({ query: inputValue, display: String(displayCount) });
+    setPagination(0);
   };
 
   const clickPaginationButton = (pagination: number) => {
