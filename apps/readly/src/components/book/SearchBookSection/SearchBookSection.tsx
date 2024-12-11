@@ -67,12 +67,7 @@ export default function SearchBookSection({
 
   const clickBookItem = (item: SearchBookItem) => {
     setSelectedBook(item);
-  };
-
-  const clickSelectBook = () => {
-    if (!selectedBook) return;
-    clickSelect(selectedBook);
-    setIsOpenResult(false);
+    clickSelect(item);
   };
 
   useEffect(() => {
@@ -117,9 +112,6 @@ export default function SearchBookSection({
             onClickPagination={clickPaginationButton}
             viewButtonCount={isSm ? 5 : 10}
           />
-          {selectedBook && (
-            <CommonButton onClick={clickSelectBook}>선택</CommonButton>
-          )}
         </div>
       )}
       {selectedBook && (
