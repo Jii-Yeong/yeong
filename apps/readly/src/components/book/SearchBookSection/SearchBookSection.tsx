@@ -101,7 +101,6 @@ export default function SearchBookSection({
                     isbn={item.isbn}
                     clickItem={() => clickBookItem(item)}
                     isSelected={item.isbn === selectedBook?.isbn}
-                    isRegist
                   />
                 </div>
               ))}
@@ -126,7 +125,6 @@ export default function SearchBookSection({
             cursor="default"
             isWide
             imageWidth={100}
-            isRegist
           />
         </div>
       )}

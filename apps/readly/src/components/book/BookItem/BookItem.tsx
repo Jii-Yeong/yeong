@@ -1,5 +1,5 @@
 import { COLORS } from '@/constants/color.constants';
-import { formatDateToString, transferStringToDate } from '@yeong/utils/date';
+import { formatDateToString } from '@yeong/utils/date';
 import { parseDomSizeValue } from '@yeong/utils/string';
 import Image from 'next/image';
 import { useMemo } from 'react';
@@ -15,7 +15,6 @@ type BookItemProps = {
   imageWidth?: string | number;
   cursor?: 'default' | 'pointer';
   isWide?: boolean;
-  isRegist?: boolean;
   clickItem?: (isbn: string) => void;
 };
 
@@ -30,7 +29,6 @@ export default function BookItem({
   imageWidth = '100%',
   cursor = 'pointer',
   isWide,
-  isRegist,
   clickItem,
 }: BookItemProps) {
   const handleClickItem = () => {
@@ -38,8 +36,6 @@ export default function BookItem({
   };
 
   const pubdateFromFormat = useMemo(() => {
-    if (isRegist)
-      return formatDateToString(transferStringToDate(pubdate, 'yyyyMMdd'));
     return formatDateToString(new Date(pubdate));
   }, [pubdate]);
 

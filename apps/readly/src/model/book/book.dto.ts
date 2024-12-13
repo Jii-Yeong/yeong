@@ -1,6 +1,7 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
 import { UserInfoDto } from '../user.dto';
 import { BookSummaryItemModel } from './book.model';
+import { transferStringToDate } from '@yeong/utils/date';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -26,6 +27,26 @@ export type SearchBookItem = {
   pubdate: string;
   isbn: string;
   description: string;
+};
+
+export const toSearchBookItemModel = (item: SearchBookResponse) => {
+  const bookItem: SearchBookItem[] = item.items.map((item) => {
+    return {
+      author: item.author,
+      description: item.description,
+      discount: item.discount,
+      image: item.image,
+      isbn: item.isbn,
+      link: item.link,
+      pubdate: transferStringToDate(item.pubdate, 'yyyyMMdd').toISOString(),
+      publisher: item.publisher,
+      title: item.title,
+    };
+  });
+  return {
+    ...item,
+    items: bookItem,
+  };
 };
 
 export type CreateBookSummaryRequest = {

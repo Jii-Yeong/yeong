@@ -7,7 +7,10 @@ import { queryClient } from '@/lib/react-query';
 import {
   BookSummaryItemDto,
   BookSummaryListRequest,
+  SearchBookRequest,
+  SearchBookResponse,
   toBookSummaryItemModel,
+  toSearchBookItemModel,
 } from '@/model/book/book.dto';
 import {
   addBookSummaryLikeCount,
@@ -25,8 +28,11 @@ import {
 } from './../repository/book.repository';
 
 export const searchBookMutation = () => {
-  return useMutation({
-    mutationFn: searchBookList,
+  return useMutation<SearchBookResponse, any, SearchBookRequest>({
+    mutationFn: async (params) => {
+      const data = await searchBookList(params);
+      return toSearchBookItemModel(data);
+    },
   });
 };
 
