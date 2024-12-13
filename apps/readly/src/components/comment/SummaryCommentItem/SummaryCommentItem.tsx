@@ -82,14 +82,17 @@ export default function SummaryCommentItem({
           </div>
         )}
       </div>
-      {isOpenInput && setCommentValue && value && clickInputButton && (
-        <SummaryCommentInput
-          isPending={isPending}
-          value={value}
-          setCommentValue={setCommentValue}
-          clickInputButton={() => clickInputButton(id)}
-        />
-      )}
+      {isOpenInput &&
+        setCommentValue &&
+        typeof value === 'string' &&
+        clickInputButton && (
+          <SummaryCommentInput
+            isPending={isPending}
+            value={value}
+            setCommentValue={setCommentValue}
+            clickInputButton={() => clickInputButton(id)}
+          />
+        )}
     </div>
   );
 }
