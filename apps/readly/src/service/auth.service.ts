@@ -1,4 +1,7 @@
-import { MY_USERS_QUERY_KEY } from '@/constants/query-key.constants';
+import {
+  BOOK_SUMMARY_KEY,
+  MY_USERS_QUERY_KEY,
+} from '@/constants/query-key.constants';
 import { queryClient } from '@/lib/react-query';
 import {
   checkSignUpId,
@@ -20,6 +23,7 @@ export const loginByGoogleMutation = () => {
         secure: true,
       });
       queryClient.invalidateQueries({ queryKey: [MY_USERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
     },
   });
 };
@@ -53,6 +57,7 @@ export const loginByDefaultMutation = () => {
         secure: true,
       });
       queryClient.invalidateQueries({ queryKey: [MY_USERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
     },
   });
 };
