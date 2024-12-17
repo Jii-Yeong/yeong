@@ -52,6 +52,7 @@ https://readly-steel.vercel.app/
 - React Query를 이용한 API 호출 관리 방법
 - React Query를 이용한 효율적인 API 데이터 캐싱 또는 refetch 방법
 - Tailwind CSS를 통한 스타일링 및 반응형 디자인 적용
+- 무한스크롤 구현을 통한 Intersection Observer API의 사용 방법 및 React Query의 useInfiniteQuery() 사용 방법
 
 ## 개선 사항 및 향후 계획
 - ~~무한 스크롤 추가~~ (24.12.17 구현)
