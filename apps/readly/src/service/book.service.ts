@@ -21,7 +21,7 @@ import {
   getDetailBookSummary,
   searchBookList,
 } from '@/repository/book.repository';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import {
   getBookCategoryList,
   getBookSummaryList,
@@ -73,17 +73,27 @@ export const deleteDetailBookSummaryMutation = () => {
 };
 
 export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: [
       BOOK_SUMMARY_KEY,
       params.user_id,
       params.category_id,
       params.order,
     ],
-    queryFn: async () => {
-      const data = await getBookSummaryList(params);
-      return data.map((item) => toBookSummaryItemModel(item));
+    queryFn: async ({ pageParam = 0 }) => {
+      const { total, list, nextOffset } = await getBookSummaryList({
+        ...params,
+        offset: pageParam * Number(params.limit),
+      });
+
+      return {
+        total,
+        data: list.map((item) => toBookSummaryItemModel(item)),
+        nextOffset,
+      };
     },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextOffset,
     staleTime: Infinity,
     gcTime: Infinity,
   });

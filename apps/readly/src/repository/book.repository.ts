@@ -4,6 +4,7 @@ import {
   BookSummaryItemDto,
   BookSummaryLikeCountResponse,
   BookSummaryListRequest,
+  BookSummaryListResponse,
   CreateBookSummaryRequest,
   EditBookSummaryRequest,
   SearchBookRequest,
@@ -51,7 +52,7 @@ export const deleteDetailBoookSummary = async (
 };
 
 export const getBookSummaryList = async (params: BookSummaryListRequest) => {
-  const { data } = await readlyApiAxiosInstance().get<BookSummaryItemDto[]>(
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryListResponse>(
     '/book/summary/list',
     {
       params,

@@ -1,6 +1,7 @@
 'use client';
 
 import BookCategorySkeleton from '@/components/skeleton/book/BookCategorySkeleton';
+import { useObserverTarget } from '@/hooks/useObserverTarget';
 import {
   getBookCategoryListQuery,
   getBookSummaryListQuery,
@@ -52,9 +53,14 @@ export default function BookSummaryList() {
     [order],
   );
 
-  const { data: listData, isFetching: listFetching } = getBookSummaryListQuery({
+  const {
+    data: listData,
+    isFetching: listFetching,
+    fetchNextPage,
+  } = getBookSummaryListQuery({
     category_id: categoryId ? Number(categoryId) : null,
     order,
+    limit: 12,
   });
   const { data: categoryData, isLoading: categoryLoading } =
     getBookCategoryListQuery();
@@ -69,6 +75,8 @@ export default function BookSummaryList() {
     currentParams.set('order', value);
     router.push(`?${currentParams.toString()}`);
   };
+
+  const { observerTarget } = useObserverTarget({ callback: fetchNextPage });
 
   return (
     <div>
@@ -112,16 +120,19 @@ export default function BookSummaryList() {
       </div>
       <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-x-[16px] gap-y-[16px] w-full">
         {listData && !listFetching ? (
-          listData.map((item, index) => (
-            <BookSummaryItem
-              {...item}
-              key={`${JSON.stringify(item)}-${index}`}
-            />
-          ))
+          listData.pages.flatMap(({ data }, index) =>
+            data.map((item) => (
+              <BookSummaryItem
+                {...item}
+                key={`${JSON.stringify(item)}-${index}`}
+              />
+            )),
+          )
         ) : (
           <BookSummaryListSkeleton />
         )}
       </div>
+      {observerTarget()}
     </div>
   );
 }

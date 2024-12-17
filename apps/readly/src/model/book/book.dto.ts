@@ -1,7 +1,7 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
+import { transferStringToDate } from '@yeong/utils/date';
 import { UserInfoDto } from '../user.dto';
 import { BookSummaryItemModel } from './book.model';
-import { transferStringToDate } from '@yeong/utils/date';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -63,6 +63,15 @@ export type BookSummaryListRequest = {
   category_id?: BookCategoryDto['id'] | null;
   user_id?: UserInfoDto['id'] | null;
   order?: string;
+  limit?: number;
+  offset?: number;
+  nextOffset?: number;
+};
+
+export type BookSummaryListResponse = {
+  total: number;
+  list: BookSummaryItemDto[];
+  nextOffset: number;
 };
 
 export type BookSummaryItemDto = {
