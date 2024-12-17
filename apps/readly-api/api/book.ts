@@ -192,9 +192,13 @@ bookRouter.delete('/summary/delete', async (req: Request, res: Response) => {
 });
 
 bookRouter.get('/summary/list', async (req: Request, res: Response) => {
-  const categoryId = (req.query?.category_id as string) || null;
-  const userId = (req.query?.user_id as string) || null;
-  const order = (req.query?.order as string) || null;
+  const {
+    category_id = null,
+    user_id = null,
+    order = null,
+    limit = 12,
+    offset = 0,
+  } = req.query;
 
   const orderByObject = {
     desc: 'ORDER BY summaries.created_at DESC',
@@ -203,7 +207,9 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     like: 'ORDER BY COALESCE(like_counts.like_count, 0) DESC',
   };
 
-  const orderByQuery = orderByObject[order || 'desc'];
+  const orderKey = order ? String(order) : 'desc';
+
+  const orderByQuery = orderByObject[orderKey];
 
   let query = `
   WITH
@@ -251,7 +257,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   ON
     summaries.id = like_counts.summary_id
   WHERE
-    (summaries.category_id = ${categoryId}::INTEGER OR ${categoryId}::INTEGER IS NULL)
+    (summaries.category_id = ${category_id}::INTEGER OR ${category_id}::INTEGER IS NULL)
   AND
     (summaries.user_id = $1::TEXT OR $1::TEXT IS NULL)
   GROUP BY 
@@ -264,16 +270,40 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   `;
 
   query += orderByQuery;
-  query += ';';
+  query += `
+    LIMIT
+      ${limit}
+    OFFSET
+      ${offset};`;
 
-  const { rows, rowCount } = await sql.query(query, [userId]);
+  const { rows, rowCount } = await sql.query(query, [user_id]);
 
-  if (!rowCount || rowCount <= 0) {
+  const { rows: total } = await sql.query<{ count: string }>(
+    `
+    SELECT 
+      COUNT(*) FROM summaries 
+    WHERE
+      (summaries.category_id = ${category_id}::INTEGER OR ${category_id}::INTEGER IS NULL)
+    AND
+      (summaries.user_id = $1::TEXT OR $1::TEXT IS NULL)
+    `,
+    [user_id],
+  );
+
+  if (!rowCount || rowCount <= 0 || !total) {
     res.json([]);
     return;
   }
 
-  res.json(rows);
+  const totalCount = Number(total[0].count);
+
+  const isOverOffset = totalCount - Number(limit) * (Number(offset) + 1) <= 0;
+
+  res.json({
+    total: totalCount,
+    list: rows,
+    nextOffset: isOverOffset ? null : Number(offset) + 1,
+  });
 });
 
 bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
