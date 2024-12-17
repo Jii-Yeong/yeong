@@ -159,12 +159,14 @@ export default function MyPage() {
         <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-x-[16px] gap-y-[16px] w-full">
           {listLoading && <BookSummaryListSkeleton />}
           {myListData &&
-            myListData.map((item, index) => (
-              <BookSummaryItem
-                {...item}
-                key={`${JSON.stringify(item)}-${index}`}
-              />
-            ))}
+            myListData.pages.flatMap(({ data }, index) =>
+              data.map((item) => (
+                <BookSummaryItem
+                  {...item}
+                  key={`${JSON.stringify(item)}-${index}`}
+                />
+              )),
+            )}
         </div>
       </div>
     </div>
