@@ -60,7 +60,7 @@ export default function BookSummaryList() {
   } = getBookSummaryListQuery({
     category_id: categoryId ? Number(categoryId) : null,
     order,
-    limit: 12,
+    limit: 16,
   });
   const { data: categoryData, isLoading: categoryLoading } =
     getBookCategoryListQuery();

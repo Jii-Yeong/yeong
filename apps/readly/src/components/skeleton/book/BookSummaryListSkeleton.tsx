@@ -16,6 +16,10 @@ export default function BookSummaryListSkeleton() {
       <CommonSkeleton height={skeletonHeight} />
       <CommonSkeleton height={skeletonHeight} />
       <CommonSkeleton height={skeletonHeight} />
+      <CommonSkeleton height={skeletonHeight} />
+      <CommonSkeleton height={skeletonHeight} />
+      <CommonSkeleton height={skeletonHeight} />
+      <CommonSkeleton height={skeletonHeight} />
     </>
   );
 }
