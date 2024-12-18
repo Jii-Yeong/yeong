@@ -196,7 +196,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     category_id = null,
     user_id = null,
     order = null,
-    limit = 12,
+    limit = 16,
     offset = 0,
   } = req.query;
 
