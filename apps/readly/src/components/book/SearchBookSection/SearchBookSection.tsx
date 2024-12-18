@@ -33,7 +33,6 @@ export default function SearchBookSection({
   clickSelect,
 }: SearchBookSectionProps) {
   const SEARCH_RESULT_KEY = 'book-search-result';
-  const searchResult = localStorage.getItem(SEARCH_RESULT_KEY);
 
   const [inputValue, setInputValue] = useState('');
   const [isOpenResult, setIsOpenResult] = useState(false);
@@ -42,9 +41,7 @@ export default function SearchBookSection({
   );
   const [alertText, setAlertText] = useState('');
   const [pagination, setPagination] = useState(0);
-  const [searchResultList, setSearchResultList] = useState<string[]>(
-    searchResult ? JSON.parse(searchResult) : [],
-  );
+  const [searchResultList, setSearchResultList] = useState<string[]>([]);
   const searchResultRef = useRef<HTMLUListElement | null>(null);
 
   const { isOpen: isOpenSearchResult, setIsOpen: setIsOpenSearchResult } =
@@ -97,7 +94,7 @@ export default function SearchBookSection({
   };
 
   const focusInputArea = () => {
-    if (!searchResult) return;
+    if (searchResultList.length <= 0) return;
     setIsOpenSearchResult(true);
   };
 
@@ -124,6 +121,15 @@ export default function SearchBookSection({
   useEffect(() => {
     dispatch(bookData?.total);
   }, [bookData?.total]);
+
+  useEffect(() => {
+    const storageResult = localStorage.getItem(SEARCH_RESULT_KEY);
+    if (!storageResult) return;
+    const list = JSON.parse(storageResult);
+    if (!Array.isArray(list)) return;
+    setSearchResultList(list);
+  }, []);
+
   return (
     <div className="search-book-section flex flex-col items-center gap-y-[16px]">
       <div className="flex flex-col sm:flex-row gap-x-[16px] gap-y-[8px] w-full">
