@@ -19,7 +19,7 @@ export default function SummaryEditPage() {
             title: data.book_title,
             publisher: data.book_publisher,
             link: data.book_link,
-            isbn: '',
+            isbn: data.isbn,
           }}
           defaultContent={data.contents}
           defaultEndPage={data.end_page}

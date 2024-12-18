@@ -95,6 +95,7 @@ export type BookSummaryItemDto = {
   category_id: number;
   category_name: string;
   comment_count: number;
+  isbn: string;
 };
 
 export const toBookSummaryItemModel = (

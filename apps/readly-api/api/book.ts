@@ -55,7 +55,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   }
 
   await sql`
-  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, user_id, user_name, user_image, start_page, end_page, category_id)
+  INSERT INTO summaries (contents, book_title, book_author, book_publisher, book_pubdate, book_image, book_link, isbn, user_id, user_name, user_image, start_page, end_page, category_id)
   VALUES (
     ${content},
     ${bookInfo.title},
@@ -64,6 +64,7 @@ bookRouter.post('/summary/create', async (req: Request, res: Response) => {
     ${bookInfo.pubdate},
     ${bookInfo.image},
     ${bookInfo.link},
+    ${bookInfo.isbn},
     ${decodedInfo.id},
     ${row.nickname},
     ${row.profile_image},
@@ -163,6 +164,7 @@ bookRouter.put('/summary/edit', async (req: Request, res: Response) => {
     book_pubdate = ${bookInfo.pubdate}, 
     book_image = ${bookInfo.image}, 
     book_link = ${bookInfo.link}, 
+    isbn = ${bookInfo.isbn}, 
     start_page = ${startPage}, 
     end_page = ${endPage}, 
     category_id = ${categoryId}
