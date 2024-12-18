@@ -4,9 +4,19 @@ import { useViewport } from '@/hooks/useViewport';
 import { SearchBookItem } from '@/model/book/book.dto';
 import { searchBookMutation } from '@/service/book.service';
 import { CommonButton, CommonInput, CommonPagination } from '@yeong/ui';
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  MouseEvent,
+  useRef,
+} from 'react';
 import BookItem from '../BookItem/BookItem';
 import './SearchBookSection.scss';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { useClickOpenOutside } from '@/hooks/useClickOpenOutside';
 
 export type SearchBookType = Pick<
   SearchBookItem,
@@ -22,6 +32,9 @@ export default function SearchBookSection({
   defaultBook = null,
   clickSelect,
 }: SearchBookSectionProps) {
+  const SEARCH_RESULT_KEY = 'book-search-result';
+  const searchResult = localStorage.getItem(SEARCH_RESULT_KEY);
+
   const [inputValue, setInputValue] = useState('');
   const [isOpenResult, setIsOpenResult] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(
@@ -29,31 +42,44 @@ export default function SearchBookSection({
   );
   const [alertText, setAlertText] = useState('');
   const [pagination, setPagination] = useState(0);
+  const [searchResultList, setSearchResultList] = useState<string[]>(
+    searchResult ? JSON.parse(searchResult) : [],
+  );
+  const searchResultRef = useRef<HTMLUListElement | null>(null);
+
+  const { isOpen: isOpenSearchResult, setIsOpen: setIsOpenSearchResult } =
+    useClickOpenOutside({
+      ref: searchResultRef,
+    });
+
   const { mutate, data: bookData } = searchBookMutation();
   const { isSm } = useViewport();
 
   const displayCount = useMemo(() => (isSm ? 8 : 12), [isSm]);
 
-  const reducer = (state: number, action: number) => {
-    if (!action) return state;
+  const reducer = (state: number, action: number | undefined) => {
+    if (typeof action === 'undefined') return state;
     return Math.ceil(action / displayCount);
   };
 
   const [countState, dispatch] = useReducer(reducer, 0);
 
-  const searchBook = () => {
+  const searchBook = (text?: string) => {
+    const value = text || inputValue;
     setAlertText('');
-    if (!inputValue) {
+    if (!value) {
       setAlertText('첵 제목을 입력해주세요.');
       return;
     }
-    if (inputValue.length < 2) {
+    if (value.length < 2) {
       setAlertText('두 글자 이상을 입력해주세요.');
       return;
     }
     setIsOpenResult(true);
-    mutate({ query: inputValue, display: String(displayCount) });
+    mutate({ query: value, display: String(displayCount) });
     setPagination(0);
+    saveSearchResult();
+    setIsOpenSearchResult(false);
   };
 
   const clickPaginationButton = (pagination: number) => {
@@ -70,21 +96,70 @@ export default function SearchBookSection({
     clickSelect(item);
   };
 
+  const focusInputArea = () => {
+    if (!searchResult) return;
+    setIsOpenSearchResult(true);
+  };
+
+  const saveSearchResult = useCallback(() => {
+    const list = [...searchResultList];
+    if (!inputValue || list.includes(inputValue)) return;
+    list.push(inputValue);
+    localStorage.setItem(SEARCH_RESULT_KEY, JSON.stringify(list));
+    setSearchResultList(list);
+  }, [searchResultList, inputValue]);
+
+  const handleClickSearchResult = (value: string) => {
+    setInputValue(value);
+    searchBook(value);
+  };
+
+  const handleClickRemoveSearchResult = (e: MouseEvent, value: string) => {
+    e.stopPropagation();
+    const filteredList = searchResultList.filter((item) => item !== value);
+    localStorage.setItem(SEARCH_RESULT_KEY, JSON.stringify(filteredList));
+    setSearchResultList(filteredList);
+  };
+
   useEffect(() => {
-    dispatch(bookData?.total || 0);
+    dispatch(bookData?.total);
   }, [bookData?.total]);
   return (
     <div className="search-book-section flex flex-col items-center gap-y-[16px]">
       <div className="flex flex-col sm:flex-row gap-x-[16px] gap-y-[8px] w-full">
-        <CommonInput
-          value={inputValue}
-          onChangeValue={setInputValue}
-          onEnter={searchBook}
-          placeholder="책 제목을 2자 이상 입력해주세요."
-          alertText={alertText}
-          className="flex-1"
-        />
-        <CommonButton onClick={searchBook}>검색</CommonButton>
+        <div className="w-full flex-1 relative">
+          <CommonInput
+            value={inputValue}
+            onChangeValue={setInputValue}
+            onEnter={searchBook}
+            placeholder="책 제목을 2자 이상 입력해주세요."
+            alertText={alertText}
+            onFocus={focusInputArea}
+          />
+          <ul
+            className="absolute w-full bg-white shadow-lg shadow-gray/80 rounded-[8px] overflow-hidden z-20"
+            ref={searchResultRef}
+          >
+            {isOpenSearchResult &&
+              searchResultList.length > 0 &&
+              searchResultList.map((item) => (
+                <li
+                  key={item}
+                  className="px-[16px] py-[8px] hover:bg-light-gray flex flex-row justify-between items-center cursor-pointer"
+                  onClick={() => handleClickSearchResult(item)}
+                >
+                  <p>{item}</p>
+                  <Icon
+                    icon="ic:round-close"
+                    className="cursor-pointer"
+                    width={20}
+                    onClick={(e) => handleClickRemoveSearchResult(e, item)}
+                  />
+                </li>
+              ))}
+          </ul>
+        </div>
+        <CommonButton onClick={() => searchBook()}>검색</CommonButton>
       </div>
       {isOpenResult && (
         <div className="flex flex-col items-center gap-y-[16px]">
