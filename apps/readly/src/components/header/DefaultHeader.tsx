@@ -2,6 +2,7 @@
 
 import {
   getLoginPage,
+  getRootPage,
   getSignUpPage,
   getSummaryCreatePage,
 } from '@/utils/route.utils';
@@ -32,15 +33,18 @@ export default function DefaultHeader() {
 
   const goToWriteSummary = () => {
     router.push(getSummaryCreatePage());
+    setIsOpenToggle(false);
   };
 
   const clickSignUpButton = () => {
     router.push(getSignUpPage());
   };
 
-  const clickLogoutButton = () => {
+  const clickLogoutButton = async () => {
     Cookies.remove('access_token');
-    refetch();
+    await refetch();
+    setIsOpenToggle(false);
+    router.push(getRootPage());
   };
 
   const clickToggleButton = () => {
