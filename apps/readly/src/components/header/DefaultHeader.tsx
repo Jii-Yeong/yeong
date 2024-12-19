@@ -11,9 +11,19 @@ import { useRouter } from 'next/navigation';
 import UserProfile from '../user/UserProfile/UserProfile';
 import { getUserMyInfoQuery } from '@/service/user.service';
 import Cookies from 'js-cookie';
+import { useViewport } from '@/hooks/useViewport';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { COLORS } from '@/constants/color.constants';
+import { useRef } from 'react';
+import { useClickOpenOutside } from '@/hooks/useClickOpenOutside';
 
 export default function DefaultHeader() {
   const { data, refetch } = getUserMyInfoQuery();
+  const { isSm } = useViewport();
+  const toggleRef = useRef<HTMLDivElement | null>(null);
+
+  const { isOpen: isOpenToggle, setIsOpen: setIsOpenToggle } =
+    useClickOpenOutside({ ref: toggleRef });
   const router = useRouter();
 
   const clickLoginButton = () => {
@@ -28,9 +38,13 @@ export default function DefaultHeader() {
     router.push(getSignUpPage());
   };
 
-  const clictLogoutButton = () => {
+  const clickLogoutButton = () => {
     Cookies.remove('access_token');
     refetch();
+  };
+
+  const clickToggleButton = () => {
+    setIsOpenToggle(!isOpenToggle);
   };
 
   return (
@@ -41,7 +55,7 @@ export default function DefaultHeader() {
       >
         READLY
       </Link>
-      <div className="flex flex-row gap-x-[8px]">
+      <div className="flex flex-row gap-x-[8px] items-center">
         {data ? (
           <>
             <UserProfile
@@ -50,12 +64,38 @@ export default function DefaultHeader() {
               userName={data.nickname}
               textClassName="text-white font-bold"
             />
-            <CommonButton onClick={goToWriteSummary} variant="outline">
-              요약 작성하기
-            </CommonButton>
-            <CommonButton onClick={clictLogoutButton} variant="outline">
-              로그아웃
-            </CommonButton>
+            {isSm ? (
+              <div className="relative">
+                <Icon
+                  icon="pepicons-pop:triangle-down-filled"
+                  color={COLORS.white}
+                  width={25}
+                  onClick={clickToggleButton}
+                />
+                {isOpenToggle && (
+                  <div
+                    className="absolute bg-white rounded-[8px] p-[8px] right-0 w-[200px] flex flex-col gap-y-[8px] shadow-lg shadow-gray/80 z-30"
+                    ref={toggleRef}
+                  >
+                    <CommonButton onClick={goToWriteSummary} variant="outline">
+                      요약 작성하기
+                    </CommonButton>
+                    <CommonButton onClick={clickLogoutButton} variant="outline">
+                      로그아웃
+                    </CommonButton>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <CommonButton onClick={goToWriteSummary} variant="outline">
+                  요약 작성하기
+                </CommonButton>
+                <CommonButton onClick={clickLogoutButton} variant="outline">
+                  로그아웃
+                </CommonButton>
+              </>
+            )}
           </>
         ) : (
           <>
