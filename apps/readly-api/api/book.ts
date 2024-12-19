@@ -16,6 +16,35 @@ bookRouter.post('/search', async (req: Request, res: Response) => {
   res.json(searchResult);
 });
 
+bookRouter.get('/recent', async (req: Request, res: Response) => {
+  const userToken = req.headers['authorization']?.split(' ')[1];
+
+  if (!userToken) {
+    res.status(401).send('You entered via the wrong route.');
+    return;
+  }
+
+  const decodedInfo = decodeJwtToken(userToken);
+
+  if (!decodedInfo.id) {
+    res.status(400).send('Decoding failed.');
+    return;
+  }
+
+  const { rows } = await sql`
+  SELECT * 
+  FROM (
+    SELECT DISTINCT ON (isbn) book_title, book_author, book_publisher, book_pubdate, book_image, book_link, isbn, created_at
+    FROM summaries
+    WHERE user_id = ${decodedInfo.id}
+    ) t
+  ORDER BY created_at DESC
+  LIMIT 3;
+  `;
+
+  res.json(rows);
+});
+
 bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
