@@ -20,7 +20,7 @@ import { useClickOpenOutside } from '@/hooks/useClickOpenOutside';
 
 export default function DefaultHeader() {
   const { data, refetch } = getUserMyInfoQuery();
-  const { isSm } = useViewport();
+  const { isMd } = useViewport();
   const toggleRef = useRef<HTMLDivElement | null>(null);
 
   const { isOpen: isOpenToggle, setIsOpen: setIsOpenToggle } =
@@ -68,7 +68,7 @@ export default function DefaultHeader() {
               userName={data.nickname}
               textClassName="text-white font-bold"
             />
-            {isSm ? (
+            {isMd ? (
               <div className="relative">
                 <Icon
                   icon="pepicons-pop:triangle-down-filled"
