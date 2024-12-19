@@ -21,7 +21,8 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 
 ## Readly
 
-![image](https://github.com/user-attachments/assets/bc1e58ce-174d-4ac0-9c89-5e3c1413f747)
+![image](https://github.com/user-attachments/assets/07838e83-a165-4ce6-a72a-a060c8edf812)
+
 
 자신이 읽은 책의 소감을 자유롭게 게시할 수 있는 웹 프로젝트 입니다.
 
