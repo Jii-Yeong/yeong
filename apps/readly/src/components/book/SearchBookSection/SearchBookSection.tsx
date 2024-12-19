@@ -2,8 +2,16 @@
 
 import { useViewport } from '@/hooks/useViewport';
 import { SearchBookItem } from '@/model/book/book.dto';
-import { searchBookMutation } from '@/service/book.service';
-import { CommonButton, CommonInput, CommonPagination } from '@yeong/ui';
+import {
+  getRecentBookListQuery,
+  searchBookMutation,
+} from '@/service/book.service';
+import {
+  CommonButton,
+  CommonInput,
+  CommonPagination,
+  LoadingSpinner,
+} from '@yeong/ui';
 import {
   useCallback,
   useEffect,
@@ -42,13 +50,15 @@ export default function SearchBookSection({
   const [alertText, setAlertText] = useState('');
   const [pagination, setPagination] = useState(0);
   const [searchResultList, setSearchResultList] = useState<string[]>([]);
-  const searchResultRef = useRef<HTMLUListElement | null>(null);
+  const searchResultRef = useRef<HTMLDivElement | null>(null);
 
   const { isOpen: isOpenSearchResult, setIsOpen: setIsOpenSearchResult } =
     useClickOpenOutside({
       ref: searchResultRef,
     });
 
+  const { data: recentBookData, isLoading: recentBookLoading } =
+    getRecentBookListQuery();
   const { mutate, data: bookData } = searchBookMutation();
   const { isSm } = useViewport();
 
@@ -91,10 +101,10 @@ export default function SearchBookSection({
   const clickBookItem = (item: SearchBookItem) => {
     setSelectedBook(item);
     clickSelect(item);
+    setIsOpenSearchResult(false);
   };
 
   const focusInputArea = () => {
-    if (searchResultList.length <= 0) return;
     setIsOpenSearchResult(true);
   };
 
@@ -142,28 +152,61 @@ export default function SearchBookSection({
             alertText={alertText}
             onFocus={focusInputArea}
           />
-          <ul
-            className="absolute w-full bg-white shadow-lg shadow-gray/80 rounded-[8px] overflow-hidden z-20"
-            ref={searchResultRef}
-          >
-            {isOpenSearchResult &&
-              searchResultList.length > 0 &&
-              searchResultList.map((item) => (
-                <li
-                  key={item}
-                  className="px-[16px] py-[8px] hover:bg-light-gray flex flex-row justify-between items-center cursor-pointer"
-                  onClick={() => handleClickSearchResult(item)}
-                >
-                  <p>{item}</p>
-                  <Icon
-                    icon="ic:round-close"
-                    className="cursor-pointer"
-                    width={20}
-                    onClick={(e) => handleClickRemoveSearchResult(e, item)}
-                  />
-                </li>
-              ))}
-          </ul>
+          {isOpenSearchResult && (
+            <div
+              className="absolute w-full bg-white shadow-lg shadow-gray/80 rounded-[8px] overflow-hidden z-20"
+              ref={searchResultRef}
+            >
+              {searchResultList.length > 0 && (
+                <ul>
+                  <li className="px-[16px] py-[8px] font-bold">최근 검색어</li>
+                  {searchResultList.map((item) => (
+                    <li
+                      key={item}
+                      className="px-[16px] py-[8px] hover:bg-light-gray flex flex-row justify-between items-center cursor-pointer"
+                      onClick={() => handleClickSearchResult(item)}
+                    >
+                      <p>{item}</p>
+                      <Icon
+                        icon="ic:round-close"
+                        className="cursor-pointer"
+                        width={20}
+                        onClick={(e) => handleClickRemoveSearchResult(e, item)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="p-[16px]">
+                <p className="py-[8px] font-bold">최근 등록한 책</p>
+                {recentBookLoading && (
+                  <div className="w-full flex flex-row justify-center">
+                    <LoadingSpinner />
+                  </div>
+                )}
+                {recentBookData &&
+                  (recentBookData.length > 0 ? (
+                    recentBookData.map((item) => (
+                      <BookItem
+                        author={item.author}
+                        image={item.image}
+                        pubdate={item.pubdate}
+                        publisher={item.publisher}
+                        title={item.title}
+                        isWide
+                        imageWidth={100}
+                        isbn={item.isbn}
+                        clickItem={() => clickBookItem(item)}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-center w-full text-dark-gray text-md">
+                      최근 등록한 책이 없습니다.
+                    </p>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
         <CommonButton onClick={() => searchBook()}>검색</CommonButton>
       </div>

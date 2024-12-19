@@ -17,24 +17,31 @@ export type SearchBookResponse = {
   items: SearchBookItem[];
 };
 
+export type RecentBookDto = Pick<
+  BookSummaryItemDto,
+  | 'book_author'
+  | 'book_image'
+  | 'book_link'
+  | 'book_pubdate'
+  | 'book_publisher'
+  | 'book_title'
+  | 'isbn'
+>;
+
 export type SearchBookItem = {
   title: string;
   link: string;
   image: string;
   author: string;
-  discount: string;
   publisher: string;
   pubdate: string;
   isbn: string;
-  description: string;
 };
 
 export const toSearchBookItemModel = (item: SearchBookResponse) => {
   const bookItem: SearchBookItem[] = item.items.map((item) => {
     return {
       author: item.author,
-      description: item.description,
-      discount: item.discount,
       image: item.image,
       isbn: item.isbn,
       link: item.link,
@@ -46,6 +53,18 @@ export const toSearchBookItemModel = (item: SearchBookResponse) => {
   return {
     ...item,
     items: bookItem,
+  };
+};
+
+export const toRecentBookItemModel = (item: RecentBookDto): SearchBookItem => {
+  return {
+    author: item.book_author,
+    image: item.book_image,
+    isbn: item.isbn,
+    link: item.book_link,
+    pubdate: item.book_pubdate,
+    publisher: item.book_publisher,
+    title: item.book_title,
   };
 };
 

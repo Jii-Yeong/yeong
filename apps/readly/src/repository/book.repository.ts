@@ -7,6 +7,7 @@ import {
   BookSummaryListResponse,
   CreateBookSummaryRequest,
   EditBookSummaryRequest,
+  RecentBookDto,
   SearchBookRequest,
   SearchBookResponse,
 } from '@/model/book/book.dto';
@@ -16,6 +17,12 @@ export const searchBookList = async (params: SearchBookRequest) => {
     '/book/search',
     params,
   );
+  return data;
+};
+
+export const getRecentBookList = async () => {
+  const { data } =
+    await readlyApiAxiosInstance().get<RecentBookDto[]>('/book/recent');
   return data;
 };
 

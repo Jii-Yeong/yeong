@@ -10,6 +10,7 @@ import {
   SearchBookRequest,
   SearchBookResponse,
   toBookSummaryItemModel,
+  toRecentBookItemModel,
   toSearchBookItemModel,
 } from '@/model/book/book.dto';
 import {
@@ -19,6 +20,7 @@ import {
   editBookSummary,
   getBookSummaryLikeCount,
   getDetailBookSummary,
+  getRecentBookList,
   searchBookList,
 } from '@/repository/book.repository';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
@@ -33,6 +35,18 @@ export const searchBookMutation = () => {
       const data = await searchBookList(params);
       return toSearchBookItemModel(data);
     },
+  });
+};
+
+export const getRecentBookListQuery = () => {
+  return useQuery({
+    queryKey: [BOOK_SUMMARY_KEY],
+    queryFn: async () => {
+      const data = await getRecentBookList();
+      return data.map((item) => toRecentBookItemModel(item));
+    },
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 
