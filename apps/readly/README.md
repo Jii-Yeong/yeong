@@ -1,6 +1,7 @@
 # Readly
 
-![image](https://github.com/user-attachments/assets/bc1e58ce-174d-4ac0-9c89-5e3c1413f747)
+![image](https://github.com/user-attachments/assets/abaa05fe-045d-4dcf-a20e-2f3c3c058d5f)
+
 
 ## 소개
 이 프로젝트는 자신이 읽은 책의 소감을 자유롭게 게시할 목적으로 Next.js를 활용하여 개발된 웹 애플리케이션 입니다.
