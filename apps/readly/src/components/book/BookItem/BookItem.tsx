@@ -1,6 +1,6 @@
-import { COLORS } from '@/constants/color.constants';
 import { formatDateToString } from '@yeong/utils/date';
 import { parseDomSizeValue } from '@yeong/utils/string';
+import { cva } from 'class-variance-authority';
 import Image from 'next/image';
 import { useMemo } from 'react';
 
@@ -10,6 +10,7 @@ type BookItemProps = {
   publisher: string;
   pubdate: string;
   image: string;
+  link?: string;
   isbn?: string;
   isSelected?: boolean;
   imageWidth?: string | number;
@@ -18,12 +19,42 @@ type BookItemProps = {
   clickItem?: (isbn: string) => void;
 };
 
+const bookItemVariants = cva(
+  [
+    'p-[8px]',
+    'rounded-[8px]',
+    'w-full',
+    'h-full',
+    'flex',
+    'gap-x-[16px]',
+    'md:hover:bg-light-gray',
+    'transition-all',
+  ],
+  {
+    variants: {
+      selected: {
+        true: 'bg-highlight',
+        false: 'bg-white',
+      },
+      wide: {
+        true: 'flex-row',
+        false: 'flex-col',
+      },
+    },
+    defaultVariants: {
+      selected: false,
+      wide: false,
+    },
+  },
+);
+
 export default function BookItem({
   title,
   author,
   publisher,
   pubdate,
   image,
+  link,
   isbn,
   isSelected,
   imageWidth = '100%',
@@ -32,7 +63,11 @@ export default function BookItem({
   clickItem,
 }: BookItemProps) {
   const handleClickItem = () => {
-    if (clickItem && isbn) clickItem(isbn);
+    if (clickItem && isbn) {
+      clickItem(isbn);
+      return;
+    }
+    if (link) window.open(link, '_blank');
   };
 
   const pubdateFromFormat = useMemo(() => {
@@ -41,11 +76,9 @@ export default function BookItem({
 
   return (
     <div
-      className="p-[8px] rounded-[8px] w-full h-full flex gap-x-[16px]"
+      className={bookItemVariants({ selected: isSelected, wide: isWide })}
       style={{
-        backgroundColor: isSelected ? COLORS.highlight : 'transparent',
         cursor,
-        flexDirection: isWide ? 'row' : 'column',
       }}
       onClick={handleClickItem}
     >

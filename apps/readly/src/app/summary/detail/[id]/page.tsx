@@ -223,6 +223,7 @@ export default function SummaryDetailPage() {
             pubdate={detailSummaryData.book_pubdate}
             title={detailSummaryData.book_title}
             publisher={detailSummaryData.book_publisher}
+            link={detailSummaryData.book_link}
             imageWidth={150}
           />
         ) : (
