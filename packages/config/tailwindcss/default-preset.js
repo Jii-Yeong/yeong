@@ -25,6 +25,7 @@ export default {
         'light-yellow': '#ffffc9',
         brown: '#964B00',
         'light-brown': '#edd6bf',
+        highlight: '#fdf5e1',
       },
       fontSize: {
         sm: '12px',
