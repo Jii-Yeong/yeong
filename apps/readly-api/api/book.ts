@@ -45,6 +45,29 @@ bookRouter.get('/recent', async (req: Request, res: Response) => {
   res.json(rows);
 });
 
+bookRouter.get('/created-rank', async (req: Request, res: Response) => {
+  const { rows } = await sql`
+  SELECT 
+    MAX(book_title) AS book_title, 
+    MAX(book_author) AS book_author, 
+    MAX(book_publisher) AS book_publisher, 
+    MAX(book_pubdate) AS book_pubdate, 
+    MAX(book_image) AS book_image, 
+    MAX(book_link) AS book_link, 
+    isbn,
+    COUNT(*) AS created_count
+  FROM 
+    summaries
+  GROUP BY 
+    isbn
+  ORDER BY 
+    created_count DESC
+  LIMIT 3;
+  `;
+
+  res.json(rows);
+});
+
 bookRouter.post('/summary/create', async (req: Request, res: Response) => {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
