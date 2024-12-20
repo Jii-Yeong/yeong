@@ -6,15 +6,18 @@ import Provider from './provider';
 import KaKaoScript from './script/KaKaoScript';
 import { CommonToaster } from '@yeong/ui';
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
+const ibmPlexSansKR = localFont({
+  src: [
+    {
+      path: '../../public/fonts/IBMPlexSansKR-Regular.ttf',
+      weight: '400',
+    },
+    {
+      path: '../../public/fonts/IBMPlexSansKR-Bold.ttf',
+      weight: '700',
+    },
+  ],
+  variable: '--font-ibm-plex-sans',
 });
 
 export const metadata: Metadata = {
@@ -30,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+        className={`${ibmPlexSansKR.className} antialiased overflow-x-hidden`}
       >
         <Provider>
           <div className="flex flex-col items-center">
