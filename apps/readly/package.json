@@ -16,6 +16,7 @@
     "@yeong/ui": "workspace:*",
     "@yeong/utils": "workspace:*",
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.0",
     "jose": "^5.9.6",
     "js-cookie": "2.2.1",
     "lodash-es": "^4.17.21",

@@ -10,3 +10,12 @@ export type SearchBookItemModel = {
   image: string;
   isbn?: string;
 };
+
+export type BookCreatedRankModel = {
+  image: string;
+  title: string;
+  author: string;
+  count: number;
+  rank: number;
+  link: string;
+};

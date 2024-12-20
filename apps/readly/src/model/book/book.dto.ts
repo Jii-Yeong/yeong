@@ -1,7 +1,7 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
 import { transferStringToDate } from '@yeong/utils/date';
 import { UserInfoDto } from '../user.dto';
-import { BookSummaryItemModel } from './book.model';
+import { BookCreatedRankModel, BookSummaryItemModel } from './book.model';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -17,7 +17,7 @@ export type SearchBookResponse = {
   items: SearchBookItem[];
 };
 
-export type RecentBookDto = Pick<
+export type BookItemDto = Pick<
   BookSummaryItemDto,
   | 'book_author'
   | 'book_image'
@@ -56,6 +56,8 @@ export const toSearchBookItemModel = (item: SearchBookResponse) => {
   };
 };
 
+export type RecentBookDto = BookItemDto;
+
 export const toRecentBookItemModel = (item: RecentBookDto): SearchBookItem => {
   return {
     author: item.book_author,
@@ -65,6 +67,22 @@ export const toRecentBookItemModel = (item: RecentBookDto): SearchBookItem => {
     pubdate: item.book_pubdate,
     publisher: item.book_publisher,
     title: item.book_title,
+  };
+};
+
+export type BookCreatedRankDto = BookItemDto & { created_count: number };
+
+export const toBookCreatedRankModel = (
+  item: BookCreatedRankDto,
+  index: number,
+): BookCreatedRankModel => {
+  return {
+    author: item.book_author,
+    image: item.book_image,
+    link: item.book_link,
+    title: item.book_title,
+    count: item.created_count,
+    rank: index + 1,
   };
 };
 

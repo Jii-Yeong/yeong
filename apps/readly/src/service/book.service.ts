@@ -1,5 +1,6 @@
 import {
   BOOK_CATEGORY_KEY,
+  BOOK_RANK_KEY,
   BOOK_SUMMARY_KEY,
   BOOK_SUMMARY_LIKE_KEY,
 } from '@/constants/query-key.constants';
@@ -9,6 +10,7 @@ import {
   BookSummaryListRequest,
   SearchBookRequest,
   SearchBookResponse,
+  toBookCreatedRankModel,
   toBookSummaryItemModel,
   toRecentBookItemModel,
   toSearchBookItemModel,
@@ -18,6 +20,7 @@ import {
   createBookSummary,
   deleteDetailBoookSummary,
   editBookSummary,
+  getBookCreatedRank,
   getBookSummaryLikeCount,
   getDetailBookSummary,
   getRecentBookList,
@@ -44,6 +47,18 @@ export const getRecentBookListQuery = () => {
     queryFn: async () => {
       const data = await getRecentBookList();
       return data.map((item) => toRecentBookItemModel(item));
+    },
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+};
+
+export const getBookCreatedRankQuery = () => {
+  return useQuery({
+    queryKey: [BOOK_RANK_KEY],
+    queryFn: async () => {
+      const data = await getBookCreatedRank();
+      return data.map((item, index) => toBookCreatedRankModel(item, index));
     },
     staleTime: Infinity,
     gcTime: Infinity,

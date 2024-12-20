@@ -1,6 +1,7 @@
 import { readlyApiAxiosInstance } from '@/api/readly-api';
 import {
   BookCategoryDto,
+  BookCreatedRankDto,
   BookSummaryItemDto,
   BookSummaryLikeCountResponse,
   BookSummaryListRequest,
@@ -23,6 +24,14 @@ export const searchBookList = async (params: SearchBookRequest) => {
 export const getRecentBookList = async () => {
   const { data } =
     await readlyApiAxiosInstance().get<RecentBookDto[]>('/book/recent');
+  return data;
+};
+
+export const getBookCreatedRank = async () => {
+  const { data } =
+    await readlyApiAxiosInstance().get<BookCreatedRankDto[]>(
+      '/book/created-rank',
+    );
   return data;
 };
 

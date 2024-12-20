@@ -1,5 +1,3 @@
-'use client';
-
 import BookCategorySkeleton from '@/components/skeleton/book/BookCategorySkeleton';
 import { useObserverTarget } from '@/hooks/useObserverTarget';
 import {
@@ -80,6 +78,7 @@ export default function BookSummaryList() {
 
   return (
     <div>
+      <p className="text-lg font-bold mb-[16px]">책 요약</p>
       <div className="flex flex-row gap-x-[8px] gap-y-[8px] flex-wrap mb-[16px]">
         {categoryLoading && <BookCategorySkeleton />}
         {categoryData && (
