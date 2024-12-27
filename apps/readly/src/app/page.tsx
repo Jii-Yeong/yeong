@@ -70,27 +70,26 @@ export default function Home() {
       <BookRankList />
       <CommonDivider />
       <div className="flex flex-col gap-y-[16px]">
-        <p className="text-lg font-bold mb-[16px]">책 요약</p>
-        <SearchBookSummary />
-        <div className="w-full mb-[16px]">
-          <div className="float-right">
-            <CommonDropdown
-              value={order}
-              onChange={changeOrderValue}
-              label={dropdownLabel}
-            >
-              <CommonDropdownInner>
-                {orderList.map((item) => (
-                  <CommonDropdownItem
-                    children={item.children}
-                    value={item.value}
-                    key={item.value}
-                  />
-                ))}
-              </CommonDropdownInner>
-            </CommonDropdown>
-          </div>
+        <div className="w-full flex flex-row justify-between">
+          <p className="text-lg font-bold mb-[16px]">책 요약</p>
+          <CommonDropdown
+            value={order}
+            onChange={changeOrderValue}
+            label={dropdownLabel}
+          >
+            <CommonDropdownInner>
+              {orderList.map((item) => (
+                <CommonDropdownItem
+                  children={item.children}
+                  value={item.value}
+                  key={item.value}
+                />
+              ))}
+            </CommonDropdownInner>
+          </CommonDropdown>
         </div>
+        <SearchBookSummary />
+
         <BookSummaryList
           data={listData?.pages.flatMap((item) => item.data) || null}
           isFetching={listFetching}
