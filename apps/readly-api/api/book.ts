@@ -360,6 +360,106 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   });
 });
 
+bookRouter.get('/summary/search', async (req: Request, res: Response) => {
+  const { type = 'title', keyword = '', limit = 16, offset = 0 } = req.query;
+
+  const typeObject = {
+    title: 'book_title',
+    author: 'book_author',
+    category: 'book_category.name',
+  };
+
+  const { rows } = await sql.query(
+    `
+  WITH
+  comment_counts AS (
+    SELECT
+      summary_id,
+      COUNT(*) AS comment_count
+    FROM
+      summary_comment
+    GROUP BY
+      summary_id
+  ),
+  like_counts AS (
+    SELECT
+      summary_id,
+      COUNT(*) AS like_count
+    FROM
+      summary_like_count
+    GROUP BY
+      summary_id
+  )
+  SELECT
+    summaries.*,
+    book_category.name AS category_name,
+    users.nickname AS user_name,
+    users.profile_image AS user_image,
+    COALESCE(comment_counts.comment_count, 0) AS comment_count,
+    COALESCE(like_counts.like_count, 0) AS like_count
+  FROM
+    summaries
+  LEFT JOIN
+    users
+  ON
+    summaries.user_id = users.id
+  LEFT JOIN
+    book_category
+  ON
+    summaries.category_id = book_category.id
+  LEFT JOIN
+    comment_counts
+  ON
+    summaries.id = comment_counts.summary_id
+  LEFT JOIN
+    like_counts
+  ON
+    summaries.id = like_counts.summary_id
+  WHERE 
+    ${typeObject[String(type)]} ILIKE '%' || $1 || '%' 
+  GROUP BY 
+    summaries.id, 
+    book_category.name, 
+    users.nickname, 
+    users.profile_image,
+    comment_counts.comment_count,
+    like_counts.like_count
+  ORDER BY 
+    created_at DESC
+  LIMIT $2 OFFSET $3;
+  `,
+    [keyword, limit, offset],
+  );
+
+  const { rows: total } = await sql.query(
+    `
+  SELECT 
+    COUNT(*),
+    book_category.name AS category_name
+  FROM summaries
+  LEFT JOIN
+    book_category
+  ON
+    summaries.category_id = book_category.id
+  WHERE
+    ${typeObject[String(type)]} ILIKE '%' || $1 || '%'
+  GROUP BY
+    book_category.name;
+  `,
+    [keyword],
+  );
+
+  const totalCount = Number(total[0].count);
+
+  const isOverOffset = totalCount - Number(limit) * (Number(offset) + 1) <= 0;
+
+  res.json({
+    total: totalCount,
+    list: rows,
+    nextOffset: isOverOffset ? null : Number(offset) + 1,
+  });
+});
+
 bookRouter.get('/summary/like-count', async (req: Request, res: Response) => {
   const id = req.query?.id;
 
