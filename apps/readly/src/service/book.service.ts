@@ -12,13 +12,14 @@ import {
   SearchBookResponse,
   toBookCreatedRankModel,
   toBookSummaryItemModel,
+  toDetailBookSummaryModel,
   toRecentBookItemModel,
   toSearchBookItemModel,
 } from '@/model/book/book.dto';
 import {
   addBookSummaryLikeCount,
   createBookSummary,
-  deleteDetailBoookSummary,
+  deleteDetailBookSummary,
   editBookSummary,
   getBookCreatedRank,
   getBookSummaryLikeCount,
@@ -77,7 +78,10 @@ export const createBookSummaryMutation = () => {
 export const getDetailBookSummaryQuery = (id: BookSummaryItemDto['id']) => {
   return useQuery({
     queryKey: [BOOK_SUMMARY_KEY, id],
-    queryFn: () => getDetailBookSummary(id),
+    queryFn: async () => {
+      const data = await getDetailBookSummary(id);
+      return toDetailBookSummaryModel(data);
+    },
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -94,7 +98,7 @@ export const editBookSummaryMutation = () => {
 
 export const deleteDetailBookSummaryMutation = () => {
   return useMutation({
-    mutationFn: deleteDetailBoookSummary,
+    mutationFn: deleteDetailBookSummary,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [BOOK_SUMMARY_KEY] });
     },

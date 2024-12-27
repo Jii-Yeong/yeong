@@ -1,7 +1,11 @@
 import { SearchBookType } from '@/components/book/SearchBookSection/SearchBookSection';
 import { transferStringToDate } from '@yeong/utils/date';
 import { UserInfoDto } from '../user.dto';
-import { BookCreatedRankModel, BookSummaryItemModel } from './book.model';
+import {
+  BookCreatedRankModel,
+  BookDetailSummaryModel,
+  BookSummaryItemModel,
+} from './book.model';
 export type SearchBookRequest = {
   query: string;
   display?: string;
@@ -41,7 +45,7 @@ export type SearchBookItem = {
 export const toSearchBookItemModel = (item: SearchBookResponse) => {
   const bookItem: SearchBookItem[] = item.items.map((item) => {
     return {
-      author: item.author,
+      author: item.author.replaceAll('^', ', '),
       image: item.image,
       isbn: item.isbn,
       link: item.link,
@@ -60,7 +64,7 @@ export type RecentBookDto = BookItemDto;
 
 export const toRecentBookItemModel = (item: RecentBookDto): SearchBookItem => {
   return {
-    author: item.book_author,
+    author: item.book_author.replaceAll('^', ', '),
     image: item.book_image,
     isbn: item.isbn,
     link: item.book_link,
@@ -77,7 +81,7 @@ export const toBookCreatedRankModel = (
   index: number,
 ): BookCreatedRankModel => {
   return {
-    author: item.book_author,
+    author: item.book_author.replaceAll('^', ', '),
     image: item.book_image,
     link: item.book_link,
     title: item.book_title,
@@ -138,9 +142,10 @@ export type BookSummaryItemDto = {
 export const toBookSummaryItemModel = (
   item: BookSummaryItemDto,
 ): BookSummaryItemModel => {
+  console.log(item.book_author.replaceAll('^', ', '));
   return {
     id: item.id,
-    bookAuthor: item.book_author,
+    bookAuthor: item.book_author.replaceAll('^', ', '),
     bookTitle: item.book_title,
     content: item.contents,
     endPage: item.end_page,
@@ -157,6 +162,18 @@ export const toBookSummaryItemModel = (
   };
 };
 
+export const toDetailBookSummaryModel = (
+  item: BookSummaryItemDto,
+): BookDetailSummaryModel => {
+  return {
+    ...toBookSummaryItemModel(item),
+    bookImage: item.book_image,
+    bookPubdate: item.book_pubdate,
+    bookPublisher: item.book_publisher,
+    bookLink: item.book_link,
+    isMy: item.is_my,
+  };
+};
 export type BookSummaryLikeCountResponse = {
   like_count: number;
   is_clicked: boolean;

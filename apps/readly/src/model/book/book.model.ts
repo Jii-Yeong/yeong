@@ -2,6 +2,14 @@ import { BookSummaryItemProps } from '@/components/book/BookSummaryItem/BookSumm
 
 export type BookSummaryItemModel = BookSummaryItemProps;
 
+export type BookDetailSummaryModel = BookSummaryItemProps & {
+  bookImage: string;
+  bookPubdate: string;
+  bookPublisher: string;
+  bookLink: string;
+  isMy: boolean;
+};
+
 export type SearchBookItemModel = {
   title: string;
   author: string;

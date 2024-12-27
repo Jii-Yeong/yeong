@@ -43,16 +43,16 @@ export default function SummaryDetailPage() {
 
   const createAt = useMemo(() => {
     if (!detailSummaryData) return '';
-    return formatDateToString(new Date(detailSummaryData.created_at));
-  }, [detailSummaryData?.created_at]);
+    return formatDateToString(new Date(detailSummaryData.createAt));
+  }, [detailSummaryData?.createAt]);
 
   const shareText = useMemo(() => {
-    return `${detailSummaryData?.user_name} 님이 작성한 책 ${detailSummaryData?.book_title}의 요약 - Readly에서 확인해보세요.`;
+    return `${detailSummaryData?.userName} 님이 작성한 책 ${detailSummaryData?.bookTitle}의 요약 - Readly에서 확인해보세요.`;
   }, [detailSummaryData]);
 
   const metadataTitle = useMemo(() => {
-    return detailSummaryData?.book_title
-      ? `${detailSummaryData?.book_title}의 요약`
+    return detailSummaryData?.bookTitle
+      ? `${detailSummaryData?.bookTitle}의 요약`
       : 'Readly';
   }, [detailSummaryData]);
 
@@ -77,10 +77,10 @@ export default function SummaryDetailPage() {
       templateArgs: {
         title: shareText,
         like_count: likeCountData?.like_count || 0,
-        view_count: detailSummaryData?.view_count || 0,
+        view_count: detailSummaryData?.viewCount || 0,
         path: pathname,
-        profile_image: detailSummaryData?.user_image,
-        user_name: detailSummaryData?.user_name,
+        profile_image: detailSummaryData?.userImage,
+        user_name: detailSummaryData?.userName,
       },
     });
   };
@@ -119,35 +119,34 @@ export default function SummaryDetailPage() {
             <div className="w-full flex flex-col gap-y-[8px]">
               <div className="flex flex-row justify-between text-md gap-x-[16px] w-full">
                 <UserProfile
-                  userId={detailSummaryData.user_id}
-                  userImage={detailSummaryData.user_image}
-                  userName={detailSummaryData.user_name}
+                  userId={detailSummaryData.userId}
+                  userImage={detailSummaryData.userImage}
+                  userName={detailSummaryData.userName}
                 />
                 <div className="flex flex-row gap-x-[16px]">
                   <div className="text-dark-gray flex flex-row gap-x-[8px] items-center">
                     <span>{createAt}</span>
                     <span>|</span>
-                    <span>{`조회수 : ${detailSummaryData.view_count}`}</span>
+                    <span>{`조회수 : ${detailSummaryData.viewCount}`}</span>
                   </div>
                 </div>
               </div>
               <div className="flex flex-row justify-between">
                 <div>
-                  {detailSummaryData.category_name && (
+                  {detailSummaryData.category && (
                     <BookCategoryChip
-                      text={detailSummaryData.category_name}
-                      value={String(detailSummaryData.category_id)}
+                      text={detailSummaryData.category}
+                      value={String(detailSummaryData.categoryId)}
                     />
                   )}
-                  {detailSummaryData.start_page &&
-                    detailSummaryData.end_page && (
-                      <div className="flex flex-row text-dark-gray text-md gap-x-[2px]">
-                        <p>{detailSummaryData.start_page}p</p>~
-                        <p>{detailSummaryData.end_page}p</p>
-                      </div>
-                    )}
+                  {detailSummaryData.startPage && detailSummaryData.endPage && (
+                    <div className="flex flex-row text-dark-gray text-md gap-x-[2px]">
+                      <p>{detailSummaryData.startPage}p</p>~
+                      <p>{detailSummaryData.endPage}p</p>
+                    </div>
+                  )}
                 </div>
-                {detailSummaryData.is_my && (
+                {detailSummaryData.isMy && (
                   <div className="flex flex-row gap-x-[8px] justify-end items-start">
                     <CommonButton
                       onClick={clickEditButton}
@@ -167,7 +166,7 @@ export default function SummaryDetailPage() {
                 )}
               </div>
             </div>
-            <BookSummaryContent content={detailSummaryData.contents} />
+            <BookSummaryContent content={detailSummaryData.content} />
           </>
         ) : (
           <BookSummaryDetailSkeleton />
@@ -218,12 +217,12 @@ export default function SummaryDetailPage() {
         {detailSummaryData ? (
           <BookItem
             isWide
-            author={detailSummaryData.book_author}
-            image={detailSummaryData.book_image}
-            pubdate={detailSummaryData.book_pubdate}
-            title={detailSummaryData.book_title}
-            publisher={detailSummaryData.book_publisher}
-            link={detailSummaryData.book_link}
+            author={detailSummaryData.bookAuthor}
+            image={detailSummaryData.bookImage}
+            pubdate={detailSummaryData.bookPubdate}
+            title={detailSummaryData.bookTitle}
+            publisher={detailSummaryData.bookPublisher}
+            link={detailSummaryData.bookLink}
             imageWidth={150}
           />
         ) : (

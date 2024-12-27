@@ -9,7 +9,7 @@ type BookItemProps = {
   author: string;
   publisher: string;
   pubdate: string;
-  image: string;
+  image?: string;
   link?: string;
   isbn?: string;
   isSelected?: boolean;
@@ -83,7 +83,7 @@ export default function BookItem({
       onClick={handleClickItem}
     >
       <Image
-        src={image}
+        src={image || ''}
         alt="book-image"
         width={100}
         height={132}

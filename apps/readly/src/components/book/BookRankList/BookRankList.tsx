@@ -8,7 +8,7 @@ export default function BookRankList() {
     <div className="flex flex-col">
       <p className="text-lg font-bold mb-[16px]">등록한 책 랭킹</p>
       {data && !isLoading ? (
-        data?.map((item) => <BookRankItem {...item} />)
+        data?.map((item) => <BookRankItem {...item} key={item.title} />)
       ) : (
         <BookRankListSkeleton />
       )}

@@ -40,7 +40,7 @@ export default function SearchBookSummary() {
       >
         <CommonDropdownInner>
           {dropdownList.map((item) => (
-            <CommonDropdownItem value={item.value}>
+            <CommonDropdownItem value={item.value} key={item.value}>
               {item.children}
             </CommonDropdownItem>
           ))}

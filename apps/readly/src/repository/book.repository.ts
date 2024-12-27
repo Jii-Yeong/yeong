@@ -57,9 +57,7 @@ export const editBookSummary = async (
   await readlyApiAxiosInstance().put('/book/summary/edit', params);
 };
 
-export const deleteDetailBoookSummary = async (
-  id: BookSummaryItemDto['id'],
-) => {
+export const deleteDetailBookSummary = async (id: BookSummaryItemDto['id']) => {
   await readlyApiAxiosInstance().delete('/book/summary/delete', {
     params: {
       id,
