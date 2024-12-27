@@ -10,6 +10,7 @@ import {
   BookSummaryListRequest,
   SearchBookRequest,
   SearchBookResponse,
+  SearchBookSummaryListRequest,
   toBookCreatedRankModel,
   toBookSummaryItemModel,
   toDetailBookSummaryModel,
@@ -25,6 +26,7 @@ import {
   getBookSummaryLikeCount,
   getDetailBookSummary,
   getRecentBookList,
+  getSearchBookSummaryList,
   searchBookList,
 } from '@/repository/book.repository';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
@@ -152,5 +154,29 @@ export const getBookCategoryListQuery = () => {
   return useQuery({
     queryKey: [BOOK_CATEGORY_KEY],
     queryFn: getBookCategoryList,
+  });
+};
+
+export const getSearchBookSummaryListQuery = (
+  params: SearchBookSummaryListRequest,
+) => {
+  return useInfiniteQuery({
+    queryKey: [BOOK_SUMMARY_KEY, params.type, params.keyword],
+    queryFn: async ({ pageParam = 0 }) => {
+      const { total, list, nextOffset } = await getSearchBookSummaryList({
+        ...params,
+        offset: pageParam * Number(params.limit || 16),
+      });
+
+      return {
+        total,
+        data: list.map((item) => toBookSummaryItemModel(item)),
+        nextOffset,
+      };
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextOffset,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };

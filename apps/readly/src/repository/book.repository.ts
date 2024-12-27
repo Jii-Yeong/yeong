@@ -11,6 +11,7 @@ import {
   RecentBookDto,
   SearchBookRequest,
   SearchBookResponse,
+  SearchBookSummaryListRequest,
 } from '@/model/book/book.dto';
 
 export const searchBookList = async (params: SearchBookRequest) => {
@@ -97,6 +98,16 @@ export const addBookSummaryLikeCount = async (
 export const getBookCategoryList = async () => {
   const { data } = await readlyApiAxiosInstance().get<BookCategoryDto[]>(
     '/book/category-list',
+  );
+  return data;
+};
+
+export const getSearchBookSummaryList = async (
+  params: SearchBookSummaryListRequest,
+) => {
+  const { data } = await readlyApiAxiosInstance().get<BookSummaryListResponse>(
+    '/book/summary/search',
+    { params },
   );
   return data;
 };

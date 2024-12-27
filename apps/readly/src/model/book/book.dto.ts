@@ -142,7 +142,6 @@ export type BookSummaryItemDto = {
 export const toBookSummaryItemModel = (
   item: BookSummaryItemDto,
 ): BookSummaryItemModel => {
-  console.log(item.book_author.replaceAll('^', ', '));
   return {
     id: item.id,
     bookAuthor: item.book_author.replaceAll('^', ', '),
@@ -184,4 +183,11 @@ export type BookCategoryDto = {
   id: number;
   name: string;
   summary_count: number;
+};
+
+export type SearchBookSummaryListRequest = {
+  keyword: string;
+  type: string;
+  limit?: number;
+  offset?: number;
 };
