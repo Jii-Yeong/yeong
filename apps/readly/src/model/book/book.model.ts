@@ -8,6 +8,7 @@ export type BookDetailSummaryModel = BookSummaryItemProps & {
   bookPublisher: string;
   bookLink: string;
   isMy: boolean;
+  isbn: string;
 };
 
 export type SearchBookItemModel = {

@@ -5,6 +5,7 @@ import './globals.css';
 import Provider from './provider';
 import KaKaoScript from './script/KaKaoScript';
 import { CommonToaster } from '@yeong/ui';
+import { Suspense } from 'react';
 
 const ibmPlexSansKR = localFont({
   src: [
@@ -39,7 +40,7 @@ export default function RootLayout({
           <div className="flex flex-col items-center">
             <DefaultHeader />
             <div className="w-full m-[24px] lg:w-[1000px] px-[16px] md:px-[32px]">
-              {children}
+              <Suspense>{children}</Suspense>
             </div>
           </div>
         </Provider>

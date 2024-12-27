@@ -13,19 +13,19 @@ export default function SummaryEditPage() {
       {data && (
         <BookSummaryCreateSection
           defaultBook={{
-            author: data.book_author,
-            image: data.book_image,
-            pubdate: data.book_pubdate,
-            title: data.book_title,
-            publisher: data.book_publisher,
-            link: data.book_link,
+            author: data.bookAuthor,
+            image: data.bookImage,
+            pubdate: data.bookPubdate,
+            title: data.bookTitle,
+            publisher: data.bookPublisher,
+            link: data.bookLink,
             isbn: data.isbn,
           }}
-          defaultContent={data.contents}
-          defaultEndPage={data.end_page}
-          defaultStartPage={data.start_page}
-          defaultCategoryId={data.category_id}
-          defaultCategoryName={data.category_name}
+          defaultContent={data.content}
+          defaultEndPage={data.endPage}
+          defaultStartPage={data.startPage}
+          defaultCategoryId={data.categoryId}
+          defaultCategoryName={data.category}
           isEdit
           summaryId={String(id)}
         />

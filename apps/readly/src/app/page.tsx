@@ -12,7 +12,7 @@ import {
   CommonDropdownItemProps,
 } from '@yeong/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useMemo } from 'react';
+import { useMemo } from 'react';
 
 export default function Home() {
   const orderList: CommonDropdownItemProps[] = [
@@ -66,39 +66,37 @@ export default function Home() {
   };
 
   return (
-    <Suspense>
-      <div className="flex flex-col gap-y-[32px]">
-        <BookRankList />
-        <CommonDivider />
-        <div className="flex flex-col gap-y-[16px]">
-          <p className="text-lg font-bold mb-[16px]">책 요약</p>
-          <SearchBookSummary />
-          <div className="w-full mb-[16px]">
-            <div className="float-right">
-              <CommonDropdown
-                value={order}
-                onChange={changeOrderValue}
-                label={dropdownLabel}
-              >
-                <CommonDropdownInner>
-                  {orderList.map((item) => (
-                    <CommonDropdownItem
-                      children={item.children}
-                      value={item.value}
-                      key={item.value}
-                    />
-                  ))}
-                </CommonDropdownInner>
-              </CommonDropdown>
-            </div>
+    <div className="flex flex-col gap-y-[32px]">
+      <BookRankList />
+      <CommonDivider />
+      <div className="flex flex-col gap-y-[16px]">
+        <p className="text-lg font-bold mb-[16px]">책 요약</p>
+        <SearchBookSummary />
+        <div className="w-full mb-[16px]">
+          <div className="float-right">
+            <CommonDropdown
+              value={order}
+              onChange={changeOrderValue}
+              label={dropdownLabel}
+            >
+              <CommonDropdownInner>
+                {orderList.map((item) => (
+                  <CommonDropdownItem
+                    children={item.children}
+                    value={item.value}
+                    key={item.value}
+                  />
+                ))}
+              </CommonDropdownInner>
+            </CommonDropdown>
           </div>
-          <BookSummaryList
-            data={listData?.pages.flatMap((item) => item.data) || null}
-            isFetching={listFetching}
-            fetchNextPage={fetchNextPage}
-          />
         </div>
+        <BookSummaryList
+          data={listData?.pages.flatMap((item) => item.data) || null}
+          isFetching={listFetching}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
-    </Suspense>
+    </div>
   );
 }

@@ -171,6 +171,7 @@ export const toDetailBookSummaryModel = (
     bookPublisher: item.book_publisher,
     bookLink: item.book_link,
     isMy: item.is_my,
+    isbn: item.isbn,
   };
 };
 export type BookSummaryLikeCountResponse = {
