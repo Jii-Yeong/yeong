@@ -449,6 +449,15 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
     [keyword],
   );
 
+  if (total.length <= 0) {
+    res.json({
+      total: 0,
+      list: [],
+      nextOffset: null,
+    });
+    return;
+  }
+
   const totalCount = Number(total[0].count);
 
   const isOverOffset = totalCount - Number(limit) * (Number(offset) + 1) <= 0;
