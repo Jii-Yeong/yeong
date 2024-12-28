@@ -111,9 +111,10 @@ export default function SearchBookSection({
   const saveSearchResult = useCallback(() => {
     const list = [...searchResultList];
     if (!inputValue || list.includes(inputValue)) return;
-    list.push(inputValue);
+    list.unshift(inputValue);
     localStorage.setItem(SEARCH_RESULT_KEY, JSON.stringify(list));
-    setSearchResultList(list);
+    const sliceList = list.slice(0, 10);
+    setSearchResultList(sliceList);
   }, [searchResultList, inputValue]);
 
   const handleClickSearchResult = (value: string) => {
