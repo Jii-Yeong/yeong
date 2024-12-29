@@ -22,7 +22,12 @@ export default function BookCategoryChip({
 
   return (
     <div>
-      <CommonChip onClick={clickCategoryChip} {...rest} />
+      <CommonChip
+        onClick={clickCategoryChip}
+        {...rest}
+        variant="secondary"
+        isActive
+      />
     </div>
   );
 }
