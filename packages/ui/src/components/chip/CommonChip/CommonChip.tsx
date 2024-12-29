@@ -6,6 +6,7 @@ import {
   HTMLAttributes,
   memo,
   MouseEvent,
+  ReactNode,
   Ref,
   useMemo,
 } from 'react';
@@ -19,6 +20,10 @@ const chipVariants = cva(
     'cursor-pointer',
     'w-max',
     'hover:opacity-60',
+    'flex',
+    'flex-row',
+    'gap-x-[4px]',
+    'items-center',
   ],
   {
     variants: {
@@ -88,7 +93,9 @@ type CommonChipProps = {
   isActive?: boolean;
   disabled?: boolean;
   variant?: ChipVariant['variant'];
+  removeIcon?: ReactNode;
   onClick?: (value: string) => void;
+  onClickRemove?: () => void;
 } & Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'onClick'>;
 
 const CommonChip = forwardRef(
@@ -102,7 +109,9 @@ const CommonChip = forwardRef(
       isActive,
       disabled,
       variant,
+      removeIcon,
       onClick,
+      onClickRemove,
     }: CommonChipProps,
     ref: Ref<HTMLDivElement>,
   ) => {
@@ -116,6 +125,11 @@ const CommonChip = forwardRef(
       e.preventDefault();
       if (!disabled && onClick) onClick(value || '');
     };
+
+    const handleClickRemove = (e: MouseEvent) => {
+      e.preventDefault();
+      if (onClickRemove) onClickRemove();
+    };
     return (
       <div
         className={divClassName}
@@ -128,6 +142,7 @@ const CommonChip = forwardRef(
         ref={ref}
       >
         {text}
+        {removeIcon && <div onClick={handleClickRemove}> {removeIcon}</div>}
       </div>
     );
   },
