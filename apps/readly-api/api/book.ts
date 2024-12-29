@@ -363,14 +363,13 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
 bookRouter.get('/summary/search', async (req: Request, res: Response) => {
   const { type = 'title', keyword = '', limit = 16, offset = 0 } = req.query;
 
-  const typeObject = {
-    title: 'book_title',
-    author: 'book_author',
-    category: 'book_category.name',
+  const whereByTypeObject = {
+    title: `WHERE book_title ILIKE '%' || $1 || '%'`,
+    author: `WHERE book_author ILIKE '%' || $1 || '%'`,
+    category: `WHERE book_category.name = ANY(SELECT jsonb_array_elements_text($1::jsonb))`,
   };
 
-  const { rows } = await sql.query(
-    `
+  let sqlQuery = `
   WITH
   comment_counts AS (
     SELECT
@@ -415,8 +414,11 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
     like_counts
   ON
     summaries.id = like_counts.summary_id
-  WHERE 
-    ${typeObject[String(type)]} ILIKE '%' || $1 || '%' 
+  `;
+
+  sqlQuery += whereByTypeObject[String(type)];
+
+  sqlQuery += `
   GROUP BY 
     summaries.id, 
     book_category.name, 
@@ -427,12 +429,11 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
   ORDER BY 
     created_at DESC
   LIMIT $2 OFFSET $3;
-  `,
-    [keyword, limit, offset],
-  );
+  `;
 
-  const { rows: total } = await sql.query(
-    `
+  const { rows } = await sql.query(sqlQuery, [keyword, limit, offset]);
+
+  let countSqlQuery = `
   SELECT 
     COUNT(*),
     book_category.name AS category_name
@@ -441,13 +442,15 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
     book_category
   ON
     summaries.category_id = book_category.id
-  WHERE
-    ${typeObject[String(type)]} ILIKE '%' || $1 || '%'
+  `;
+
+  countSqlQuery += whereByTypeObject[String(type)];
+  countSqlQuery += `
   GROUP BY
     book_category.name;
-  `,
-    [keyword],
-  );
+  `;
+
+  const { rows: total } = await sql.query(countSqlQuery, [keyword]);
 
   if (total.length <= 0) {
     res.json({
