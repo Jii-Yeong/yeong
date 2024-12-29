@@ -25,6 +25,8 @@ const commonInputWrapperVariants = cva(
     'items-center',
     'border-gray',
     'gap-x-[4px]',
+    'gap-y-[4px]',
+    'flex-wrap',
   ],
   {
     variants: {
@@ -47,6 +49,7 @@ type CommonInputProps = {
   type?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  children?: ReactNode;
   onChangeValue?: (value: string) => void;
   onEnter?: () => void;
 } & HTMLAttributes<HTMLInputElement>;
@@ -62,6 +65,7 @@ const CommonInput = forwardRef(
       type,
       leftIcon,
       rightIcon,
+      children,
       onChangeValue,
       onEnter,
       ...rest
@@ -101,9 +105,11 @@ const CommonInput = forwardRef(
         ),
       [innerClassName],
     );
+
     return (
       <div className={divClassName}>
         {leftIcon && leftIcon}
+        {children}
         <input
           className={inputClassName}
           onChange={handleChangeInputValue}
