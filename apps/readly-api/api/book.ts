@@ -287,7 +287,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     )
   SELECT
     summaries.*,
-    book_category.name AS category_name,
+    ARRAY_AGG(book_category.name) AS category_name,
     users.nickname AS user_name,
     users.profile_image AS user_image,
     COALESCE(comment_counts.comment_count, 0) AS comment_count,
@@ -299,9 +299,13 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   ON
     summaries.user_id = users.id
   LEFT JOIN
+    UNNEST(summaries.category_id) WITH ORDINALITY AS cid(value, index)
+  ON
+    TRUE
+  LEFT JOIN
     book_category
   ON
-    summaries.category_id = book_category.id
+    cid.value = book_category.id
   LEFT JOIN
     comment_counts
   ON
@@ -311,7 +315,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   ON
     summaries.id = like_counts.summary_id
   WHERE
-    (summaries.category_id = ${category_id}::INTEGER OR ${category_id}::INTEGER IS NULL)
+    (${category_id}::INTEGER[] IS NULL OR summaries.category_id && ${category_id}::INTEGER[])
   AND
     (summaries.user_id = $1::TEXT OR $1::TEXT IS NULL)
   GROUP BY 
@@ -336,8 +340,7 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
     `
     SELECT 
       COUNT(*) FROM summaries 
-    WHERE
-      (summaries.category_id = ${category_id}::INTEGER OR ${category_id}::INTEGER IS NULL)
+    WHERE (${category_id}::INTEGER[] IS NULL OR summaries.category_id && ${category_id}::INTEGER[])
     AND
       (summaries.user_id = $1::TEXT OR $1::TEXT IS NULL)
     `,
@@ -345,7 +348,11 @@ bookRouter.get('/summary/list', async (req: Request, res: Response) => {
   );
 
   if (!rowCount || rowCount <= 0 || !total) {
-    res.json([]);
+    res.json({
+      total: 0,
+      list: [],
+      nextOffset: null,
+    });
     return;
   }
 
@@ -366,32 +373,32 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
   const whereByTypeObject = {
     title: `WHERE book_title ILIKE '%' || $1 || '%'`,
     author: `WHERE book_author ILIKE '%' || $1 || '%'`,
-    category: `WHERE book_category.name = ANY(SELECT jsonb_array_elements_text($1::jsonb))`,
+    category: `WHERE book_category.name && ANY(SELECT jsonb_array_elements_text($1::jsonb))`,
   };
 
   let sqlQuery = `
   WITH
-  comment_counts AS (
-    SELECT
-      summary_id,
-      COUNT(*) AS comment_count
-    FROM
-      summary_comment
-    GROUP BY
-      summary_id
-  ),
-  like_counts AS (
-    SELECT
-      summary_id,
-      COUNT(*) AS like_count
-    FROM
-      summary_like_count
-    GROUP BY
-      summary_id
-  )
+    comment_counts AS (
+      SELECT
+        summary_id,
+        COUNT(*) AS comment_count
+      FROM
+        summary_comment
+      GROUP BY
+        summary_id
+    ),
+    like_counts AS (
+      SELECT
+        summary_id,
+        COUNT(*) AS like_count
+      FROM
+        summary_like_count
+      GROUP BY
+        summary_id
+    )
   SELECT
     summaries.*,
-    book_category.name AS category_name,
+    ARRAY_AGG(book_category.name) AS category_name,
     users.nickname AS user_name,
     users.profile_image AS user_image,
     COALESCE(comment_counts.comment_count, 0) AS comment_count,
@@ -403,9 +410,13 @@ bookRouter.get('/summary/search', async (req: Request, res: Response) => {
   ON
     summaries.user_id = users.id
   LEFT JOIN
+    UNNEST(summaries.category_id) WITH ORDINALITY AS cid(value, index)
+  ON
+    TRUE
+  LEFT JOIN
     book_category
   ON
-    summaries.category_id = book_category.id
+    cid.value = book_category.id
   LEFT JOIN
     comment_counts
   ON
@@ -548,19 +559,9 @@ bookRouter.get('/category-list', async (req: Request, res: Response) => {
   const { rows } = await sql`
   SELECT 
     book_category.id,
-    book_category.name,
-    COUNT(summaries.id) AS summary_count
+    book_category.name
   FROM 
-    book_category
-  LEFT JOIN 
-    summaries
-  ON 
-    book_category.id = summaries.category_id
-  GROUP BY 
-    book_category.id, book_category.name
-  ORDER BY 
-    summary_count DESC;`;
-
+    book_category;`;
   res.json(rows);
 });
 
