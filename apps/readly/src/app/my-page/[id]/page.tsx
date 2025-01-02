@@ -1,7 +1,6 @@
 'use client';
 
-import BookSummaryItem from '@/components/book/BookSummaryItem/BookSummaryItem';
-import BookSummaryListSkeleton from '@/components/skeleton/book/BookSummaryListSkeleton';
+import BookSummaryList from '@/components/book/BookSummaryList/BookSummaryList';
 import MyPageProfileSkeleton from '@/components/skeleton/my-page/MyPageProfileSkeleton';
 import { COLORS } from '@/constants/color.constants';
 import { getBookSummaryListQuery } from '@/service/book.service';
@@ -31,7 +30,11 @@ export default function MyPage() {
   const { data: infoData, isFetching: infoFetching } = getUserInfoQuery(
     String(id),
   );
-  const { data: myListData, isLoading: listLoading } = getBookSummaryListQuery({
+  const {
+    data: myListData,
+    isFetching: listFetching,
+    fetchNextPage,
+  } = getBookSummaryListQuery({
     user_id: String(id),
   });
   const { mutateAsync: nicknameMutate, isPending: nicknamePending } =
@@ -156,18 +159,11 @@ export default function MyPage() {
 
       <div className="w-full">
         <h1 className="text-lg mb-[16px]">작성글</h1>
-        <div className="grid lg:grid-cols-4 sm:grid-cols-3 gap-x-[16px] gap-y-[16px] w-full">
-          {listLoading && <BookSummaryListSkeleton />}
-          {myListData &&
-            myListData.pages.flatMap(({ data }, index) =>
-              data.map((item) => (
-                <BookSummaryItem
-                  {...item}
-                  key={`${JSON.stringify(item)}-${index}`}
-                />
-              )),
-            )}
-        </div>
+        <BookSummaryList
+          data={myListData?.pages.flatMap((item) => item.data) || null}
+          isFetching={listFetching}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
     </div>
   );
