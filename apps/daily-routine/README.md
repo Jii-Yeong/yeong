@@ -6,10 +6,6 @@
 
 이 프로젝트는 오늘의 할일을 관리할 수 있도록 개발된 웹 애플리케이션 입니다.
 
-### 배포 URL
-
-https://yeong-daily-routine.vercel.app/
-
 ## 기술 스택
 
 - `TypeScript/React.js`
