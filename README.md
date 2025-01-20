@@ -74,7 +74,6 @@ yeong Repository에서 쓰일 디자인 시스템 라이브러리 입니다.
 손쉽게 할일을 관리할 수 있는 웹 애플리케이션 프로젝트 입니다.
 
 - 저장소 및 상세 설명 : https://github.com/Jii-Yeong/yeong/tree/main/apps/daily-routine
-- 배포 URL : https://yeong-daily-routine.vercel.app/
 
 ### 주요 패키지
 
