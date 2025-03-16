@@ -18,7 +18,7 @@ export default function PostListItem({item}: PostListItemProps) {
         <p className="text-md text-dark-gray">{item.date}</p>
       </div>
       <div className="flex flex-row gap-y-2 flex-1 justify-between gap-x-[16px]">
-        <p className="text-base sm:text-lg">{item.title}</p>
+        <p className="text-base sm:text-lg text-black">{item.title}</p>
         {item.thumbnail && (
           <Image
             className="my-0 h-auto"

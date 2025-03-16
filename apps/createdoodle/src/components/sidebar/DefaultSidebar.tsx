@@ -109,7 +109,7 @@ export default function DefaultSidebar({
       </div>
       <div className="flex flex-col items-center gap-y-[8px]">
         <ProfileImage size="large" imageSrc="/images/profile-image.png" />
-        <p className="text-lg">지영</p>
+        <p className="text-lg text-black">지영</p>
         <div className="flex flex-row gap-x-[8px] justify-center">
           <CommonButton
             className="rounded-full p-[4px]"
