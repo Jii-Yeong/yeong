@@ -48,7 +48,7 @@ export default function BookSummaryItem({
   );
   return (
     <Link
-      href={`summary/detail/${id}`}
+      href={`/summary/detail/${id}`}
       className="w-full border border-gray border-solid rounded-[16px] p-[16px] flex flex-col"
     >
       <div className="bg-light-gray p-[8px] rounded-[8px] ">
