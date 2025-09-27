@@ -1,4 +1,4 @@
-import {PostListItemType} from '@/types/post.types';
+import { PostListItemType } from '@/types/post.types';
 
 export const POST_LIST: PostListItemType[] = [
   {
@@ -138,5 +138,14 @@ export const POST_LIST: PostListItemType[] = [
       "Next.js 의 'use client' 지시어에 대한 것과 알맞은 상황에 대한 정리",
     route: 13,
     date: '2024.12.10',
+  },
+  {
+    id: '14',
+    title: 'Vue.js의 반응성 기법 (reactive, ref, computed)',
+    category: '라이브러리/프레임워크',
+    categoryId: 'library-and-framework',
+    description: 'Vue.js의 반응성 기법 (reactive, ref, computed)에 대한 정리',
+    route: 14,
+    date: '2025.09.27',
   },
 ];
