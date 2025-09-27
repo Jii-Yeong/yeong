@@ -1,6 +1,7 @@
-import {getPostMd} from '@/api/post.api';
+import { getPostMd } from '@/api/post.api';
 import MdPost from '@/components/posts/MdPost';
-import {POST_LIST} from '@/constants/post-list.constants';
+import { POST_LIST } from '@/constants/post-list.constants';
+import { Metadata } from 'next';
 
 interface PostProps {
   params: {
@@ -8,13 +9,24 @@ interface PostProps {
   };
 }
 
-export default async function Post({params}: PostProps) {
+export async function generateMetadata({
+  params,
+}: PostProps): Promise<Metadata> {
+  const currentPost = POST_LIST.find((item) => item.id === params.id);
+
+  return {
+    title: currentPost?.title || '끄적끄적',
+    description: currentPost?.description || '',
+  };
+}
+
+export default async function Post({ params }: PostProps) {
   const text = await getPostMd(String(params.id));
   const currentPost = POST_LIST.find((item) => item.id === params.id);
 
   return (
     <>
-      <title>{currentPost?.title}</title>
+      <title>{currentPost?.title || ''}</title>
       <div className="flex flex-col items-center w-full">
         <MdPost markdownText={text} postInfo={currentPost} />
       </div>
