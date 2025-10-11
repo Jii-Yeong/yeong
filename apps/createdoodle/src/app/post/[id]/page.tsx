@@ -21,7 +21,7 @@ export async function generateMetadata({
       title: currentPost?.title || '끄적끄적',
       description: currentPost?.description || '',
       siteName: '끄적끄적',
-      images: '/images/profile-image.png',
+      images: `${process.env.NEXT_PUBLIC_CLIENT_URL}/images/profile-image.png'`,
       type: 'website',
     },
   };
