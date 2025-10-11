@@ -4,6 +4,10 @@ export const CATEGORY_LIST = [
     id: null,
   },
   {
+    name: '언어',
+    id: 'language',
+  },
+  {
     name: '라이브러리/프레임워크',
     id: 'library-and-framework',
   },

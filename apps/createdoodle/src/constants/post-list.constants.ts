@@ -148,4 +148,14 @@ export const POST_LIST: PostListItemType[] = [
     route: 14,
     date: '2025.09.27',
   },
+  {
+    id: '15',
+    title: 'JavaScript Web Worker',
+    category: '언어',
+    categoryId: 'language',
+    description:
+      '별도의 스레드를 생성하여 작업을 처리하는 Web Worker에 대한 설명',
+    route: 15,
+    date: '2025.10.11',
+  },
 ];

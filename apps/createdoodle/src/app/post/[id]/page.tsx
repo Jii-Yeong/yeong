@@ -17,6 +17,13 @@ export async function generateMetadata({
   return {
     title: currentPost?.title || '끄적끄적',
     description: currentPost?.description || '',
+    openGraph: {
+      title: currentPost?.title || '끄적끄적',
+      description: currentPost?.description || '',
+      siteName: '끄적끄적',
+      images: '/images/profile-image.png',
+      type: 'website',
+    },
   };
 }
 
