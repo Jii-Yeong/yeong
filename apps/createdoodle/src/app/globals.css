@@ -39,8 +39,9 @@ body {
     @apply my-4;
   }
   h4 {
-    @apply text-xl;
+    @apply text-lg;
     @apply font-semibold;
+    @apply my-4;
   }
   img {
     @apply my-8;

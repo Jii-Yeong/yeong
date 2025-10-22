@@ -158,4 +158,13 @@ export const POST_LIST: PostListItemType[] = [
     route: 15,
     date: '2025.10.11',
   },
+  {
+    id: '16',
+    title: 'C++ 포인터와 참조',
+    category: '언어',
+    categoryId: 'language',
+    description: 'C++ 포인터와 참조에 대한 설명',
+    route: 16,
+    date: '2025.10.23',
+  },
 ];
