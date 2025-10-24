@@ -1,10 +1,10 @@
-import {usePost} from '@/hooks/usePost';
-import {CategoryId} from '@/types/category.types';
-import {Icon} from '@iconify/react/dist/iconify.js';
-import {CommonButton, CommonDivider, ProfileImage} from '@yeong/ui';
-import {cva} from 'class-variance-authority';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {useMemo} from 'react';
+import { usePost } from '@/hooks/usePost';
+import { CategoryId } from '@/types/category.types';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { CommonButton, CommonDivider, ProfileImage } from '@yeong/ui';
+import { cva } from 'class-variance-authority';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 
 type DefaultSidebarProps = {
   isShow?: boolean;
@@ -30,7 +30,7 @@ const sidebarVariants = cva(
     variants: {
       isShow: {
         true: ['left-0'],
-        false: ['left-[-100%]', 'sm:left-[-300px]'],
+        false: ['md:left-[-100%]', 'sm:left-[-300px]'],
       },
     },
   },
@@ -68,7 +68,7 @@ export default function DefaultSidebar({
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentParams = new URLSearchParams(searchParams.toString());
-  const {categoryList, categoryId} = usePost();
+  const { categoryList, categoryId } = usePost();
 
   const handleClickCategoryItem = (value: CategoryId) => {
     if (!value) {
@@ -91,7 +91,7 @@ export default function DefaultSidebar({
     );
   };
 
-  const sidebarClassName = useMemo(() => sidebarVariants({isShow}), [isShow]);
+  const sidebarClassName = useMemo(() => sidebarVariants({ isShow }), [isShow]);
 
   return (
     <div className={sidebarClassName}>
@@ -99,7 +99,8 @@ export default function DefaultSidebar({
         <CommonButton
           variant="ghost"
           onClick={onClickClose}
-          className="p-[4px]">
+          className="p-[4px]"
+        >
           <Icon
             icon="eva:menu-arrow-outline"
             width={35}
@@ -114,25 +115,28 @@ export default function DefaultSidebar({
           <CommonButton
             className="rounded-full p-[4px]"
             variant="outline"
-            onClick={handleClickNotionButton}>
+            onClick={handleClickNotionButton}
+          >
             <Icon icon="mingcute:notion-fill" width={32} />
           </CommonButton>
           <CommonButton
             className="rounded-full p-[4px]"
             variant="outline"
-            onClick={handleClickGithubButton}>
+            onClick={handleClickGithubButton}
+          >
             <Icon icon="mdi:github" width={32} />
           </CommonButton>
         </div>
       </div>
-      <div className="flex flex-col gap-y-[8px]">
+      <div className="flex flex-col gap-y-[8px] overflow-auto">
         {categoryList.map((item) => (
           <div key={item.value}>
             <div
               className={sidebarItemVariants({
                 isCurrent: item.value === categoryId,
               })}
-              onClick={() => handleClickCategoryItem(item.value)}>
+              onClick={() => handleClickCategoryItem(item.value)}
+            >
               <p>{item.label}</p>
               <p>{item.count}</p>
             </div>

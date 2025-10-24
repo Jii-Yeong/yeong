@@ -7,7 +7,7 @@ type PostListProps = {
 
 export default function PostList({ list }: PostListProps) {
   return (
-    <div className="flex flex-col gap-y-4 w-full">
+    <div className="flex flex-col gap-y-4 w-full sm:p-[16px] md:p-0">
       {list.map((item, index) => (
         <PostListItem item={item} key={`${JSON.stringify(item)}-${index}`} />
       ))}
