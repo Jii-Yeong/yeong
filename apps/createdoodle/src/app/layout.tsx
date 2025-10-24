@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={nanumFont.className}>
         <Suspense>
           <CommonHeader />
-          <div className="py-[76px] flex flex-col items-center p-[16px]">
+          <div className="py-[76px] flex flex-col items-center p-[16px] sm:px-0 md:px-[16px]">
             {children}
           </div>
         </Suspense>

@@ -17,7 +17,7 @@ type MdPostProps = {
 
 export default function MdPost({ markdownText, postInfo }: MdPostProps) {
   return (
-    <div className="md-post bg-white rounded-2xl p-[24px] sm:p-16 w-full lg:max-w-[1000px] text-black">
+    <div className="md-post bg-white md:rounded-2xl sm:rounded-none md:p-[24px] sm:p-[12px] w-full lg:max-w-[1000px] text-black">
       <div className="flex sm:flex-row justify-between flex-col">
         <p className="text-[#7b71be]">{postInfo?.category}</p>
         <p className="text-md text-dark-gray">{postInfo?.date}</p>
