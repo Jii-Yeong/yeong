@@ -167,4 +167,13 @@ export const POST_LIST: PostListItemType[] = [
     route: 16,
     date: '2025.10.23',
   },
+  {
+    id: '17',
+    title: 'C++ 4대 캐스트',
+    category: '언어',
+    categoryId: 'language',
+    description: 'C++ 4대 캐스트에 대한 설명',
+    route: 17,
+    date: '2025.11.08',
+  },
 ];

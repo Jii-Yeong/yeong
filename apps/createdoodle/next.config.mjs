@@ -15,9 +15,12 @@ const nextConfig = {
     ],
   },
   webpack: (config) => {
-    config.resolve.fallback = {fs: false};
+    config.resolve.fallback = { fs: false };
 
     return config;
+  },
+  compiler: {
+    removeConsole: true,
   },
 };
 

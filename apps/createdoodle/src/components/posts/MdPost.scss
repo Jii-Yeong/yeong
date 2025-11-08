@@ -47,15 +47,20 @@
   }
   table {
     width: 100%;
+    overflow-x: auto;
+    max-width: 100%;
+    display: block;
     th {
       padding: 10px 16px;
       background-color: #235c91;
       color: #ffffff;
+      white-space: nowrap;
     }
 
     td {
       padding: 10px 16px;
       border-bottom: 1px solid #dfe2e5;
+      white-space: nowrap;
 
       code {
         color: #235c91 !important;
