@@ -27,4 +27,8 @@ export const CATEGORY_LIST = [
     name: '오픈소스',
     id: 'open-source',
   },
+  {
+    name: 'CS 지식',
+    id: 'cs',
+  },
 ] as const;

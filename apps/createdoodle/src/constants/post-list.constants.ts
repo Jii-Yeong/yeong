@@ -1,4 +1,4 @@
-import { PostListItemType } from '@/types/post.types';
+import {PostListItemType} from '@/types/post.types';
 
 export const POST_LIST: PostListItemType[] = [
   {
@@ -175,5 +175,15 @@ export const POST_LIST: PostListItemType[] = [
     description: 'C++ 4대 캐스트에 대한 설명',
     route: 17,
     date: '2025.11.08',
+  },
+  {
+    id: '18',
+    title: 'CAN, 시리얼, 이더넷의 차이점과 임베디드 시스템 내 역할 총정리',
+    category: 'CS 지식',
+    categoryId: 'cs',
+    description:
+      '임베디드 시스템에서 3대 유선 통신 방식인 CAN 통신, 시리얼 통신, 이더넷 통신에 대해 기술',
+    route: 17,
+    date: '2026.03.14',
   },
 ];
