@@ -183,7 +183,17 @@ export const POST_LIST: PostListItemType[] = [
     categoryId: 'cs',
     description:
       '임베디드 시스템에서 3대 유선 통신 방식인 CAN 통신, 시리얼 통신, 이더넷 통신에 대해 기술',
-    route: 17,
+    route: 18,
     date: '2026.03.14',
+  },
+  {
+    id: '19',
+    title:
+      '(저번주에 작성하지 못해서 이번에 쓰는) 2026년도 상반기 그로스로그에서 성장할 나의 목표',
+    category: '일상',
+    categoryId: 'daily',
+    description: '2026년도 상반기 그로스로그를 다니면서 성장 목표 세우기',
+    route: 19,
+    date: '2026.03.28',
   },
 ];
