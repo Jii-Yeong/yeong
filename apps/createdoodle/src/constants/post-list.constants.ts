@@ -1,4 +1,4 @@
-import {PostListItemType} from '@/types/post.types';
+import { PostListItemType } from '@/types/post.types';
 
 export const POST_LIST: PostListItemType[] = [
   {
@@ -195,5 +195,15 @@ export const POST_LIST: PostListItemType[] = [
     description: '2026년도 상반기 그로스로그를 다니면서 성장 목표 세우기',
     route: 19,
     date: '2026.03.28',
+  },
+  {
+    id: '20',
+    title: '[C++] RTSP 실시간 웹 스트리밍 서버 구축기',
+    category: '서버',
+    categoryId: 'server',
+    description:
+      'C++로 RTSP 실시간 웹 스트리밍 서버를 구축한 것에 대한 경험을 담았습니다.',
+    route: 20,
+    date: '2026.04.11',
   },
 ];

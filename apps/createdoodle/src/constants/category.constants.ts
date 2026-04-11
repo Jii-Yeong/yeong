@@ -35,4 +35,8 @@ export const CATEGORY_LIST = [
     name: '일상',
     id: 'daily',
   },
+  {
+    name: '서버',
+    id: 'server',
+  },
 ] as const;
