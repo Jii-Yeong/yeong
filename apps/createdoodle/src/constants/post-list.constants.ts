@@ -206,4 +206,14 @@ export const POST_LIST: PostListItemType[] = [
     route: 20,
     date: '2026.04.11',
   },
+  {
+    id: '21',
+    title: '순차탐색 vs 이진탐색 - 언제 어떤 걸 써야 할까?',
+    category: 'CS 지식',
+    categoryId: 'cs',
+    description:
+      '데이터 탐색 중 순차 탐색과 이진 탐색 중 어떤 걸 써야할지 기술하는 글',
+    route: 21,
+    date: '2026.04.25',
+  },
 ];
