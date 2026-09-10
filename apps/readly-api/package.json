@@ -2,6 +2,9 @@
   "name": "readly-api",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "cd ../../ && vercel dev --port=3002"
   },
