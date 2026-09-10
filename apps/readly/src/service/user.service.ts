@@ -25,8 +25,9 @@ export const getUserMyInfoQuery = () => {
   return useQuery({
     queryKey: [MY_USERS_QUERY_KEY],
     queryFn: getUserMyInfoData,
-    staleTime: Infinity,
+    staleTime: 5 * 60 * 1000,
     gcTime: Infinity,
+    retry: false,
   });
 };
 

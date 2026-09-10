@@ -1,30 +1,39 @@
 import jwt from 'jsonwebtoken';
 import { GoogleTokenType, GoogleUserInfoType } from '../model/auth';
 
+type JwtUserPayload = Pick<GoogleUserInfoType, 'id'>;
+
+const getJwtSecret = () => {
+  const secretKey = process.env.JWT_SECRET_KEY;
+  if (!secretKey || secretKey.length < 32) {
+    throw new Error(
+      'JWT_SECRET_KEY must be configured with at least 32 characters.',
+    );
+  }
+  return secretKey;
+};
+
 export const getGoogleTokenByCode = async (
   code: string,
 ): Promise<GoogleTokenType | null> => {
-  try {
-    const response = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        code: code,
-        client_id: process.env.GOOGLE_CLIENT_ID || '',
-        client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
-        redirect_uri: process.env.GOOGLE_REDIRECT_URI || '',
-        grant_type: 'authorization_code',
-      }),
-    });
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID || '',
+      client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI || '',
+      grant_type: 'authorization_code',
+    }),
+  });
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error exchanging authorization code:', error);
-    return null;
-  }
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as GoogleTokenType;
+  return data.access_token ? data : null;
 };
 
 export const getGoogleUserInfo = async (
@@ -39,29 +48,32 @@ export const getGoogleUserInfo = async (
     },
   );
 
-  return userInfo.json();
+  if (!userInfo.ok) {
+    throw new Error(`Google user info request failed with ${userInfo.status}.`);
+  }
+
+  return userInfo.json() as Promise<GoogleUserInfoType>;
 };
 
 export const generateJwtToken = (payload: Pick<GoogleUserInfoType, 'id'>) => {
-  const secretKey = process.env.JWT_SECRET_KEY;
-  const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+  const token = jwt.sign(payload, getJwtSecret(), {
+    algorithm: 'HS256',
+    expiresIn: '1h',
+  });
   return token;
 };
 
-export const decodeJwtToken = (
-  accessToken: string | null,
-): Pick<GoogleUserInfoType, 'id'> => {
-  const secretKey = process.env.JWT_SECRET_KEY;
+export const verifyJwtToken = (accessToken: string): JwtUserPayload | null => {
+  const secretKey = getJwtSecret();
 
   try {
-    const isVerify = jwt.verify(accessToken, secretKey);
-
-    if (!isVerify) throw new Error('invalid token');
-
-    const decoded = jwt.decode(accessToken);
-
-    return decoded;
-  } catch (e) {
-    return e;
+    const payload = jwt.verify(accessToken, secretKey, {
+      algorithms: ['HS256'],
+    });
+    if (typeof payload === 'string' || typeof payload.id !== 'string')
+      return null;
+    return { id: payload.id };
+  } catch {
+    return null;
   }
 };

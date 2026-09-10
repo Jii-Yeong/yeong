@@ -1,17 +1,19 @@
 'use client';
 
 import BookSummaryCreateSection from '@/components/book/BookSummaryCreateSection/BookSummaryCreateSection';
-import Cookies from 'js-cookie';
+import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Page() {
   const router = useRouter();
+  const { isLoggedIn, isAuthLoading } = useAuth();
 
   useEffect(() => {
-    const accessToken = Cookies.get('access_token') || '';
-    if (!accessToken) router.push('/');
-  }, []);
+    if (!isAuthLoading && !isLoggedIn) router.replace('/');
+  }, [isAuthLoading, isLoggedIn, router]);
+
+  if (isAuthLoading || !isLoggedIn) return null;
 
   return <BookSummaryCreateSection />;
 }

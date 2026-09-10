@@ -1,25 +1,10 @@
-import { jwtVerify } from 'jose';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
+import { getUserMyInfoQuery } from '@/service/user.service';
 
 export const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data, isPending, isError } = getUserMyInfoQuery();
 
-  const accessToken = Cookies.get('access_token') || '';
-
-  const secretKey = new TextEncoder().encode(
-    process.env.NEXT_PUBLIC_JWT_SECRET_KEY,
-  );
-
-  useEffect(() => {
-    jwtVerify(accessToken, secretKey)
-      .then(() => {
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      });
-  }, [accessToken]);
-
-  return { isLoggedIn };
+  return {
+    isLoggedIn: !isError && Boolean(data),
+    isAuthLoading: isPending,
+  };
 };

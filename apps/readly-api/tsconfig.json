@@ -1,0 +1,18 @@
+{
+  "extends": "@yeong/config/typescript/base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "types": ["node", "vitest/globals"]
+  },
+  "include": [
+    "api/**/*.ts",
+    "middleware/**/*.ts",
+    "model/**/*.ts",
+    "tests/**/*.ts",
+    "types/**/*.d.ts",
+    "utils/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

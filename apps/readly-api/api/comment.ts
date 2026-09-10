@@ -1,92 +1,127 @@
 import { sql } from '@vercel/postgres';
-import express, { Request, Response } from 'express';
-import { decodeJwtToken } from '../utils/auth';
+import express from 'express';
+import { optionalAuth, requireAuth } from '../middleware/auth';
+import { ApiError } from '../utils/api-error';
+import { asyncHandler } from '../utils/async-handler';
+import { parseInteger } from '../utils/validation';
 
 const commentRouter = express.Router();
 
-commentRouter.post('/create', async (req: Request, res: Response) => {
-  const comment = req.body?.comment;
-  const summaryId = req.body?.summary_id;
-  const commentId = req.body?.comment_id || null;
-
-  if (!comment || !summaryId) {
-    res.status(401).send('A required parameter is missing.');
-    return;
+const parseComment = (value: unknown) => {
+  if (typeof value !== 'string') {
+    throw new ApiError(400, 'INVALID_BODY', 'comment must be a string.');
   }
 
-  const userToken = req.headers['authorization']?.split(' ')[1];
-
-  if (!userToken) {
-    res.status(401).send('You entered via the wrong route.');
-    return;
+  const comment = value.trim();
+  if (!comment || comment.length > 5_000) {
+    throw new ApiError(
+      400,
+      'INVALID_BODY',
+      'comment must contain between 1 and 5000 characters.',
+    );
   }
+  return comment;
+};
 
-  const decodedInfo = decodeJwtToken(userToken);
+commentRouter.post(
+  '/create',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const comment = parseComment(req.body?.comment);
+    const summaryId = parseInteger(req.body?.summary_id, 'summary_id', {
+      min: 1,
+      max: 2_147_483_647,
+    });
+    const commentId = parseInteger(req.body?.comment_id, 'comment_id', {
+      min: 1,
+      max: 2_147_483_647,
+      optional: true,
+    });
+    const { rows } = await sql`
+      SELECT id, nickname, profile_image
+      FROM users
+      WHERE id = ${req.userId};
+    `;
+    const user = rows[0];
 
-  if (!decodedInfo.id) {
-    res.status(401).send('Decoding failed.');
-    return;
-  }
+    if (!user) {
+      throw new ApiError(404, 'USER_NOT_FOUND', 'User does not exist.');
+    }
 
-  const { rows } = await sql`
-  SELECT id, nickname, profile_image 
-  FROM users 
-  WHERE id = ${decodedInfo.id};`;
+    await sql`
+      INSERT INTO summary_comment (
+        comment,
+        summary_id,
+        comment_id,
+        user_id,
+        user_image,
+        user_name
+      )
+      VALUES (
+        ${comment},
+        ${summaryId},
+        ${commentId},
+        ${user.id},
+        ${user.profile_image},
+        ${user.nickname}
+      );
+    `;
 
-  const row = rows[0];
+    res.status(201).json({ message: 'Comment created.' });
+  }),
+);
 
-  if (!row) {
-    res.status(401).send('There is no user information.');
-    return;
-  }
+commentRouter.get(
+  '/list',
+  optionalAuth,
+  asyncHandler(async (req, res) => {
+    const summaryId = parseInteger(req.query.summary_id, 'summary_id', {
+      min: 1,
+      max: 2_147_483_647,
+    });
+    const { rows } = await sql`
+      SELECT
+        summary_comment.*,
+        users.nickname AS user_name,
+        users.profile_image AS user_image
+      FROM summary_comment
+      LEFT JOIN users ON summary_comment.user_id = users.id
+      WHERE summary_comment.summary_id = ${summaryId};
+    `;
 
-  await sql`
-  INSERT INTO summary_comment (comment, summary_id, comment_id, user_id, user_image, user_name)
-  VALUES (${comment}, ${summaryId}, ${commentId}, ${row.id}, ${row.profile_image}, ${row.nickname});
-  `;
-  res.send('Success create comment.');
-});
+    res.json(
+      rows.map((item) => ({
+        ...item,
+        is_my: item.user_id === req.userId,
+      })),
+    );
+  }),
+);
 
-commentRouter.get('/list', async (req: Request, res: Response) => {
-  const summaryId = req.query?.summary_id;
-  const userToken = req.headers['authorization']?.split(' ')[1];
+commentRouter.delete(
+  '/delete',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const id = parseInteger(req.query.id, 'id', {
+      min: 1,
+      max: 2_147_483_647,
+    });
+    const { rows } = await sql`
+      DELETE FROM summary_comment
+      WHERE id = ${id} AND user_id = ${req.userId}
+      RETURNING id;
+    `;
 
-  const decodedInfo = decodeJwtToken(userToken || null);
+    if (!rows[0]) {
+      throw new ApiError(
+        404,
+        'COMMENT_NOT_FOUND',
+        'Comment does not exist or is not owned by the current user.',
+      );
+    }
 
-  const { rows } = await sql`
-    SELECT summary_comment.*, users.nickname AS user_name, users.profile_image AS user_image
-    FROM summary_comment
-    LEFT JOIN users
-    ON summary_comment.user_id = users.id
-    WHERE summary_comment.summary_id = ${String(summaryId)}`;
-
-  const parsedRows = rows.map((item) => {
-    return {
-      ...item,
-      is_my: item.user_id === decodedInfo.id,
-    };
-  });
-  res.json(parsedRows);
-});
-
-commentRouter.delete('/delete', async (req: Request, res: Response) => {
-  const id = req.query?.id;
-
-  if (!id) {
-    res.status(401).send('A required parameter is missing.');
-  }
-
-  const { rowCount } = await sql`
-  DELETE 
-  FROM summary_comment
-  WHERE id = ${String(id)};`;
-
-  if (!rowCount || rowCount <= 0) {
-    res.status(401).send('Comment does not exist.');
-    return;
-  }
-
-  res.send('Success deleted.');
-});
+    res.status(204).send();
+  }),
+);
 
 export default commentRouter;

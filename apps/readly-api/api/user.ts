@@ -1,131 +1,147 @@
 import { del, put } from '@vercel/blob';
 import { sql } from '@vercel/postgres';
-import express, { Request, Response } from 'express';
-import { decodeJwtToken } from '../utils/auth';
+import express from 'express';
+import { optionalAuth, requireAuth } from '../middleware/auth';
+import { ApiError } from '../utils/api-error';
+import { asyncHandler } from '../utils/async-handler';
+import { parseOptionalText } from '../utils/validation';
 
 const userRouter = express.Router();
+const allowedProfileImageTypes = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+]);
 
-userRouter.get('/my-info', async (req: Request, res: Response) => {
-  const userToken = req.headers['authorization']?.split(' ')[1];
+userRouter.get(
+  '/my-info',
+  optionalAuth,
+  asyncHandler(async (req, res) => {
+    if (!req.userId) {
+      res.json(null);
+      return;
+    }
 
-  if (!userToken) {
-    res.json(null);
-    return;
-  }
+    const { rows } = await sql`
+      SELECT id, email, nickname, profile_image, created_at
+      FROM users
+      WHERE id = ${req.userId};
+    `;
 
-  const decodedInfo = decodeJwtToken(userToken);
+    res.json(rows[0] ?? null);
+  }),
+);
 
-  const { rows } = await sql`
-  SELECT *
-  FROM users
-  WHERE id = ${decodedInfo.id};`;
+userRouter.get(
+  '/info',
+  optionalAuth,
+  asyncHandler(async (req, res) => {
+    const userId = parseOptionalText(req.query.user_id, 'user_id');
+    if (!userId) {
+      throw new ApiError(400, 'INVALID_QUERY', 'user_id is required.');
+    }
 
-  const row = rows[0];
+    const { rows } = await sql`
+      SELECT id, email, nickname, profile_image, created_at
+      FROM users
+      WHERE id = ${userId};
+    `;
+    const user = rows[0];
 
-  if (!row) {
-    res.json(null);
-    return;
-  }
+    res.json(user ? { ...user, is_my: userId === req.userId } : null);
+  }),
+);
 
-  res.json(row);
-});
+userRouter.put(
+  '/edit/nickname',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const nickname = parseOptionalText(req.body?.nickname, 'nickname', 30);
+    if (!nickname) {
+      throw new ApiError(400, 'INVALID_BODY', 'nickname is required.');
+    }
 
-userRouter.get('/info', async (req: Request, res: Response) => {
-  const userToken = req.headers['authorization']?.split(' ')[1];
+    const { rows } = await sql`
+      UPDATE users
+      SET nickname = ${nickname}
+      WHERE id = ${req.userId}
+      RETURNING id;
+    `;
 
-  const decodedInfo = decodeJwtToken(String(userToken));
+    if (!rows[0]) {
+      throw new ApiError(404, 'USER_NOT_FOUND', 'User does not exist.');
+    }
 
-  const userId = req.query?.user_id;
+    res.json({ message: 'Nickname updated.' });
+  }),
+);
 
-  if (!userId) {
-    res.status(400).send('A required parameter is missing.');
-    return;
-  }
+userRouter.post(
+  '/edit/profile-image',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const { rows } = await sql`
+      SELECT profile_image
+      FROM users
+      WHERE id = ${req.userId};
+    `;
+    const user = rows[0];
 
-  const { rows } = await sql`
-  SELECT *
-  FROM users
-  WHERE id = ${String(userId)};`;
+    if (!user) {
+      throw new ApiError(404, 'USER_NOT_FOUND', 'User does not exist.');
+    }
 
-  const row = rows[0];
+    let image = req.files?.image;
+    if (Array.isArray(image)) image = image[0];
 
-  if (!row) {
-    res.json(null);
-    return;
-  }
+    if (!image || image.truncated) {
+      throw new ApiError(
+        400,
+        'INVALID_FILE',
+        'A valid image file is required.',
+      );
+    }
 
-  res.json({ ...row, is_my: userId === decodedInfo.id });
-});
+    if (!allowedProfileImageTypes.has(image.mimetype)) {
+      throw new ApiError(
+        415,
+        'UNSUPPORTED_FILE_TYPE',
+        'Only JPEG, PNG, and WebP images are supported.',
+      );
+    }
 
-userRouter.put('/edit/nickname', async (req: Request, res: Response) => {
-  const userToken = req.headers['authorization']?.split(' ')[1];
+    const extension =
+      image.mimetype === 'image/jpeg' ? 'jpg' : image.mimetype.split('/')[1];
+    const blob = await put(
+      `readly/user/profile-image/${req.userId}-${Date.now()}.${extension}`,
+      image.data,
+      { access: 'public' },
+    );
 
-  if (!userToken) {
-    res.status(401).send('You entered via the wrong route.');
-    return;
-  }
+    await sql`
+      UPDATE users
+      SET profile_image = ${blob.url}
+      WHERE id = ${req.userId};
+    `;
 
-  const decodedInfo = decodeJwtToken(userToken);
+    if (user.profile_image) {
+      try {
+        await del(user.profile_image);
+      } catch (error) {
+        console.warn(
+          JSON.stringify({
+            timestamp: new Date().toISOString(),
+            level: 'warn',
+            event: 'old_profile_image_delete_failed',
+            requestId: req.requestId,
+            error: error instanceof Error ? error.message : String(error),
+          }),
+        );
+      }
+    }
 
-  const nickname = req.body?.nickname;
-
-  await sql`
-  UPDATE users
-  SET nickname = ${nickname}
-  WHERE id = ${decodedInfo.id};`;
-
-  res.send('Success edited.');
-});
-
-userRouter.post('/edit/profile-image', async (req: Request, res: Response) => {
-  const userToken = req.headers['authorization']?.split(' ')[1];
-
-  if (!userToken) {
-    res.status(401).send('You entered via the wrong route.');
-    return;
-  }
-
-  const decodedInfo = decodeJwtToken(userToken);
-
-  const { rows } =
-    await sql`SELECT profile_image FROM users WHERE id = ${decodedInfo.id}`;
-
-  if (!rows || rows.length <= 0) {
-    res.status(401).send('User does not exist.');
-    return;
-  }
-
-  const row = rows[0];
-
-  if (row.profile_image) {
-    await del(row.profile_image);
-  }
-
-  let image = req.files?.image;
-
-  if (!image) {
-    res.status(400).send('A required parameter is missing.');
-    return;
-  }
-
-  if (Array.isArray(image)) {
-    image = image[0];
-  }
-
-  const blob = await put(
-    `readly/user/profile-image/${image.name}`,
-    image.data,
-    {
-      access: 'public',
-    },
-  );
-
-  await sql`
-  UPDATE users
-  SET profile_image = ${blob.url}
-  WHERE id = ${decodedInfo.id};`;
-
-  res.send('Success edited.');
-});
+    res.json({ profileImage: blob.url });
+  }),
+);
 
 export default userRouter;

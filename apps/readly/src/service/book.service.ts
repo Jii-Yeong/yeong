@@ -118,7 +118,7 @@ export const getBookSummaryListQuery = (params: BookSummaryListRequest) => {
     queryFn: async ({ pageParam = 0 }) => {
       const { total, list, nextOffset } = await getBookSummaryList({
         ...params,
-        offset: pageParam * Number(params.limit || 16),
+        offset: pageParam,
       });
 
       return {
@@ -165,7 +165,7 @@ export const getSearchBookSummaryListQuery = (
     queryFn: async ({ pageParam = 0 }) => {
       const { total, list, nextOffset } = await getSearchBookSummaryList({
         ...params,
-        offset: pageParam * Number(params.limit || 16),
+        offset: pageParam,
       });
 
       return {
